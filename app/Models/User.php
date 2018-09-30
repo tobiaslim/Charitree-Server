@@ -40,9 +40,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static $rules = [
         "register" => [
-            "data" => [
-                'email' => 'required|email|unique:User',
-            ]
+            'email' => 'required|email|unique:User',
         ]
     ];
 
@@ -58,7 +56,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
 
-     /**
+    /**
      * The plain text password. Will be hashed and check if correct.
      *
      * @param string
@@ -66,20 +64,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function validatePassword(string $password)
     {
-        if(Hash::check($password, $this->password)){
-          return true;
+        if (Hash::check($password, $this->password)) {
+            return true;
+        } else {
+            return false;
         }
-        else{
-          return false;
-        }
-      }
+    }
 
 
     /**
      * Relationship with other entity define hereafter
      */
 
-    public function session(){
+    public function session()
+    {
         return $this->hasMany('App\models\Session');
-      }
+    }
 }
