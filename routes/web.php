@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,6 +12,12 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/', function () use ($router) {  
     return $router->app->version();
+});
+
+//route group user. 
+$router->group(['prefix' => 'user'], function () use ($router) {
+    $router->post('create', 'UserController@register');
+    $router->post('authenticate', "UserController@authenticate");
 });
