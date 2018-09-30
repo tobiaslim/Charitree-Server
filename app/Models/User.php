@@ -16,7 +16,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     /*
      * Table specific information
      */
-    protected $table = 'user';
+    protected $table = 'User'; //case sensitive with database in some environment
     //protected $primarykey = ''; //eloquent assume primarykey is use as id, if not declare the column name of the primary key
     public $timestamps = false;
 
@@ -41,7 +41,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public static $rules = [
         "register" => [
             "data" => [
-                'email' => 'required|email|unique:user',
+                'email' => 'required|email|unique:User',
             ]
         ]
     ];

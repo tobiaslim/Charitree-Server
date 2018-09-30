@@ -11,7 +11,7 @@ class Session extends Model {
     public static $rules = [
         // Validation rules
     ];
-    protected $table = 'session';
+    protected $table = 'Session';
     protected $primaryKey = 'session_id';
     public $timestamps = false;
 
