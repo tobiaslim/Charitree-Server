@@ -49,7 +49,7 @@ class AuthServiceProvider extends ServiceProvider
                 //1.
                 $session = Session::where('session_token', $key[1])->where('session_expire', '>', new \DateTime())->first();
                 if (!empty($session)) {
-                    $user = $session->user->user_email == $key[0] ? $session->user : null;
+                    $user = ($session->user->email == $key[0]) ? $session->user : null;
                     if (!empty($user)) {
                         $request->request->add(['user' => $user]);
                     }

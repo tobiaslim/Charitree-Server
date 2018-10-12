@@ -81,6 +81,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function session()
     {
-        return $this->hasMany('App\models\Session');
+        return $this->hasMany('App\Models\Session');
     }
+
+
 }

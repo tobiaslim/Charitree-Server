@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Contracts\Repository\IUserRepository;
@@ -46,16 +45,27 @@ class UserController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], 422);
         }
 
-        $user = User::where('email', $request->input('email'))->first();
+        $user = $this->users->getUserByEmail($request->input('email'));
+
         if ($user == null) {
             return response()->json(['status' => '0'], 401);
         }
         if ($user->validatePassword($request->input('password'))) {
-            $session = new Session();
-            $user->session()->save($session);
+            $session = $this->users->createNewSessionForUser($user);
             return response()->json(['status' => '1', 'user_token' => $session->session_token]);
         } else {
             return response()->json(['status' => '0'], 401);
         }
+    }
+
+    public function editUser(Request $request){
+    }
+
+    public function registerAsCampaignManager(Request $request){
+        
+    }
+
+    public function testauthorization(Request $request){
+        return response()->json(['status' => '1', "message"=>"If you see this, you pass the authorization"], 200);
     }
 }

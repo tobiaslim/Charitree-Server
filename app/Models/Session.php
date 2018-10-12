@@ -25,6 +25,6 @@ class Session extends Model {
 
     // Relationships
     public function user(){
-      return $this->belongsTo('App\models\User');
+      return $this->belongsTo('App\Models\User');
     }
 }

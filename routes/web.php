@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Middleware\Authenticate as Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +20,5 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->post('create', 'UserController@register');
     $router->post('authenticate', "UserController@authenticate");
+    $router->post('test',['middleware'=>Auth::class, "uses"=>"UserController@testauthorization"]);
 });

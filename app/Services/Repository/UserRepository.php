@@ -3,6 +3,7 @@ namespace App\Services\Repository;
 
 use App\Contracts\Repository\IUserRepository;
 use App\Models\User;
+use App\Models\Session;
 
 
 class UserRepository implements IUserRepository{
@@ -11,7 +12,9 @@ class UserRepository implements IUserRepository{
     {
     }
 
-    /*
+    /**
+     * Create a user based on the input array of information
+     * 
      * @param array $array Fills to be filled into user when creating.
      * @return boolean
      * 
@@ -29,7 +32,31 @@ class UserRepository implements IUserRepository{
         }
     }
 
-    public function edit(array $data, int $id){
+    /**
+     * 
+     * @param array data,  data to edit
+     * @param int id the user id of the data to be edited
+     * 
+     */
 
+    public function edit(array $data, int $id){
+        // $user->
+    }
+
+    /**
+     * Retrieve a user based on email. Return null if not found.
+     * 
+     * @param array $array Fills to be filled into user when creating.
+     * @return User
+     * 
+     */
+    public function getUserByEmail(string $email){
+        return User::where('email', $email)->first();
+    }
+
+    public function createNewSessionForUser(User $user){
+        $session = new Session();
+        $user->session()->save($session);
+        return $session;
     }
 }
