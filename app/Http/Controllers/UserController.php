@@ -36,36 +36,10 @@ class UserController extends Controller
         }
     }
 
-    public function authenticate(Request $request)
-    {   
-        $validator = Validator::make($request->all(), User::$rules['login']);
-
-        if($validator->fails()){
-            $errors = $validator->errors();
-            return response()->json(["status"=>"0", "errors"=> $errors], 422);
-        }
-
-        $user = $this->users->getUserByEmail($request->input('email'));
-
-        if ($user == null) {
-            return response()->json(['status' => '0'], 401);
-        }
-        if ($user->validatePassword($request->input('password'))) {
-            $session = $this->users->createNewSessionForUser($user);
-            return response()->json(['status' => '1', 'user_token' => $session->session_token]);
-        } else {
-            return response()->json(['status' => '0'], 401);
-        }
-    }
-
     public function editUser(Request $request){
     }
 
     public function registerAsCampaignManager(Request $request){
         
-    }
-
-    public function testauthorization(Request $request){
-        return response()->json(['status' => '1', "message"=>"If you see this, you pass the authorization"], 200);
     }
 }

@@ -13,18 +13,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /*
-         * Store repository service to be injected in the following format
-         * Register all services in the services array into lumen container
-         * 
-         * "Class that requires"=>"Service that it is asking for", "Service provided"
+        /**
+         * Bind UserRepository implementation to IUserRepository for all classess
          */
-        $services = [
-            "App\Http\Controllers\UserController"=>["App\Contracts\Repository\IUserRepository", "App\Services\Repository\UserRepository"]
-        ];
-
-        foreach($services as $key => $value){
-            $this->app->when($key)->needs($value[0])->give($value[1]);
-        }
+        $this->app->bind('App\Contracts\Repository\IUserRepository', 'App\Services\Repository\UserRepository');
     }
 }

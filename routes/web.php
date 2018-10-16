@@ -16,9 +16,20 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-//route group user. 
-$router->group(['prefix' => 'user'], function () use ($router) {
-    $router->post('create', 'UserController@register');
-    $router->post('authenticate', "UserController@authenticate");
-    $router->post('test',['middleware'=>Auth::class, "uses"=>"UserController@testauthorization"]);
+/**
+ * Routes:
+ * POST /users                   Creating a new user
+ */
+$router->group(['prefix' => 'users'], function () use ($router) {
+    $router->post('', 'UserController@register');                   
+});
+
+/**
+ * Routes:
+ * POST     /sessions               Create a new session
+ * GET      /sessions               Check if a session is valid using auth 
+ */
+$router->group(['prefix' => 'sessions'], function () use ($router) {
+    $router->post('', 'SessionController@createSession');
+    $router->get('',['middleware'=>Auth::class, "uses"=>"SessionController@testauthorization"]);
 });
