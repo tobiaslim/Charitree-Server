@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Contracts\Repository\IUserRepository;
 use App\Models\CampaignManager;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -39,7 +40,7 @@ class UserController extends Controller
     }
 
     public function editUser(Request $request, User $user){
-        $validator = Validator::make($request->all(), User::$rules['edit']);
+        $validator = Validator::make($request->all(), [User::$rules['edit'],'email'=>Rule::unique('User')->ignore($user->id)]);
 
         if($validator->fails()){
             $errors = $validator->errors();
