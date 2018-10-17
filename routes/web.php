@@ -32,4 +32,7 @@ $router->group(['prefix' => 'users'], function () use ($router) {
 $router->group(['prefix' => 'sessions'], function () use ($router) {
     $router->post('', 'SessionController@createSession');
     $router->get('',['middleware'=>Auth::class, "uses"=>"SessionController@testauthorization"]);
+    $router->get('/goodpath', function(){
+        return "hello"; 
+     });
 });

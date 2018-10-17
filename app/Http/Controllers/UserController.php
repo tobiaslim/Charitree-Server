@@ -37,6 +37,14 @@ class UserController extends Controller
     }
 
     public function editUser(Request $request){
+        
+        if($this->users->edit($request->all(),$request->get_current_user)){
+            return response()->json(['status'=>'1','message'=>'User updated.'],201);
+        }
+
+        else{
+            return response()->json(['status'=>'0','message'=>'Something went wrong']);
+        }
     }
 
     public function registerAsCampaignManager(Request $request){

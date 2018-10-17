@@ -39,8 +39,19 @@ class UserRepository implements IUserRepository{
      * 
      */
 
-    public function edit(array $data, int $id){
-        // $user->
+    public function edit(array $data, User $user){
+    
+        $user->email=$data["email"];
+        $user->last_name=$data["last_name"];
+        $user->first_name=$data["first_name"];
+
+        if($user->save()){
+            return true;
+        }
+
+        else{
+            return false;
+        }
     }
 
     /**
