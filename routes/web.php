@@ -1,5 +1,6 @@
 <?php
 use App\Http\Middleware\Authenticate as Auth;
+use App\Http\Middleware\CampaignManagerMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,8 @@ $router->get('/', function () use ($router) {
  * POST /users                   Creating a new user
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
-    $router->post('', 'UserController@register');                   
+    $router->post('', 'UserController@register');
+    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);                   
 });
 
 /**

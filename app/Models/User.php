@@ -84,5 +84,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\Models\Session');
     }
 
+    public function campaignManager(){
+        return $this->hasOne('App\Models\CampaignManager', 'cid');
+    }
+
 
 }

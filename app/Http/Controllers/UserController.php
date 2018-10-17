@@ -5,6 +5,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Contracts\Repository\IUserRepository;
+use App\Models\CampaignManager;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -25,11 +27,11 @@ class UserController extends Controller
         
         if($validator->fails()){
             $errors = $validator->errors();
-            return response()->json(["status"=>"0", "errors"=> $errors], 422);
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if($this->users->create($request->all())){
-            return response()->json(['status' => '1', 'message' => 'User created.'], 201);
+            return response()->json(['status' => '1', 'message' => 'User created.'], Response::HTTP_CREATED);
         }
         else{
            return response()->json(['status' => '0', 'message' => 'Something went wrong']);
@@ -47,7 +49,25 @@ class UserController extends Controller
         }
     }
 
-    public function registerAsCampaignManager(Request $request){
+    public function registerAsCampaignManager(Request $request, User $user){
+
+        $validator = Validator::make($request->all(), CampaignManager::$rules['register']);
         
+        if($validator->fails()){
+            $errors = $validator->errors();
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if(!is_null($user->campaignManager)){
+            return response()->json(['status'=>'0', 'message'=>'Already a camopaign manger'], Response::HTTP_CONFLICT);
+        }
+
+
+        $cm = new CampaignManager($request->all());
+        $cm->cid = $user->id;
+        $user->campaignManager()->save($cm);
+        $user->refresh();
+        return response()->json(['status' => '1', 'message' => 'Campaign Manager Created']);
+
     }
 }

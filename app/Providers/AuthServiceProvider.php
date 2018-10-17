@@ -51,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
                 if (!empty($session)) {
                     $user = ($session->user->email == $key[0]) ? $session->user : null;
                     if (!empty($user)) {
-                        $request->request->add(['user' => $user]);
+                        $this->app->instance('App\Models\User', $user);
                     }
                 }
                 return $user;
