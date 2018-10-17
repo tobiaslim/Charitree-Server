@@ -38,9 +38,15 @@ class UserController extends Controller
         }
     }
 
-    public function editUser(Request $request){
-        
-        if($this->users->edit($request->all(),$request->get_current_user)){
+    public function editUser(Request $request, User $user){
+        $validator = Validator::make($request->all(), User::$rules['edit']);
+
+        if($validator->fails()){
+            $errors = $validator->errors();
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if($this->users->edit($request->all(), $user)){
             return response()->json(['status'=>'1','message'=>'User updated.'],201);
         }
 

@@ -18,12 +18,23 @@ $router->get('/', function () use ($router) {
 });
 
 /**
+ * HTTP VERBS: GET PUT POST DELETE PATCH
+ * 
+ * GET - Retrieving / Reading
+ * POST - Creating new / Creating new 
+ * PUT - Create / edit
+ * DELETE - Delete
+ * PATCH - EDIT PARTS
+ */
+
+/**
  * Routes:
  * POST /users                   Creating a new user
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->post('', 'UserController@register');
-    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);                   
+    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]); 
+    $router->put('', ['middleware'=>[Auth::class], "uses"=>"UserController@editUser"]);                 
 });
 
 /**
