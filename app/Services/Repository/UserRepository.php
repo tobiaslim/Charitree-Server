@@ -4,9 +4,10 @@ namespace App\Services\Repository;
 use App\Contracts\Repository\IUserRepository;
 use App\Models\User;
 use App\Models\Session;
+use App\Contracts\IAuthenticate;
 
 
-class UserRepository implements IUserRepository{
+class UserRepository implements IUserRepository, IAuthenticate{
 
     public function __construct()
     {
@@ -67,6 +68,25 @@ class UserRepository implements IUserRepository{
     public function createNewSessionForUser(User $user){
         $session = new Session();
         $user->session()->save($session);
-        return $session;
+        return $session->session_token;;
+    }
+
+    /**
+     * Authenticate a user and create a session
+     * Return session token if valid, else return null
+     */
+
+    public function login(array $credentials){
+        $user = $this->getUserByEmail($credentials['email']);
+        if($user == null){
+            return null;
+        }
+
+        if($user->validatePassword($credentials['password'])){
+            return $this->createNewSessionForUser($user);
+        }
+        else{
+            return null;
+        }
     }
 }

@@ -27,15 +27,10 @@ class SessionController extends Controller
             $errors = $validator->errors();
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+        $session_token = $users->login($request->all());
 
-        $user = $users->getUserByEmail($request->input('email'));
-
-        if ($user == null) {
-            return response()->json(['status' => '0'], 401);
-        }
-        if ($user->validatePassword($request->input('password'))) {
-            $session = $users->createNewSessionForUser($user);
-            return response()->json(['status' => '1', 'user_token' => $session->session_token], Response::HTTP_CREATED);
+        if (!is_null($session_token)) {
+            return response()->json(['status' => '1', 'user_token' =>$session_token], Response::HTTP_CREATED);
         } else {
             return response()->json(['status' => '0'], 401);
         }
