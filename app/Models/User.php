@@ -46,7 +46,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'email' => 'required|email'
         ],
         "edit"=>[
-            'email' => 'required|email|unique:User',
             'first_name'=>'required|alpha',
             'last_name'=>'required|alpha'
         ]

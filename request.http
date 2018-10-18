@@ -1,14 +1,47 @@
 @baseurl = http://localhost/public
 @contentype = application/json
 
+### Create user
+POST {{baseurl}}/users HTTP/1.0
+Content-type: application/json
+
+{
+	"email":"test@gmail.com",
+	"first_name":"test first name",
+	"last_name":"test last name",
+	"password":"password"
+}
+
+### Edit User
+PUT {{baseurl}}/users HTTP/1.0
+Content-Type: {{contentype}}
+Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
+
+{
+    "email":"tobiaslkj@gmail.com",
+    "first_name":"2",
+    "last_name":"1"
+}
+
+### Create Session
+POST {{baseurl}}/sessions HTTP/1.0
+Content-Type: {{contentype}}
+
+{
+    "email":"test@gmail.com",
+    "password":"password",
+}
+
+### Check session
+
 GET {{baseurl}}/sessions HTTP/1.1
 Content-Type: {{contentype}}
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpiVmh2Y3pKV1dVcHVORlp3ZUdoemFVTjJZbEJzY1VnMlYzaGpWMnBxZW01b2NVRnZibWR4ZHc9PQ==
+Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
 
-###
+### Create Campaign Manager
 
 POST {{baseurl}}/users/campaignmanager HTTP/1.1
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpiVmh2Y3pKV1dVcHVORlp3ZUdoemFVTjJZbEJzY1VnMlYzaGpWMnBxZW01b2NVRnZibWR4ZHc9PQ==
+Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
 Content-Type: {{contentype}}
 
 {
@@ -16,4 +49,4 @@ Content-Type: {{contentype}}
     "organization_name":"Tobias"
 }
 
-###
+### Create a Campaign

@@ -40,7 +40,13 @@ class UserController extends Controller
     }
 
     public function editUser(Request $request, User $user){
-        $validator = Validator::make($request->all(), [User::$rules['edit'],'email'=>Rule::unique('User')->ignore($user->id)]);
+        /**
+         * How to find a better way of passing $user->id to the static array. 
+         * Current work around.
+         */
+        $validator = Validator::make($request->all(), [
+            'email'=>'required|email|unique:User,email,'.$user->id
+        ]);
 
         if($validator->fails()){
             $errors = $validator->errors();
@@ -74,7 +80,7 @@ class UserController extends Controller
         $cm->cid = $user->id;
         $user->campaignManager()->save($cm);
         $user->refresh();
-        return response()->json(['status' => '1', 'message' => 'Campaign Manager Created']);
+        return response()->json(['status' => '1', 'message' => 'Campaign Manager Created'], Response::HTTP_CREATED);
 
     }
 }
