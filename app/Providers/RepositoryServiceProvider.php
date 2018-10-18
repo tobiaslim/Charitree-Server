@@ -17,5 +17,6 @@ class RepositoryServiceProvider extends ServiceProvider
          * Bind UserRepository implementation to IUserRepository for all classess
          */
         $this->app->bind('App\Contracts\Repository\IUserRepository', 'App\Services\Repository\UserRepository');
+        $this->app->bind('App\Contracts\Repository\ICampaignRepository', 'App\Services\Repository\CampaignRepository');
     }
 }

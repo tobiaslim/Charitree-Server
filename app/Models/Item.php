@@ -17,4 +17,11 @@ class Item extends Model {
     public function __construct(){
 
     }
+
+    /**
+     * Relationship with other entity define hereafter
+     */
+    public function campaigns(){
+        return $this->belongsToMany(Campaign::class, 'Campaign_has_Item', 'Item_id', 'Campaign_id');
+    }
 }

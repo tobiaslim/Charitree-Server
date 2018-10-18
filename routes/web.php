@@ -29,7 +29,9 @@ $router->get('/', function () use ($router) {
 
 /**
  * Routes:
- * POST /users                   Creating a new user
+ * POST     /users                  Creating a new user
+ * POST     /users/campaignmanager  Create campaign manager from a user
+ * PUT      /users                  Edit user
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->post('', 'UserController@register');
@@ -48,4 +50,14 @@ $router->group(['prefix' => 'sessions'], function () use ($router) {
     $router->get('/goodpath', function(){
         return "hello"; 
      });
+});
+
+/**
+ * Routes:
+ * GET      /items                  Get list of items
+ * POST     /campaign             Create campaign
+ */
+$router->get('/items', "ItemController@getItems");
+$router->group(['prefix' => 'campaigns'], function () use ($router) {
+    $router->post('', ['middleware'=>Auth::class, "uses"=>"CampaignController@createCampaign"]);
 });
