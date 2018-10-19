@@ -18,5 +18,6 @@ class RepositoryServiceProvider extends ServiceProvider
          */
         $this->app->bind('App\Contracts\Repository\IUserRepository', 'App\Services\Repository\UserRepository');
         $this->app->bind('App\Contracts\Repository\ICampaignRepository', 'App\Services\Repository\CampaignRepository');
+        $this->app->bind('App\Contracts\Repository\IDonationRepository', 'App\Services\Repository\DonationRepository');
     }
 }

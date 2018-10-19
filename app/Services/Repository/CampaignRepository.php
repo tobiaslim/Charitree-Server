@@ -22,7 +22,7 @@ class CampaignRepository implements ICampaignRepository{
         $user = $app->make(User::class);
         $cm = $user->campaignManager;
         $campaign = new Campaign();
-        // $campaign->name = $array['campaign_name'];
+        $campaign->name = $array['name'];
         $campaign->start_date = $array['start_date'];
         $campaign->end_date = $array['end_date'];
         $cm->campaigns()->save($campaign);
@@ -32,5 +32,9 @@ class CampaignRepository implements ICampaignRepository{
     
     public function edit(array $array){
         
+    }
+
+    public function find($id){
+        return Campaign::find($id);
     }
 }

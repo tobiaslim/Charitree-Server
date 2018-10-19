@@ -60,4 +60,5 @@ $router->group(['prefix' => 'sessions'], function () use ($router) {
 $router->get('/items', "ItemController@getItems");
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->post('', ['middleware'=>Auth::class, "uses"=>"CampaignController@createCampaign"]);
+    $router->post('/{id}/donations', ['middleware'=>Auth::class, "uses"=>"CampaignController@createDonation"]);
 });

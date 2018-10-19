@@ -13,7 +13,19 @@ class Campaign extends Model
     protected $primarykey = 'id'; //eloquent assume primarykey is use as id, if not declare the column name of the primary key
     public $timestamps = false;
 
+    /**
+     * 
+     * Specify which are dates columns to be auto converted to Carbon/Carbon instance when created
+     */
+    protected $dates = [
+        'start_date',
+        'end_date'
+    ];
 
+    /**
+     * Specify the date format being stored in database as well as returninng of values
+     */
+    protected $dateFormat = 'Y-m-d';
     /**
      * The attributes that are mass assignable.
      *
@@ -41,5 +53,9 @@ class Campaign extends Model
 
     public function campaignManager(){
         return $this->belongsTo(CampaignManager::class, 'cid');
+    }
+
+    public function donations(){
+        return $this->hasMany(Donation::class);
     }
 }

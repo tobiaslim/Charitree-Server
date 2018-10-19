@@ -32,7 +32,7 @@ class SessionController extends Controller
         if (!is_null($session_token)) {
             return response()->json(['status' => '1', 'user_token' =>$session_token], Response::HTTP_CREATED);
         } else {
-            return response()->json(['status' => '0'], 401);
+            return response()->json(['status' => '0'], Response::HTTP_NOT_FOUND);
         }
     }
 

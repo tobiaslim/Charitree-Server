@@ -43,7 +43,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'email' => 'required|email|unique:User'
         ],
         "login"=>[
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'password'=>'required'
         ],
         "edit"=>[
             'first_name'=>'required|alpha',
@@ -90,6 +91,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function campaignManager(){
         return $this->hasOne('App\Models\CampaignManager', 'cid');
+    }
+
+    public function donation(){
+        return $this->hasMany(Donation::class);
     }
 
 

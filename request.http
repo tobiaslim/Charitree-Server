@@ -29,7 +29,7 @@ Content-Type: {{contentype}}
 
 {
     "email":"test@gmail.com",
-    "password":"password",
+    "password":"password"
 }
 
 ### Check session
