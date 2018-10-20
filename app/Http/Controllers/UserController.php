@@ -83,4 +83,9 @@ class UserController extends Controller
         return response()->json(['status' => '1', 'message' => 'Campaign Manager Created'], Response::HTTP_CREATED);
 
     }
+
+    public function getCurrentCampaignManagerDetails(User $user){
+        $cm = $user->campaignManager;
+        return response()->json(['status' => '1', 'campaign_manager' => $cm], Response::HTTP_OK);
+    }
 }

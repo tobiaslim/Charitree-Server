@@ -1,6 +1,6 @@
 <?php
 use App\Http\Middleware\Authenticate as Auth;
-use App\Http\Middleware\CampaignManagerMiddleware;
+use App\Http\Middleware\CampaignManagerMiddleware as CM;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +31,13 @@ $router->get('/', function () use ($router) {
  * Routes:
  * POST     /users                  Creating a new user
  * POST     /users/campaignmanager  Create campaign manager from a user
+ * GET      /users/campaignmanager  Get current session campaign manager details 
  * PUT      /users                  Edit user
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->post('', 'UserController@register');
-    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]); 
+    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);
+    $router->get('/campaignmanager',['middleware'=>[Auth::class, CM::class], "uses"=>"UserController@getCurrentCampaignManagerDetails"]); 
     $router->put('', ['middleware'=>[Auth::class], "uses"=>"UserController@editUser"]);                 
 });
 
@@ -46,19 +48,17 @@ $router->group(['prefix' => 'users'], function () use ($router) {
  */
 $router->group(['prefix' => 'sessions'], function () use ($router) {
     $router->post('', 'SessionController@createSession');
-    $router->get('',['middleware'=>Auth::class, "uses"=>"SessionController@testauthorization"]);
-    $router->get('/goodpath', function(){
-        return "hello"; 
-     });
+    $router->get('',['middleware'=>[Auth::class], "uses"=>"SessionController@testauthorization"]);
 });
 
 /**
  * Routes:
  * GET      /items                  Get list of items
- * POST     /campaign             Create campaign
+ * POST     /campaign               Create campaign
+ ** POST    /id /campaign           Create donation for a campaign
  */
 $router->get('/items', "ItemController@getItems");
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
-    $router->post('', ['middleware'=>Auth::class, "uses"=>"CampaignController@createCampaign"]);
+    $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
     $router->post('/{id}/donations', ['middleware'=>Auth::class, "uses"=>"CampaignController@createDonation"]);
 });

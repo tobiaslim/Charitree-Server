@@ -1,5 +1,6 @@
 @baseurl = http://localhost/public
 @contentype = application/json
+@authorization = Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOk9GaGlaRFU0ZFc5blNFZFFZWFZsWkZkalpUUnNTWEZFTVROMFFta3lSMlpEWmtwbmVtbHFTQT09
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
@@ -15,7 +16,7 @@ Content-type: application/json
 ### Edit User
 PUT {{baseurl}}/users HTTP/1.0
 Content-Type: {{contentype}}
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
+{{authorization}}
 
 {
     "email":"tobiaslkj@gmail.com",
@@ -33,21 +34,24 @@ Content-Type: {{contentype}}
 }
 
 ### Check session
-
-GET {{baseurl}}/sessions HTTP/1.1
+GET {{baseurl}}/sessions HTTP/1.0
 Content-Type: {{contentype}}
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
+{{authorization}}
 
 ### Create Campaign Manager
 
-POST {{baseurl}}/users/campaignmanager HTTP/1.1
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
+POST {{baseurl}}/users/campaignmanager HTTP/1.0
+{{authorization}}
 Content-Type: {{contentype}}
 
 {
     "UEN":"T19932220",
     "organization_name":"Tobias"
 }
+
+### Get current session campagin manager information
+GET {{baseurl}}/users/campaignmanager HTTP/1.0
+{{authorization}}
 
 ### Get all items
 GET {{baseurl}}/items HTTP/1.1
@@ -56,11 +60,24 @@ Content-Type: {{contentype}}
 
 ### Create Campaign
 POST {{baseurl}}/campaigns HTTP/1.0
+{{authorization}}
 Content-Type: {{contentype}}
 
 {
-    "campaign_name": "Run For Charity",
+    "name": "Run For Charity",
     "start_date": "06-Oct-1995",
     "end_date": "07-Oct-1997",
     "accepted_items": [1,2,3,4]
+}
+
+### Create Donation
+POST {{baseurl}}/campaigns/1/donations HTTP/1.0
+{{authorization}}
+Content-Type: {{contentype}}
+
+{
+	"items":{
+		"keys":[1,2,4],
+		"values":[4,4,5]
+	}
 }
