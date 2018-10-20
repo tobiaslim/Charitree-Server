@@ -4,7 +4,7 @@ use App\Models\User;
 
 interface IUserRepository extends IRepository{
     public function create(array $array);
-    public function edit(array $data, User $user);
+    public function edit(array $data);
     public function getUserByEmail(string $email);
 }
 

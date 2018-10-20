@@ -1,13 +1,13 @@
 @baseurl = http://localhost/public
 @contentype = application/json
-@authorization = Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOk9GaGlaRFU0ZFc5blNFZFFZWFZsWkZkalpUUnNTWEZFTVROMFFta3lSMlpEWmtwbmVtbHFTQT09
+@authorization = Authorization: Basic dGVzdDFAbWFpbC5jb206U0haeVp6bFBVVmxVVTBwNk9YaHZTVEJwYjFGYVJHdFVWRk5FYlVsbVVta3hlbU00VG5Sdk5BPT0
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 Content-type: application/json
 
 {
-	"email":"test@gmail.com",
+	"email":"test1@mail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -19,7 +19,7 @@ Content-Type: {{contentype}}
 {{authorization}}
 
 {
-    "email":"tobiaslkj@gmail.com",
+    "email":"test1@mail.com",
     "first_name":"2",
     "last_name":"1"
 }
@@ -29,7 +29,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 Content-Type: {{contentype}}
 
 {
-    "email":"test@gmail.com",
+    "email":"test1@mail.com",
     "password":"password"
 }
 

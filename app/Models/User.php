@@ -46,9 +46,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'email' => 'required|email',
             'password'=>'required'
         ],
+        //this rule not in used.
         "edit"=>[
-            'first_name'=>'required|alpha',
-            'last_name'=>'required|alpha'
+            'first_name'=>'required|string|alpha',
+            'last_name'=>'required|string|alpha'
         ]
     ];
 

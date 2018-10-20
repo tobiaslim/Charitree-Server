@@ -40,8 +40,8 @@ class UserRepository implements IUserRepository, IAuthenticate{
      * 
      */
 
-    public function edit(array $data, User $user){
-
+    public function edit(array $data){
+        $user = app(User::class);
         $user->email=$data["email"];
         $user->last_name=$data["last_name"];
         $user->first_name=$data["first_name"];

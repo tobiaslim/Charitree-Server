@@ -7,7 +7,6 @@ use App\Models\Session;
 use App\Contracts\IAuthenticate;
 use App\Models\Campaign;
 use App\Models\CampaignManager;
-use Illuminate\Container\Container;
 
 
 class CampaignRepository implements ICampaignRepository{
@@ -18,8 +17,7 @@ class CampaignRepository implements ICampaignRepository{
 
     
     public function create(array $array){
-        $app = Container::getInstance();
-        $user = $app->make(User::class);
+        $user = app(User::class);
         $cm = $user->campaignManager;
         $campaign = new Campaign();
         $campaign->name = $array['name'];
