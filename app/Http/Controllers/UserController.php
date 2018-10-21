@@ -4,22 +4,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Contracts\Repository\IUserRepository;
 use App\Models\CampaignManager;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
+use App\Services\Contracts\IUserService;
 
 class UserController extends Controller
 {
-    protected $users; //IUserRespository type
+    protected $userService; //IUserRespository type
     /**
      * Create a new controller instance.
      *
      * @return void
      */ 
-    public function __construct(IUserRepository $users)
+    public function __construct(IUserService $userService)
     {
-        $this->users = $users;
+        $this->userService = $userService;
     }
 
     public function register(Request $request)
@@ -33,7 +33,7 @@ class UserController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if($this->users->create($request->all())){
+        if($this->userService->create($request->all())){
             return response()->json(['status' => '1', 'message' => 'User created.'], Response::HTTP_CREATED);
         }
         else{
@@ -56,7 +56,7 @@ class UserController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if($this->users->edit($request->all(), $user)){
+        if($this->userService->edit($request->all(), $user)){
             return response()->json(['status'=>'1','message'=>'User updated.'],201);
         }
 

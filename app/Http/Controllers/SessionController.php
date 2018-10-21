@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Contracts\Repository\IUserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\Contracts\IUserService;
 
 
 class SessionController extends Controller
@@ -19,7 +19,7 @@ class SessionController extends Controller
     {
     }
 
-    public function createSession(Request $request, IUserRepository $users)
+    public function createSession(Request $request, IUserService $userService)
     {   
         $validator = Validator::make($request->all(), User::$rules['login']);
 
@@ -28,7 +28,7 @@ class SessionController extends Controller
             $errors["message"] = "Unable to process parameters.";
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $session_token = $users->login($request->all());
+        $session_token = $userService->login($request->all());
 
         if (!is_null($session_token)) {
             return response()->json(['status' => '1', 'user_token' =>$session_token], Response::HTTP_CREATED);

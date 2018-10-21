@@ -1,7 +1,7 @@
 <?php
-namespace App\Services\Repository;
+namespace App\Services\Concrete;
 
-use App\Contracts\Repository\ICampaignRepository;
+use App\Services\Contracts\ICampaignService;
 use App\Models\User;
 use App\Models\Session;
 use App\Contracts\IAuthenticate;
@@ -9,7 +9,7 @@ use App\Models\Campaign;
 use App\Models\CampaignManager;
 
 
-class CampaignRepository implements ICampaignRepository{
+class CampaignService implements ICampaignService{
 
     public function __construct()
     {

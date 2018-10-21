@@ -1,16 +1,16 @@
 <?php
-namespace App\Services\Repository;
+namespace App\Services\Concrete;
 
 use App\Models\User;
 use App\Models\Session;
 use App\Contracts\IAuthenticate;
 use App\Models\Campaign;
 use App\Models\CampaignManager;
-use App\Contracts\Repository\IDonationRepository;
+use App\Services\Contracts\IDonationService;
 use App\Models\Donation;
 
 
-class DonationRepository implements IDonationRepository{
+class DonationService implements IDonationService{
 
     public function __construct()
     {

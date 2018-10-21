@@ -1,4 +1,4 @@
-# Charitree Routes Request Documentation
+# Charitree API Request Documentation
 
 ## Content
 1. Requests & Responses
@@ -7,11 +7,10 @@
     3. Create Authenticated Session (Login)
     4. Check if session is valid
     5. Create Campaign Manager
-    6. Get items.
-    7. Create Campaign
-    8. Create Donation
-    9. Get current Campaign Manager Detail
-    10. Get all campaigns.
+    6. Check if session is Campaign Manager
+    7. Get items.
+    8. Create Campaign
+    9. Get all campaigns.
 
 
 ## Preamble
@@ -19,6 +18,38 @@
 Take note of the following syntax using in the representation of this document.
 
 {{baseurl}} : **pathtothepublicfolderoftheproject**
+
+**TAKE NOTE: status and Http status code (or http code or http status) used in the context of this document refers two different attributes.**
+
+
+# All Routes:
+When requesting from a resource from the server, the response object will always carry a ```status``` attribute of either **1 or 0**. If 1 is returned, a description of the outcome of the operation will be provided in the ```message``` attribute of the response object. If 0 is returned, an ```errors``` object will be returned to describe the error(s) occured. The ```errors``` ojbect will provide a ```message``` attribute to describe the general error. Request parameters that  triggers an error will exist as an attribute with the parameter name. The value of the attribute will carry an array of error messages for that parameter.
+
+```
+{
+  "status" : "0 or 1" 
+  "message" : "Success message" //exists if status = 1
+  "errors" : {
+    "message":"General description of the error", //exists if status = 0
+    ...
+    "email": ["Must be an email format", "Must not be longer than 100 characters."]
+  }
+}
+```
+
+Generally, when a status has a value of 1, it Http code will be in the 2xx range. Whereas for status with a value 0, it will be in the 4xx range. 
+
+| HTTP CODE | Status code | message exist? | errors.message exist?                 |
+| --------- | ----------- | -------------- | ------------------------------------- |
+| 200       | 1           | Yes            | No                                    |
+| 201       | 1           | Yes            | No                                    |
+| 403       | 0           | No             | Yes                                   |
+| 404       | 0           | No             | Yes                                   |
+| 415       | 0           | No             | Yes                                   |
+| 422       | 0           | No             | Yes (Check violating parameters also) |
+
+Additionally, all request should be send with a header of ```Content-Type: application/json```. If the headers received by the servers does not consist of the header, Http status code 415 will be returned.
+
 # User Create
 
 ##### Request Body:
@@ -79,7 +110,8 @@ Content-Type: application/json
 {
   "status": "0",
   "errors": {
-      "email":["..."], //list of error messages for email
+    "message": "Not able to process the request parameters."
+    "email":["..."], //list of error messages for email
 	  "first_name":["..."], //list of error messages for first_name
 	  "last_name":["..."], //list of error messages for last_name
   }
@@ -90,11 +122,11 @@ Content-Type: application/json
 # Full User Edit
 
 ##### Request Body:
-| Field      | Description                                                  |
-| ---------- | ------------------------------------------------------------ |
+| Field      | Description                                                              |
+| ---------- | ------------------------------------------------------------------------ |
 | email      | (Required \| email ) User's email. Has to be an email format and unique. |
-| first_name | (Required) User first name.                                  |
-| last_name  | (Required) User last name.                                   |
+| first_name | (Required) User first name.                                              |
+| last_name  | (Required) User last name.                                               |
 
 
 ##### Request:
@@ -145,6 +177,7 @@ Content-Type: application/json
 {
 	"status": "0",
 	"errors":[
+    "message": "Not able to process the request parameters.",
 		"email":["..."], //list of error messages for email
 		"first_name":["..."], //list of error messages for first_name
 		"last_name":["..."], //list of error messages for last_name
@@ -191,6 +224,7 @@ Content-Type: application/json
 
 {
   "status": "1",
+  "message":"Session Created",
   "user_token": "MnZDWWc1ZmJCQXp5TW9QWVdnSmFNclZPbFpHTHlUTDJUTlF2VUNhRw=="
 }
 ```
@@ -207,7 +241,10 @@ Connection: close
 Content-Type: text/html; charset=UTF-8
 
 {
-  "status": "0"
+  "status": "0",
+  "errors": {
+    "message":"Username or password not found."
+  }
 }
 ```
 
@@ -308,11 +345,64 @@ Content-Type: application/json
 {
 	"status": "0",
 	"errors":[
+    "message": "Not able to process the request parameters.",
 		"UEN":["..."], //list of error messages for UEN
 		"organization_name":["..."] //list of error messages for organization_name
 	]
 }
 ```
+
+# Get current session CM information
+You can use this API to check if the current session is a CM
+
+##### Request:
+```
+GET http://{{baseurl}}/users/campaignmanagers HTTP/1.1
+Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpiVmh2Y3pKV1dVcHVORlp3ZUdoemFVTjJZbEJzY1VnMlYzaGpWMnBxZW01b2NVRnZibWR4ZHc9PQ==
+```
+
+#####  Response:
+###### Success:
+```
+HTTP/1.0 200 OK
+Date: Sun, 21 Oct 2018 04:31:02 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 90
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "1",
+  "campaign_manager": {
+    "cid": 3,
+    "UEN": "T19932220",
+    "organization_name": "Tobias"
+  }
+}
+```
+###### Failure:
+```
+HTTP/1.0 403 Forbidden
+Date: Sun, 21 Oct 2018 05:20:55 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 72
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "message": {
+    "message": "Only allowed for campaign manager"
+  }
+}
+```
+
 
 # Get items
 Get all possible categories of donable items.
@@ -341,6 +431,7 @@ Content-Type: application/json
 
 {
   "status": "1",
+  "message": "Collect your items."
   "items": [{
     "id": 1,
     "name": "Newspaper"
@@ -371,12 +462,12 @@ Create a campaign.
 
 
 ##### Request Body:
-| Field      | Description                                   |
-| ---------- | --------------------------------------------- |
-| name       | (Required) Campaign name.                     |
-| start_date | (Required \| dd-MMM-yyyy) Campaign Start Date |
-| end_date   | (Required \| dd-MMM-yyyy) Campaign End Date   |
-|accepted_items|(Required \| array) List of items the campaign requires
+| Field          | Description                                             |
+| -------------- | ------------------------------------------------------- |
+| name           | (Required) Campaign name.                               |
+| start_date     | (Required \| dd-MMM-yyyy) Campaign Start Date           |
+| end_date       | (Required \| dd-MMM-yyyy) Campaign End Date             |
+| accepted_items | (Required \| array) List of items the campaign requires |
 
 
 ##### Request:
@@ -414,6 +505,7 @@ HTTP Status: 422
 {
 	"status": "0",
 	"errors":[
+    "message": "Not able to process the request parameters.",
 		"campaign_name":["..."], //list of error messages for campaign_name
 		"start_date":["..."],  //list of error messages for start_date
 		"end_date":"["..."]  //list of error messages for end_date
@@ -424,11 +516,11 @@ HTTP Status: 422
 Donation can be created for a certain campaign. Pass in the ID as part of the request URL to create a donation for a specific campaign. 
 
 ##### Request Body:
-| Field      | Description                                   |
-| ---------- | --------------------------------------------- |
-| items       | (Required \| Object)                       |
-| items.keys | (Required \| array \| int) Items keys array.|
-| items.values   | (Required \| array \| int) Array of corresponding value   |
+| Field        | Description                                             |
+| ------------ | ------------------------------------------------------- |
+| items        | (Required \| Object)                                    |
+| items.keys   | (Required \| array \| int) Items keys array.            |
+| items.values | (Required \| array \| int) Array of corresponding value |
 
 Request:
 ```
@@ -474,12 +566,14 @@ Content-Type: application/json
 
 {
   "status": "0",
-  "errors": "Request campaign not found or has ended."
+  "errors": {
+    "message": "Campaign not found or has expired."
+  }
 }
 ```
 
 # Get current Campaign Manager Detail
-Get the current session's campaign manager detail. If current session is not a campaign manager, 404 will be returned.
+Get the current session's campaign manager detail. If current session is not a campaign manager, 403 will be returned.
 
 Request:
 ```
@@ -522,7 +616,9 @@ Content-Type: application/json
 
 {
   "status": "0",
-  "message": "Only allowed for campaign manager"
+  "errors": {
+    "message": "Only allowed for campaign manager."
+  }
 }
 
 ```

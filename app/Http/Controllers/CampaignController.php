@@ -4,28 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Contracts\Repository\ICampaignRepository;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Campaign;
 use App\Models\User;
-use App\Contracts\Repository\IDonationRepository;
 use App\Rules\ArraySameSizeAs;
 use Illuminate\Support\Carbon;
+use App\Services\Contracts\ICampaignService;
+use App\Services\Contracts\IDonationService;
 
 
 
 class CampaignController extends Controller
 {
-    protected $campaignRepository;
+    protected $campaignService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ICampaignRepository $campaignRepository )
+    public function __construct(ICampaignService $campaignService )
     {
         //
-        $this->campaignRepository = $campaignRepository;
+        $this->campaignService = $campaignService;
     }
 
     //
@@ -38,12 +38,12 @@ class CampaignController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->campaignRepository->create($request->all());
+        $this->campaignService->create($request->all());
         return response()->json(["status"=>"1", "message"=>"Campaign created!"], Response::HTTP_CREATED);
 
     }
 
-    public function createDonation(Request $request, User $user, IDonationRepository $donationRepository, $id){
+    public function createDonation(Request $request, User $user, IDonationService $donationService, $id){
         $validator = Validator::make($request->all(),[
             'items.keys'=>[new ArraySameSizeAs],
             'items.keys.*'=>'required|integer|between:1,7',
@@ -56,12 +56,12 @@ class CampaignController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $campaign = $this->campaignRepository->find($id);
+        $campaign = $this->campaignService->find($id);
         $today = new Carbon;
         if($campaign == null || $campaign->end_date->lt(new Carbon)){
             return response()->json(["status"=>"0", "errors"=> ["Request campaign not found or has ended."]], Response::HTTP_NOT_FOUND);
         }
-        $donationRepository->createDonation($request->all(), $user, $campaign);
+        $donationService->createDonation($request->all(), $user, $campaign);
 
         return response()->json(["status"=>"1", "message"=> "Donation added."], Response::HTTP_CREATED);
     }

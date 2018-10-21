@@ -1,13 +1,13 @@
 <?php
-namespace App\Services\Repository;
+namespace App\Services\Concrete;
 
-use App\Contracts\Repository\IUserRepository;
+use App\Services\Contracts\IUserService;
 use App\Models\User;
 use App\Models\Session;
-use App\Contracts\IAuthenticate;
+use App\Services\Contracts\IAuthenticate;
 
 
-class UserRepository implements IUserRepository, IAuthenticate{
+class UserService implements IUserService, IAuthenticate{
 
     public function __construct()
     {

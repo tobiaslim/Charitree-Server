@@ -32,8 +32,7 @@ Important project directories that you might need to use:
 | app/Http/Controllers     | Create your controller here.                               |
 | app/Models               | Create your Eloquent Models here                           |
 | app/Contracts            | Create contracts for services.                             |
-| app/Services             | Create services that are required                          |
-| app/Services/Repository  | Create a repository service if needed.                     |
-| app/Contracts/Repository | Contracts for repository services                          |
+| app/Services/Concrete    | Create services that are required                          |
+| app/Services/Contracts   | Create an service interface.                               |
 | app/Providers            | To register your services                                  |
 | app/bootstrap/app.php    | To register service providers or make other configurations |
