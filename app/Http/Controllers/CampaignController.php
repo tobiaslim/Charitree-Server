@@ -34,7 +34,7 @@ class CampaignController extends Controller
         $validator = Validator::make($request->all(),Campaign::$rules['create']);
 
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -51,14 +51,15 @@ class CampaignController extends Controller
         ]);
 
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
+            $errors['message'] = "Unproccessable request";
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $campaign = $this->campaignRepository->find($id);
         $today = new Carbon;
         if($campaign == null || $campaign->end_date->lt(new Carbon)){
-            return response()->json(["status"=>"0", "errors"=> "Request campaign not found or has ended."], Response::HTTP_NOT_FOUND);
+            return response()->json(["status"=>"0", "errors"=> ["Request campaign not found or has ended."]], Response::HTTP_NOT_FOUND);
         }
         $donationRepository->createDonation($request->all(), $user, $campaign);
 

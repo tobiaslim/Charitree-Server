@@ -24,7 +24,8 @@ class SessionController extends Controller
         $validator = Validator::make($request->all(), User::$rules['login']);
 
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
+            $errors["message"] = "Unable to process parameters.";
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $session_token = $users->login($request->all());
@@ -32,7 +33,7 @@ class SessionController extends Controller
         if (!is_null($session_token)) {
             return response()->json(['status' => '1', 'user_token' =>$session_token], Response::HTTP_CREATED);
         } else {
-            return response()->json(['status' => '0'], Response::HTTP_NOT_FOUND);
+            return response()->json(['status' => '0', "errors"=>['message'=>"Email and password pair not found."]], Response::HTTP_NOT_FOUND);
         }
     }
 

@@ -20,6 +20,9 @@ class ItemController extends Controller
 
     public function getItems(){
         $items = Item::all();
+        if(is_null($items)){
+            return response()->json(['status'=>'0', 'errors'=>["No items found."]]);    
+        }
         return response()->json(['status'=>'1', 'items'=>$items]);
     }
 }

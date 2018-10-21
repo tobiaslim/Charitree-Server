@@ -1,13 +1,13 @@
 @baseurl = http://localhost/public
-@contentype = application/json
-@authorization = Authorization: Basic dGVzdDFAbWFpbC5jb206U0haeVp6bFBVVmxVVTBwNk9YaHZTVEJwYjFGYVJHdFVWRk5FYlVsbVVta3hlbU00VG5Sdk5BPT0
+@contentype = Content-Type: application/json
+@authorization = Authorization: Basic dG9iaWFzbGpAZ21haWwuY29tOlNrRk9kV2xOZEdkdFdscHFaRTgwZEVOdlYyWm1PVVppTmswM00wVjZPRmM1TUZBMldrZ3lUUT09
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
-Content-type: application/json
+{{contentype}}
 
 {
-	"email":"test1@mail.com",
+	"email":"tobiaslj@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -15,34 +15,34 @@ Content-type: application/json
 
 ### Edit User
 PUT {{baseurl}}/users HTTP/1.0
-Content-Type: {{contentype}}
+{{contentype}}
 {{authorization}}
 
 {
-    "email":"test1@mail.com",
-    "first_name":"2",
-    "last_name":"1"
+    "email":"tobiaslj@gmail.com",
+    "first_name":"tobi",
+    "last_name":"wan"
 }
 
 ### Create Session
 POST {{baseurl}}/sessions HTTP/1.0
-Content-Type: {{contentype}}
+{{contentype}}
 
 {
-    "email":"test1@mail.com",
+    "email":"tobiaslj@gmail.com",
     "password":"password"
 }
 
 ### Check session
 GET {{baseurl}}/sessions HTTP/1.0
-Content-Type: {{contentype}}
+{{contentype}}
 {{authorization}}
 
 ### Create Campaign Manager
 
 POST {{baseurl}}/users/campaignmanager HTTP/1.0
 {{authorization}}
-Content-Type: {{contentype}}
+{{contentype}}
 
 {
     "UEN":"T19932220",
@@ -51,33 +51,33 @@ Content-Type: {{contentype}}
 
 ### Get current session campagin manager information
 GET {{baseurl}}/users/campaignmanager HTTP/1.0
+{{contentype}}
 {{authorization}}
 
 ### Get all items
 GET {{baseurl}}/items HTTP/1.1
-Content-Type: {{contentype}}
-
+{{contentype}}
 
 ### Create Campaign
 POST {{baseurl}}/campaigns HTTP/1.0
 {{authorization}}
-Content-Type: {{contentype}}
+{{contentype}}
 
 {
     "name": "Run For Charity",
-    "start_date": "06-Oct-1995",
-    "end_date": "07-Oct-1997",
+    "start_date": "2019-08-20",
+    "end_date": "2019-08-21",
     "accepted_items": [1,2,3,4]
 }
 
 ### Create Donation
 POST {{baseurl}}/campaigns/1/donations HTTP/1.0
 {{authorization}}
-Content-Type: {{contentype}}
+{{contentype}}
 
 {
 	"items":{
-		"keys":[1,2,4],
-		"values":[4,4,5]
+		"keys":[1,2,4,5],
+		"values":[4,4,5,6]
 	}
 }

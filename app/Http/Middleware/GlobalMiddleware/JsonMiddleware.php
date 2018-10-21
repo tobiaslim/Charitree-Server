@@ -19,6 +19,7 @@ class JsonMiddleware
         if($request->isJson()){
             return $next($request);
         }
-        return response()->json(["message"=>"Invalid request format"], Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
+        $errors = "Invalid request format";
+        return response()->json(["status"=>"0", "errors"=>$errors], Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
     }
 }

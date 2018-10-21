@@ -27,7 +27,9 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), User::$rules['register']);
         
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
+            $errors['message'] = "Unable to process";
+            //$errors->add("message", "Unable to process parameters.");
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -45,11 +47,12 @@ class UserController extends Controller
          * Current work around.
          */
         $validator = Validator::make($request->all(), [
-            'email'=>'required|alpha|email|unique:User,email,'.$user->id
+            'email'=>'required|email|unique:User,email,'.$user->id
         ]);
 
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
+            $errors["message"] = "Unable to process parameters.";
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -58,7 +61,9 @@ class UserController extends Controller
         }
 
         else{
-            return response()->json(['status'=>'0','message'=>'Something went wrong']);
+            $errors = array();
+            $errors["message"]="Something went wrong.";
+            return response()->json(['status'=>'0','errors'=>$errors]);
         }
     }
 
@@ -67,12 +72,14 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), CampaignManager::$rules['register']);
         
         if($validator->fails()){
-            $errors = $validator->errors();
+            $errors = $validator->errors()->toArray();
+            $errors["message"] = "Unable to process parameters.";
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if(!is_null($user->campaignManager)){
-            return response()->json(['status'=>'0', 'message'=>'Already a camopaign manger'], Response::HTTP_CONFLICT);
+            $errors["message"] = "Alreay a campaign manager!";
+            return response()->json(['status'=>'0', 'message'=>$errors], Response::HTTP_CONFLICT);
         }
 
 

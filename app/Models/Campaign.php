@@ -39,8 +39,8 @@ class Campaign extends Model
         'create'=>[
             'name'=>'required',
             'accepted_items.*'=>'required|integer|between:1,7',
-            'start_date'=>'required|date|after:today',
-            'end_date'=>'required|date|after:start_date'
+            'start_date'=>'required|date|date_format:Y-m-d|after:today',
+            'end_date'=>'required|date|date_format:Y-m-d|after:start_date'
         ]
     ];
 
