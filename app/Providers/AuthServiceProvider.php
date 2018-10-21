@@ -49,7 +49,9 @@ class AuthServiceProvider extends ServiceProvider
                 //1.
                 $session = Session::where('session_token', $key[1])->where('session_expire', '>', new \DateTime())->first();
                 if (!empty($session)) {
-                    $user = ($session->user->email == $key[0]) ? $session->user : null;
+                    echo "session token pass";
+                    $value = strcasecmp($session->user->email, $key[0]);
+                    $user = ( $value == 0) ? $session->user : null;
                     if (!empty($user)) {
                         $this->app->instance('App\Models\User', $user);
                     }

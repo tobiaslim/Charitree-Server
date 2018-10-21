@@ -1,6 +1,6 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic dG9iaWFzbGpAZ21haWwuY29tOlNrRk9kV2xOZEdkdFdscHFaRTgwZEVOdlYyWm1PVVppTmswM00wVjZPRmM1TUZBMldrZ3lUUT09
+@authorization = Authorization: Basic dG9iaWFzbGpAR01BSUwuY29tOlJGUk1iVTB6UmtnM1NYcFBNbTlwU0RCd1FtODFOVU0wUjNFeWNuRlZhVkZPWjBsWlpWWm1adz09
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
