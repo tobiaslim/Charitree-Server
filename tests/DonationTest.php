@@ -9,7 +9,7 @@ class DonationTest extends TestCase
      *
      * @return void
      */
-    public function testShouldHaveAName(){
+    public function testShouldReturn200(){
         $user = "harrisonwjy@mail.com";
         $password = "U0JiZnM0UlRrU20wakljNzkySTJmd2U3SnVvMWdBMHpIRGhXeERrYg==";
         $token = base64_encode("$user:$password");
