@@ -27,7 +27,7 @@ class CampaignManagerMiddleware
         if(is_null($campaignManager)){
             $errors = array();
             $errors['message'] = "Only allowed for campaign manager";
-            return response()->json(['status' => '0', 'message' => $errors], Response::HTTP_FORBIDDEN); 
+            return response()->json(['status' => '0', 'errors' => $errors], Response::HTTP_FORBIDDEN); 
         }
         return $next($request);
     }

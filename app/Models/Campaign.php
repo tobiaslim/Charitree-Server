@@ -41,6 +41,9 @@ class Campaign extends Model
             'accepted_items.*'=>'required|integer|between:1,7',
             'start_date'=>'required|date|date_format:Y-m-d|after:today',
             'end_date'=>'required|date|date_format:Y-m-d|after:start_date'
+        ],
+        'get'=>[
+            'max'=>"sometimes|required|integer"
         ]
     ];
 
@@ -52,7 +55,7 @@ class Campaign extends Model
     }
 
     public function campaignManager(){
-        return $this->belongsTo(CampaignManager::class, 'cid');
+        return $this->belongsTo(CampaignManager::class, 'cid','cid');
     }
 
     public function donations(){

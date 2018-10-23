@@ -2,15 +2,17 @@
 
 ## Content
 1. Requests & Responses
-    1. User Create
-    2. Full User edit
-    3. Create Authenticated Session (Login)
-    4. Check if session is valid
-    5. Create Campaign Manager
-    6. Check if session is Campaign Manager
-    7. Get items.
-    8. Create Campaign
-    9. Get all campaigns.
+  1. User Create
+  2. User full edit
+  3. Create Authenticated Session
+  4. Check if session is valid
+  5. Create Campaign Manager
+  6. Get current session CM information
+  7. Get items
+  8. Create Campaign
+  9. Create Donation
+  10. Get current Campaign Manager Detail
+  11. Get all Campaigns
 
 
 ## Preamble
@@ -288,6 +290,7 @@ Unauthorized.
 
 ```
 # Create Campaign Manager
+
 Create a campaign manager based on a registered user.
 
 ##### Request Body:
@@ -353,6 +356,7 @@ Content-Type: application/json
 ```
 
 # Get current session CM information
+
 You can use this API to check if the current session is a CM
 
 ##### Request:
@@ -627,25 +631,127 @@ Content-Type: application/json
 
 # Get all Campaigns
 
-Retrieve all campaigns.
+Retrieve campaigns.
 
+
+##### Request body:
+| Field | Description                                                                              |
+| ----- | ---------------------------------------------------------------------------------------- |
+| max   | (int) Get a maximum number of campaigns. If not specified, all campaigns will be return. |
 
 ##### Request:
-To be added.
+```
+GET /campaigns HTTP/1.0
+Content-type: application/json
 
+{
+  "max":5
+}
+```
 ##### Possible Response:
 
 ###### Success:
 
 ```
+HTTP/1.0 200 OK
+Date: Mon, 22 Oct 2018 23:37:55 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 860
+Connection: close
+Content-Type: application/json
 
+{
+  "status": "1",
+  "messages": "All campaigns.",
+  "campaigns": [{
+    "id": 2,
+    "name": "Run For Charity",
+    "start_date": "2018-10-25",
+    "end_date": "2018-10-26",
+    "cid": 9,
+    "campaign_manager": {
+      "cid": 9,
+      "UEN": "S91291232",
+      "organization_name": "www",
+      "name": "harrison wjy"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }, {
+      "key": 5,
+      "value": "Furniture"
+    }, {
+      "key": 6,
+      "value": "Plastic"
+    }, {
+      "key": 7,
+      "value": "Metals"
+    }]
+  }, {
+    "id": 3,
+    "name": "Run For Charity",
+    "start_date": "2018-10-25",
+    "end_date": "2018-10-26",
+    "cid": 9,
+    "campaign_manager": {
+      "cid": 9,
+      "UEN": "S91291232",
+      "organization_name": "www",
+      "name": "harrison wjy"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }, {
+      "key": 5,
+      "value": "Furniture"
+    }, {
+      "key": 6,
+      "value": "Plastic"
+    }, {
+      "key": 7,
+      "value": "Metals"
+    }]
+  }]
+}
 ```
 
 ###### Failure:
 
 ```
+HTTP/1.0 404 Not Found
+Date: Tue, 23 Oct 2018 07:57:00 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 61
+Connection: close
+Content-Type: application/json
 
+{
+  "status": "0",
+  "error": "No campaigns found.",
+  "campaigns": null
+}
 ```
-
-
-

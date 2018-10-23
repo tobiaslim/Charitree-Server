@@ -31,7 +31,7 @@ class CampaignManager extends Model
     ];
 
     public function user(){
-        return $this->hasOne('App\Models\User');
+        return $this->hasOne('App\Models\User', 'id', 'cid');
     }
 
     //hasMany(child table className, name of referenced column in child table, name of primary key in current table)

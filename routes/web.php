@@ -54,11 +54,17 @@ $router->group(['prefix' => 'sessions'], function () use ($router) {
 /**
  * Routes:
  * GET      /items                  Get list of items
- * POST     /campaign               Create campaign
- ** POST    /id /campaign           Create donation for a campaign
  */
 $router->get('/items', "ItemController@getItems");
+
+
+/**
+ * Routes:
+ * POST     /campaigns               Create campaign
+ ** POST    /id/campaigns           Create donation for a campaign
+ */
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
+    $router->get('/', "CampaignController@getCampaigns");
     $router->post('/{id}/donations', ['middleware'=>Auth::class, "uses"=>"CampaignController@createDonation"]);
 });

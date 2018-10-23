@@ -23,7 +23,7 @@ class UserTest extends TestCase
     }
 
     public function testShouldReceived201Code(){
-        $params = ["email"=>"tobias@gmail.com", "first_name"=>"tobias", "last_name"=>"lim","password"=>"tobias"];
+        $params = ["email"=>"tobiasxss@gmail.com", "first_name"=>"tobias", "last_name"=>"lim","password"=>"tobias"];
         // $this->post('/users', $params, ['Content-type'=>'application/json']);
         $this->json('POST', '/users', $params);
         $this->seeStatusCode(201);

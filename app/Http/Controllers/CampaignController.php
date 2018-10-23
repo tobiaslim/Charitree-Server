@@ -43,6 +43,25 @@ class CampaignController extends Controller
 
     }
 
+    public function getCampaigns(Request $request){
+        $validator = Validator::make($request->all(),Campaign::$rules['get']);
+
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $max = null;
+        if($request->has('max')){
+            $max = (int) $request->input('max');
+        }
+
+        $campaigns = $this->campaignService->getAllCampaigns($max);
+        if(is_null($campaigns)){
+            return response()->json(["status"=>"0", "error"=> "No campaigns found.", "campaigns"=>$campaigns], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json(["status"=>"1", "messages"=> "All campaigns.", "campaigns"=>$campaigns], Response::HTTP_OK);
+    }
+
     public function createDonation(Request $request, User $user, IDonationService $donationService, $id){
         $validator = Validator::make($request->all(),[
             'items.keys'=>[new ArraySameSizeAs],

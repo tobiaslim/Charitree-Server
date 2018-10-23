@@ -81,3 +81,11 @@ POST {{baseurl}}/campaigns/1/donations HTTP/1.0
 		"values":[4,4,5,6]
 	}
 }
+
+### Get all campaigns
+GET {{baseurl}}/campaigns
+{{contentype}}
+
+{
+     "max":0
+}
