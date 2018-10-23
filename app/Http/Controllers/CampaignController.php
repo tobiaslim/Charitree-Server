@@ -61,27 +61,4 @@ class CampaignController extends Controller
         }
         return response()->json(["status"=>"1", "messages"=> "All campaigns.", "campaigns"=>$campaigns], Response::HTTP_OK);
     }
-
-    public function createDonation(Request $request, User $user, IDonationService $donationService, $id){
-        $validator = Validator::make($request->all(),[
-            'items.keys'=>[new ArraySameSizeAs],
-            'items.keys.*'=>'required|integer|between:1,7',
-            'items.values.*'=>'integer'
-        ]);
-
-        if($validator->fails()){
-            $errors = $validator->errors()->toArray();
-            $errors['message'] = "Unproccessable request";
-            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $campaign = $this->campaignService->find($id);
-        $today = new Carbon;
-        if($campaign == null || $campaign->end_date->lt(new Carbon)){
-            return response()->json(["status"=>"0", "errors"=> ["Request campaign not found or has ended."]], Response::HTTP_NOT_FOUND);
-        }
-        $donationService->createDonation($request->all(), $user, $campaign);
-
-        return response()->json(["status"=>"1", "message"=> "Donation added."], Response::HTTP_CREATED);
-    }
 }

@@ -38,6 +38,22 @@ class DonationService implements IDonationService{
 
     public function getAllDonations(User $user)
     {
-        return $user->donation;
+        $donations;
+        $items;
+        $donationsResults = Donation::with(['items'])->where('User_id',$user->id)->get();
+        
+        if($donationsResults->isEmpty()){
+            return NULL;
+        }
+
+        foreach($donationsResults as $donation){
+            $items = array();
+            foreach($donation->items as $item){
+                $items[] = ['id'=>$item->id, 'name'=>$item->name, 'qty'=> $item->pivot->qty];
+            }
+            $donations[] = ["did"=> $donation->did, "status"=> $donation->status, "Campaign_id"=> $donation->Campaign_id, "items"=>$items];
+        }
+
+        return $donations;
     }
 }

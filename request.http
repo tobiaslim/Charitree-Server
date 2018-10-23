@@ -1,13 +1,13 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic dG9iaWFzbGpAR01BSUwuY29tOlJGUk1iVTB6UmtnM1NYcFBNbTlwU0RCd1FtODFOVU0wUjNFeWNuRlZhVkZPWjBsWlpWWm1adz09
+@authorization = Authorization: Basic tobiass@gmail.com WEVRUUo0QUhWWGo3T2Zsb2RQekVmN09vdHQxUUJjem45dkxoZmZmWQ==
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobiaslj@gmail.com",
+	"email":"tobiass@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -29,7 +29,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiaslj@gmail.com",
+    "email":"tobiass@gmail.com",
     "password":"password"
 }
 
@@ -39,7 +39,6 @@ GET {{baseurl}}/sessions HTTP/1.0
 {{authorization}}
 
 ### Create Campaign Manager
-
 POST {{baseurl}}/users/campaignmanager HTTP/1.0
 {{authorization}}
 {{contentype}}
@@ -71,7 +70,7 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/campaigns/1/donations HTTP/1.0
+POST {{baseurl}}/campaigns/3/donations HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -82,10 +81,15 @@ POST {{baseurl}}/campaigns/1/donations HTTP/1.0
 	}
 }
 
+### Get donations
+GET {{baseurl}}/donations HTTP/1.0
+{{authorization}}
+{{contentype}}
+
 ### Get all campaigns
 GET {{baseurl}}/campaigns
 {{contentype}}
 
 {
-     "max":0
+     "max":1
 }

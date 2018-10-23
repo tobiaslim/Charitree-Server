@@ -26,6 +26,6 @@ class Item extends Model {
     }
 
     public function donation(){
-        return $this->belongsToMany(Donation::class, 'Donation_has_Item', 'Item_id', "Donation_did");
+        return $this->belongsToMany(Donation::class, 'Donation_has_Item', 'Item_id', "Donation_did")->withPivot('qty');
     }
 }
