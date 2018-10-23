@@ -35,4 +35,9 @@ class DonationService implements IDonationService{
         }
         $donation->items()->sync($items);
     }
+
+    public function getAllDonations(User $user)
+    {
+        return $user->donation;
+    }
 }
