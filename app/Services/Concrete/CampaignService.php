@@ -77,6 +77,11 @@ class CampaignService implements ICampaignService{
             $campaigns[$i]["campaign_manager"]["name"] = $campaignManagerInfo[$i];
             unset($campaigns[$i]["campaign_manager"]["user"]);
             $campaigns[$i]["accepted_items"] = $accepted_items[$i];
+
+            $startDate = Carbon::make($campaign['start_date']);
+            $daysLeft = $today->diffInDays($startDate);
+            $campaigns[$i]["days_left"] = $daysLeft;
+
             $i++;
         }
 

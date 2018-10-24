@@ -64,8 +64,8 @@ POST {{baseurl}}/campaigns HTTP/1.0
 
 {
     "name": "Run For Charity",
-    "start_date": "2019-08-20",
-    "end_date": "2019-08-21",
+    "start_date": "2018-10-25",
+    "end_date": "2018-10-26",
     "accepted_items": [1,2,3,4],
 	"start_time": "12",
 	"end_time": "17",
@@ -75,12 +75,12 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/campaigns/3/donations HTTP/1.0
+POST {{baseurl}}/campaigns/1/donations HTTP/1.0
 {{authorization}}
 {{contentype}}
 
 {
-	"address_id":31,
+	"address_id":1,
 	"items":{
 		"keys":[1,2,4],
 		"values":[4,4,5]
@@ -88,7 +88,7 @@ POST {{baseurl}}/campaigns/3/donations HTTP/1.0
 }
 
 ### Get donations
-GET {{baseurl}}/donations HTTP/1.0
+GET {{baseurl}}/users/donations HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -97,7 +97,7 @@ GET {{baseurl}}/campaigns
 {{contentype}}
 
 {
-     "max":1
+     "max":3
 }
 
 ### Create address
