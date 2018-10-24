@@ -28,4 +28,8 @@ class Address extends Model {
     public function user(){
       return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
+
+    public function donation(){
+        return $this->hasMany(Donation::class, 'Address_id', 'id');
+    }
 }

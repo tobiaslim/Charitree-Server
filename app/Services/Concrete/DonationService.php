@@ -62,18 +62,19 @@ class DonationService implements IDonationService{
     {
         $donations;
         $items;
-        $donationsResults = Donation::with(['items'])->where('User_id',$user->id)->get();
-        
+        $donationsResults = Donation::with(['items', 'campaign', 'address'])->where('User_id',$user->id)->get();
         if($donationsResults->isEmpty()){
             return NULL;
         }
-
+        
         foreach($donationsResults as $donation){
             $items = array();
+
             foreach($donation->items as $item){
                 $items[] = ['id'=>$item->id, 'name'=>$item->name, 'qty'=> $item->pivot->qty];
             }
-            $donations[] = ["did"=> $donation->did, "status"=> $donation->status, "Campaign_id"=> $donation->Campaign_id, "items"=>$items];
+            $donations[] = ["did"=> $donation->did, "status"=> $donation->status,
+            "items"=>$items, "campaign"=>$donation->campaign, "pickup_address"=>$donation->address];
         }
 
         return $donations;
