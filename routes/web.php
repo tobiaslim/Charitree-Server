@@ -34,13 +34,15 @@ $router->get('/', function () use ($router) {
  * GET      /users/campaignmanager  Get current session campaign manager details 
  * PUT      /users                  Edit user
  * GET      /users/donations        Get all donations of the user based on the user's session
+ * POST     /users/addresses        Create address for a user 
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->post('', 'UserController@register');
     $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);
     $router->get('/campaignmanager',['middleware'=>[Auth::class, CM::class], "uses"=>"UserController@getCurrentCampaignManagerDetails"]); 
     $router->put('', ['middleware'=>[Auth::class], "uses"=>"UserController@editUser"]);
-    $router->get('/donations',['middleware'=>[Auth::class],"uses"=>"DonationController@getAllDonations"]);                 
+    $router->get('/donations',['middleware'=>[Auth::class],"uses"=>"DonationController@getAllDonations"]);
+    $router->post('/addresses',['middleware'=>[Auth::class],"uses"=>"UserController@addAddresses"]);                 
 });
 
 /**

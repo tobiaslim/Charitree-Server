@@ -5,6 +5,7 @@ use App\Services\Contracts\IUserService;
 use App\Models\User;
 use App\Models\Session;
 use App\Services\Contracts\IAuthenticate;
+use App\Models\Address;
 
 
 class UserService implements IUserService, IAuthenticate{
@@ -89,5 +90,30 @@ class UserService implements IUserService, IAuthenticate{
         else{
             return null;
         }
+    }
+
+    public function addUserAddress($addresses, User $user){
+        $addressArray;
+        $i = 0;
+        /**
+         * Create address instances
+         */
+        foreach($addresses as $add){
+            $addressArray[$i] = new Address();
+            $addressArray[$i]->fill($add);
+            $i++;
+        }
+        /**
+         * save to database
+         */
+        $user->address()->saveMany($addressArray);
+
+        /**
+         * Refreshing the model to retrieve the address id into memory from database.
+         */
+        foreach($addressArray as $address){
+            $address->refresh();
+        }
+        return $addressArray;
     }
 }

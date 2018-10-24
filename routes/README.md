@@ -13,6 +13,8 @@
   9. Create Donation
   10. Get current Campaign Manager Detail
   11. Get all Campaigns
+  12. Get all donations of a user by the current session
+  13. Create Address for user
 
 
 ## Preamble
@@ -753,5 +755,163 @@ Content-Type: application/json
   "status": "0",
   "error": "No campaigns found.",
   "campaigns": null
+}
+```
+
+# Get all donations of a user by the current session
+
+##### Request
+```
+GET /users/donations HTTP/1.0
+```
+
+##### Possible Response
+
+##### Success
+```
+HTTP/1.0 200 OK
+Date: Tue, 23 Oct 2018 15:26:39 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 629
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "message": "Donations of a user.",
+  "donations": [{
+    "did": 4,
+    "status": "pending",
+    "Campaign_id": 3,
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }, {
+      "id": 5,
+      "name": "Furniture",
+      "qty": 6
+    }]
+  }, {
+    "did": 5,
+    "status": "pending",
+    "Campaign_id": 3,
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }, {
+      "id": 5,
+      "name": "Furniture",
+      "qty": 6
+    }]
+  }, {
+    "did": 6,
+    "status": "pending",
+    "Campaign_id": 3,
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }, {
+      "id": 5,
+      "name": "Furniture",
+      "qty": 6
+    }]
+  }]
+}
+
+```
+##### Failed
+```
+HTTP/1.0 404 Not Found
+Date: Tue, 23 Oct 2018 16:27:47 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 72
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 0,
+  "errors": {
+    "message": "No donations found."
+  },
+  "donations": null
+}
+```
+
+# Create Address for user
+| Field                         | Description                                                             |
+| ----------------------------- | ----------------------------------------------------------------------- |
+| addresses                     | (required \| array) Store addresses to be created                       |
+| addresses.address.street_name | (required \| alpha numeric with space string \| max:45 ) Street address |
+| addresses.address.unit        | (optional \| max:10 ) Unit number                                       |
+| addresses.address.zip         | (required \| size exactly 6 ) Postal code with 'S'                      |
+
+##### Request
+```
+POST /users/addresses HTTP/1.0
+```
+
+##### Response:
+###### Success
+
+```
+HTTP/1.0 201 Created
+Date: Wed, 24 Oct 2018 05:45:36 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 228
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "message": "Addresses created",
+  "addresses": [{
+    "id": 29,
+    "street_name": "Block 469 AdmiraltyDrive",
+    "unit": "#16-55",
+    "zip": "750469",
+    "user_id": 2
+  }, {
+    "id": 30,
+    "street_name": "Bhehehee",
+    "unit": "#16-25",
+    "zip": "750322",
+    "user_id": 2
+  }]
 }
 ```

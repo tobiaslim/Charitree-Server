@@ -8,6 +8,7 @@ use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use App\Models\Address;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -98,5 +99,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany(Donation::class);
     }
 
+    public function address(){
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
 
 }

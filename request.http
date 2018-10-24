@@ -1,13 +1,13 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiass@gmail.com WEVRUUo0QUhWWGo3T2Zsb2RQekVmN09vdHQxUUJjem45dkxoZmZmWQ==
+@authorization = Authorization: Basic tobiaslkj@gmail.com Q1JCUDAyNkNrUUZMVVdaVWh3WVUwY3BSbXhud29STUFjRXNGUVRzOQ==
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobiass@gmail.com",
+	"email":"tobiaslkj@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -29,7 +29,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiass@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "password":"password"
 }
 
@@ -92,4 +92,25 @@ GET {{baseurl}}/campaigns
 
 {
      "max":1
+}
+
+### Create address
+
+POST {{baseurl}}/users/addresses HTTP/1.0
+{{authorization}}
+{{contentype}}
+
+{
+	"addresses":[
+		{
+			"street_name":"Block 469 AdmiraltyDrive",
+			"unit":"#16-55",
+			"zip":"750469"
+		},
+		{
+			"street_name":"Bhehehee",
+			"unit":"#16-25",
+			"zip":"750322"
+		}
+		]
 }

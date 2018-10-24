@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CampaignManager;
@@ -94,5 +95,20 @@ class UserController extends Controller
     public function getCurrentCampaignManagerDetails(User $user){
         $cm = $user->campaignManager;
         return response()->json(['status' => '1', 'campaign_manager' => $cm], Response::HTTP_OK);
+    }
+
+    public function addAddresses(Request $request, User $user){
+        $validator = Validator::make($request->all(), Address::$rules['create']);
+        
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            $errors["message"] = "Unable to process parameters.";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $addressesInputs = $request->input('addresses');
+        $addresses = $this->userService->addUserAddress($addressesInputs, $user);
+
+        return response()->json(['status'=>1, 'message'=>'Addresses created', 'addresses'=>$addresses], Response::HTTP_CREATED);
     }
 }
