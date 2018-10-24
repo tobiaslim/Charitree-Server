@@ -1,6 +1,6 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com Q1JCUDAyNkNrUUZMVVdaVWh3WVUwY3BSbXhud29STUFjRXNGUVRzOQ==
+@authorization = Authorization: Basic tobiaslkj@gmail.com MTF2M1pOTlo3S3I1MFJyQWRxRUFuaXlVNEdvNks0N05WclkxVHE1RQ==
 
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
@@ -66,7 +66,12 @@ POST {{baseurl}}/campaigns HTTP/1.0
     "name": "Run For Charity",
     "start_date": "2019-08-20",
     "end_date": "2019-08-21",
-    "accepted_items": [1,2,3,4]
+    "accepted_items": [1,2,3,4],
+	"start_time": "12",
+	"end_time": "17",
+	"description": "wtfffff",
+	"collection_point": "Block ass",
+	"postal_code": "750469"
 }
 
 ### Create Donation

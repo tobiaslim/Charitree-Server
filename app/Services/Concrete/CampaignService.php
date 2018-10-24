@@ -21,10 +21,8 @@ class CampaignService implements ICampaignService{
     public function create(array $array){
         $user = app(User::class);
         $cm = $user->campaignManager;
-        $campaign = new Campaign();
-        $campaign->name = $array['name'];
-        $campaign->start_date = $array['start_date'];
-        $campaign->end_date = $array['end_date'];
+        $campaign = new Campaign($array);
+
         $cm->campaigns()->save($campaign);
 
         $campaign->items()->sync($array['accepted_items']);

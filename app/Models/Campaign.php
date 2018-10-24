@@ -32,7 +32,7 @@ class Campaign extends Model
      * @var array
      */
     protected $fillable = [
-        'name','start_date','end_date'
+        'name','start_date','end_date','start_time', 'end_time', 'description', 'collection_point', 'postal_code'
     ];
 
     public static $rules = [
@@ -40,7 +40,12 @@ class Campaign extends Model
             'name'=>'required',
             'accepted_items.*'=>'required|integer|between:1,7',
             'start_date'=>'required|date|date_format:Y-m-d|after:today',
-            'end_date'=>'required|date|date_format:Y-m-d|after:start_date'
+            'end_date'=>'required|date|date_format:Y-m-d|after:start_date',
+            'start_time'=>'required|int|between:0,23',
+            'end_time'=>'required|int|between:0,24|gte:start_time',
+            'description'=>'required|max:255',
+            'collection_point'=>'required|max:45|regex:/^[\w\s]+$/',
+            'postal_code'=>'required|size:6'
         ],
         'get'=>[
             'max'=>"sometimes|required|integer"
