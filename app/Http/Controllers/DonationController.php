@@ -5,12 +5,13 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Campaign;
 use App\Models\User;
+use App\Models\Address;
 use App\Rules\ArraySameSizeAs;
-use Illuminate\Support\Carbon;
 use App\Services\Contracts\ICampaignService;
 use App\Services\Contracts\IDonationService;
 use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DonationController extends Controller
 {
@@ -35,8 +36,10 @@ class DonationController extends Controller
         }
     }
 
-    public function createDonation(Request $request, User $user, ICampaignService $campaignService, $id){
+    public function createDonation(Request $request, User $user, ICampaignService $campaignService, $campaignID){
         $validator = Validator::make($request->all(),[
+            'address_id'=>'required|integer|exists:Address,id',
+            'items'=>'required',
             'items.keys'=>[new ArraySameSizeAs],
             'items.keys.*'=>'required|integer|between:1,7',
             'items.values.*'=>'integer'
@@ -48,13 +51,11 @@ class DonationController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $campaign = $campaignService->find($id);
-        $today = new Carbon;
-        if($campaign == null || $campaign->end_date->lt(new Carbon)){
-            return response()->json(["status"=>"0", "errors"=> ["Request campaign not found or has ended."]], Response::HTTP_NOT_FOUND);
+        try{
+            $this->donationService->createDonation($request->all(), $user, $campaignID);
+        }catch(ModelNotFoundException $e){
+            return response()->json(["status"=>"0", "errors"=>['message'=>$e->getMessage()]],Response::HTTP_NOT_FOUND);
         }
-        $this->donationService->createDonation($request->all(), $user, $campaign);
-
         return response()->json(["status"=>"1", "message"=> "Donation added."], Response::HTTP_CREATED);
     }
 }

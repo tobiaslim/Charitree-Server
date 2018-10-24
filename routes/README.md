@@ -524,6 +524,7 @@ Donation can be created for a certain campaign. Pass in the ID as part of the re
 ##### Request Body:
 | Field        | Description                                             |
 | ------------ | ------------------------------------------------------- |
+| address_id   | (Required \| int ) Address user choose for pick up.     |
 | items        | (Required \| Object)                                    |
 | items.keys   | (Required \| array \| int) Items keys array.            |
 | items.values | (Required \| array \| int) Array of corresponding value |
@@ -534,6 +535,7 @@ POST http://{{baseurl}}/campaigns/24/donations HTTP/1.0
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
 Content-type: application/json
 {
+	"address_id":31,
 	"items":{
 		"keys":[1,2,4],
 		"values":[4,4,5]
@@ -871,12 +873,13 @@ Content-Type: application/json
 ```
 
 # Create Address for user
-| Field                         | Description                                                             |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| addresses                     | (required \| array) Store addresses to be created                       |
-| addresses.address.street_name | (required \| alpha numeric with space string \| max:45 ) Street address |
-| addresses.address.unit        | (optional \| max:10 ) Unit number                                       |
-| addresses.address.zip         | (required \| size exactly 6 ) Postal code with 'S'                      |
+| Field                    | Description                                                             |
+| ------------------------ | ----------------------------------------------------------------------- |
+| addresses                | (required \| array) Store addresses to be created                       |
+| addresses.\*             | (object) Address objects to be created                                  |
+| addresses.\*.street_name | (required \| alpha numeric with space string \| max:45 ) Street address |
+| addresses.\*.unit        | (optional \| max:10 ) Unit number                                       |
+| addresses.\*.zip         | (required \| size exactly 6 ) Postal code excluding 'S'                 |
 
 ##### Request
 ```

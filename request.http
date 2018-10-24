@@ -75,9 +75,10 @@ POST {{baseurl}}/campaigns/3/donations HTTP/1.0
 {{contentype}}
 
 {
+	"address_id":31,
 	"items":{
-		"keys":[1,2,4,5],
-		"values":[4,4,5,6]
+		"keys":[1,2,4],
+		"values":[4,4,5]
 	}
 }
 

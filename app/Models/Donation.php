@@ -32,4 +32,8 @@ class Donation extends Model {
     public function items(){
         return $this->belongsToMany(Item::class, 'Donation_has_Item', 'Donation_did', 'Item_id')->withPivot('qty');
     }
+
+    public function address(){
+        return $this->belongsTo(Address::class, 'Address_id', 'id');
+    }
 }
