@@ -111,4 +111,13 @@ class UserController extends Controller
 
         return response()->json(['status'=>1, 'message'=>'Addresses created', 'addresses'=>$addresses], Response::HTTP_CREATED);
     }
+
+    public function getUserAddresses(User $user){
+        $addresses = $this->userService->getUserAddresses($user);
+        if(is_null($addresses)){
+            $errors['message'] = "No addresses found";
+            return response()->json(["status"=>0, "errors"=>$errors], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json(['status'=>1, "message"=>"User's addresses", "addresses"=>$addresses]);
+    }
 }

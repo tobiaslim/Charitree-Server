@@ -1,13 +1,14 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com MTF2M1pOTlo3S3I1MFJyQWRxRUFuaXlVNEdvNks0N05WclkxVHE1RQ==
-
+@authorization = Authorization: Basic tobiaslkj2@gmail.com dG83dEhtNm13c2hzMkFwSkc5TnVYV1RZcFc3MFJLQnVQZTY4MVJGQg==
+tobiaslkj@gmail.com NmRWdXkzR2l4dzFhemtSSGtVd2REY3VaNVdFNDZsek5tZDVna1BzNw==
+tobiaslkj2@gmail.com dG83dEhtNm13c2hzMkFwSkc5TnVYV1RZcFc3MFJLQnVQZTY4MVJGQg==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobiaslkj@gmail.com",
+	"email":"tobiaslkj2@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -29,7 +30,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiaslkj@gmail.com",
+    "email":"tobiaslkj2@gmail.com",
     "password":"password"
 }
 
@@ -120,3 +121,8 @@ POST {{baseurl}}/users/addresses HTTP/1.0
 		}
 		]
 }
+
+### Get Addresses
+GET {{baseurl}}/users/addresses HTTP/1.0
+{{authorization}}
+{{contentype}}

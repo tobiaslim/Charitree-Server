@@ -43,6 +43,7 @@ $router->group(['prefix' => 'users'], function () use ($router) {
     $router->put('', ['middleware'=>[Auth::class], "uses"=>"UserController@editUser"]);
     $router->get('/donations',['middleware'=>[Auth::class],"uses"=>"DonationController@getAllDonations"]);
     $router->post('/addresses',['middleware'=>[Auth::class],"uses"=>"UserController@addAddresses"]);                 
+    $router->get('/addresses',['middleware'=>[Auth::class],"uses"=>"UserController@getUserAddresses"]);
 });
 
 /**

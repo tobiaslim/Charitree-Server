@@ -116,4 +116,11 @@ class UserService implements IUserService, IAuthenticate{
         }
         return $addressArray;
     }
+
+    public function getUserAddresses(User $user){
+        if(is_null($user->address) || count($user->address)==0){
+            return null;
+        }
+        return $user->address;
+    }
 }
