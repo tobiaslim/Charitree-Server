@@ -11,6 +11,7 @@ use App\Services\Contracts\IDonationService;
 use App\Models\Donation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
+use App\Models\DonationStatus;
 
 
 class DonationService implements IDonationService{
@@ -41,7 +42,7 @@ class DonationService implements IDonationService{
 
 
         $donation = new Donation;
-        $donation->status="pending";
+        $donation->status= DonationStatus::PENDING;
         $donation->user()->associate($user);
         $donation->campaign()->associate($campaign);
         $donation->address()->associate($address);
@@ -78,5 +79,17 @@ class DonationService implements IDonationService{
         }
 
         return $donations;
+    }
+
+    public function cancelDonation($donationID){
+        $user = app(User::class);
+        $conditons = ['did'=>$donationID, 'User_id'=>$user->id];
+        $donation = Donation::where($conditons)->first();
+        if(is_null($donation) || $donation->status == DonationStatus::CANCELLED || $donation->status == DonationStatus::COMPLETED){
+            throw new ModelNotFoundException("Donation not found!");
+        }
+
+        $donation->status = DonationStatus::CANCELLED;
+        $donation->save();
     }
 }

@@ -58,4 +58,16 @@ class DonationController extends Controller
         }
         return response()->json(["status"=>"1", "message"=> "Donation added."], Response::HTTP_CREATED);
     }
+
+
+    public function cancelDonationByID($donationID){
+
+        try{
+            $this->donationService->cancelDonation($donationID);
+        }catch(ModelNotFoundException $e){
+            $errors = ["message"=> $e->getMessage()];
+            return response()->json(['status'=>0, 'errors'=>$errors]);
+        }
+        return response()->json(['status'=>1, 'message'=>'Donation cancelled']);
+    }
 }

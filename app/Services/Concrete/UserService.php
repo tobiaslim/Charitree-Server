@@ -3,9 +3,11 @@ namespace App\Services\Concrete;
 
 use App\Services\Contracts\IUserService;
 use App\Models\User;
+use App\Models\CampaignManager;
 use App\Models\Session;
 use App\Services\Contracts\IAuthenticate;
 use App\Models\Address;
+use App\Exceptions\ModelConflictException;
 
 
 class UserService implements IUserService, IAuthenticate{
@@ -92,35 +94,13 @@ class UserService implements IUserService, IAuthenticate{
         }
     }
 
-    public function addUserAddress($addresses, User $user){
-        $addressArray;
-        $i = 0;
-        /**
-         * Create address instances
-         */
-        foreach($addresses as $add){
-            $addressArray[$i] = new Address();
-            $addressArray[$i]->fill($add);
-            $i++;
+    public function convertCampaignManager(User $user, $array){
+        if(!is_null($user->campaignManager)){
+            throw new ModelConflictException("User already a campaign manager!");
         }
-        /**
-         * save to database
-         */
-        $user->address()->saveMany($addressArray);
 
-        /**
-         * Refreshing the model to retrieve the address id into memory from database.
-         */
-        foreach($addressArray as $address){
-            $address->refresh();
-        }
-        return $addressArray;
-    }
-
-    public function getUserAddresses(User $user){
-        if(is_null($user->address) || count($user->address)==0){
-            return null;
-        }
-        return $user->address;
+        $cm = new CampaignManager($array);
+        $cm->cid = $user->id;
+        $user->campaignManager()->save($cm);
     }
 }

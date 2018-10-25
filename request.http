@@ -1,14 +1,16 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj2@gmail.com dG83dEhtNm13c2hzMkFwSkc5TnVYV1RZcFc3MFJLQnVQZTY4MVJGQg==
+@authorization = Authorization: Basic tobiaslkj@gmail.com UHdHVDQ3aExJNWU3d1NXZU5SbWh1V1dqZEdTd21JU09MbENwemlFbw==
 tobiaslkj@gmail.com NmRWdXkzR2l4dzFhemtSSGtVd2REY3VaNVdFNDZsek5tZDVna1BzNw==
+tobiaslj@gmail.com
 tobiaslkj2@gmail.com dG83dEhtNm13c2hzMkFwSkc5TnVYV1RZcFc3MFJLQnVQZTY4MVJGQg==
+tobias@gmail.com
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobiaslkj2@gmail.com",
+	"email":"tobias@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -20,7 +22,7 @@ PUT {{baseurl}}/users HTTP/1.0
 {{authorization}}
 
 {
-    "email":"tobiaslj@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "first_name":"tobi",
     "last_name":"wan"
 }
@@ -30,7 +32,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiaslkj2@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "password":"password"
 }
 
@@ -65,8 +67,8 @@ POST {{baseurl}}/campaigns HTTP/1.0
 
 {
     "name": "Run For Charity",
-    "start_date": "2018-10-25",
-    "end_date": "2018-10-26",
+    "start_date": "2018-10-27",
+    "end_date": "2018-10-29",
     "accepted_items": [1,2,3,4],
 	"start_time": "12",
 	"end_time": "17",
@@ -76,7 +78,7 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/campaigns/1/donations HTTP/1.0
+POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -88,8 +90,8 @@ POST {{baseurl}}/campaigns/1/donations HTTP/1.0
 	}
 }
 
-### Get donations
-GET {{baseurl}}/users/donations HTTP/1.0
+### Get all donations based on user session
+GET {{baseurl}}/donations HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -101,9 +103,8 @@ GET {{baseurl}}/campaigns
      "max":3
 }
 
-### Create address
-
-POST {{baseurl}}/users/addresses HTTP/1.0
+### Create address 
+POST {{baseurl}}/addresses HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -123,6 +124,11 @@ POST {{baseurl}}/users/addresses HTTP/1.0
 }
 
 ### Get Addresses
-GET {{baseurl}}/users/addresses HTTP/1.0
+GET {{baseurl}}/addresses HTTP/1.0
+{{authorization}}
+{{contentype}}
+
+### Cancel Donation
+PATCH {{baseurl}}/donations/2 HTTP/1.0
 {{authorization}}
 {{contentype}}

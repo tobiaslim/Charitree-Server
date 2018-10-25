@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Contracts\IUserService', 'App\Services\Concrete\UserService');
         $this->app->bind('App\Services\Contracts\ICampaignService', 'App\Services\Concrete\CampaignService');
         $this->app->bind('App\Services\Contracts\IDonationService', 'App\Services\Concrete\DonationService');
+        $this->app->bind('App\Services\Contracts\IAddressService', 'App\Services\Concrete\AddressService');
 
     }
 }

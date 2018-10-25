@@ -9,6 +9,7 @@ use App\Models\CampaignManager;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 use App\Services\Contracts\IUserService;
+use App\Exceptions\ModelConflictException;
 
 class UserController extends Controller
 {
@@ -78,16 +79,13 @@ class UserController extends Controller
             return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if(!is_null($user->campaignManager)){
-            $errors["message"] = "Alreay a campaign manager!";
-            return response()->json(['status'=>'0', 'message'=>$errors], Response::HTTP_CONFLICT);
+        try{
+            $this->userService->convertCampaignManager($user, $request->all());
+        }catch(ModelConflictException $e){
+            $errors = ['message'=>$e->getMessage()];
+            return response()->json(['status' => '0', 'errors' => $errors], Response::HTTP_CONFLICT);
         }
-
-
-        $cm = new CampaignManager($request->all());
-        $cm->cid = $user->id;
-        $user->campaignManager()->save($cm);
-        $user->refresh();
+        
         return response()->json(['status' => '1', 'message' => 'Campaign Manager Created'], Response::HTTP_CREATED);
 
     }
@@ -95,29 +93,5 @@ class UserController extends Controller
     public function getCurrentCampaignManagerDetails(User $user){
         $cm = $user->campaignManager;
         return response()->json(['status' => '1', 'campaign_manager' => $cm], Response::HTTP_OK);
-    }
-
-    public function addAddresses(Request $request, User $user){
-        $validator = Validator::make($request->all(), Address::$rules['create']);
-        
-        if($validator->fails()){
-            $errors = $validator->errors()->toArray();
-            $errors["message"] = "Unable to process parameters.";
-            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $addressesInputs = $request->input('addresses');
-        $addresses = $this->userService->addUserAddress($addressesInputs, $user);
-
-        return response()->json(['status'=>1, 'message'=>'Addresses created', 'addresses'=>$addresses], Response::HTTP_CREATED);
-    }
-
-    public function getUserAddresses(User $user){
-        $addresses = $this->userService->getUserAddresses($user);
-        if(is_null($addresses)){
-            $errors['message'] = "No addresses found";
-            return response()->json(["status"=>0, "errors"=>$errors], Response::HTTP_NOT_FOUND);
-        }
-        return response()->json(['status'=>1, "message"=>"User's addresses", "addresses"=>$addresses]);
     }
 }
