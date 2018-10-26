@@ -92,4 +92,8 @@ $router->group(['prefix' => 'donations'], function () use ($router) {
     $router->post('/campaigns/{campaignID}', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
     $router->get('/campaigns/{campaignID}', ['middleware'=>[Auth::class, CM::class], "uses"=>"DonationController@getDonationsByCampaignID"]);
     $router->patch('/{donationID}', ['middleware'=>[Auth::class], "uses"=>"DonationController@cancelDonationByID"]);
+    $router->post('/{campaignID}/donations', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
+    $router->get('/view/{id}',['middleware'=>[Auth::class], "uses"=>"DonationController@viewDonation"]);
 });
+
+
