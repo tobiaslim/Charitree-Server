@@ -58,4 +58,17 @@ class DonationController extends Controller
         }
         return response()->json(["status"=>"1", "message"=> "Donation added."], Response::HTTP_CREATED);
     }
+
+    public function viewDonation(Request $request, User $user, $donationID)
+    {
+        //validator only used when the request body is not null
+
+        try{
+            $donation=$this->donationService->viewDonation($user,$donationID); //do not need to execute this twice
+        }catch(ModelNotFoundException $e){
+            return  response()->json(["status"=>"0", "errors"=>['message'=>$e->getMessage()]],Response::HTTP_NOT_FOUND);
+        } //the expection is defined inside donationService
+      
+        return response()->json(["status"=>"1","message"=>"Donation returned","donation"=>$donation],Response::HTTP_OK);
+        }
 }

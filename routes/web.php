@@ -75,3 +75,5 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
     $router->post('/{campaignID}/donations', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
 });
+
+$router->get('/donations/view/{id}',['middleware'=>[Auth::class], "uses"=>"DonationController@viewDonation"]);

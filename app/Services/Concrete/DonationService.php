@@ -79,4 +79,14 @@ class DonationService implements IDonationService{
 
         return $donations;
     }
+
+    public function viewDonation(User $user,$donationID)
+    {
+        $donation=Donation::where(['User_id'=>$user->id,'did'=>$donationID])->first();
+        //use an associative string to define the conditions
+        if(is_null($donation)){
+            throw new ModelNotFoundException("This user does not have this donation ID.");
+        } 
+       return $donation;
+    }
 }
