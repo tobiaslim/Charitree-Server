@@ -1,10 +1,10 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com UHdHVDQ3aExJNWU3d1NXZU5SbWh1V1dqZEdTd21JU09MbENwemlFbw==
-tobiaslkj@gmail.com NmRWdXkzR2l4dzFhemtSSGtVd2REY3VaNVdFNDZsek5tZDVna1BzNw==
-tobiaslj@gmail.com
-tobiaslkj2@gmail.com dG83dEhtNm13c2hzMkFwSkc5TnVYV1RZcFc3MFJLQnVQZTY4MVJGQg==
-tobias@gmail.com
+@authorization = Authorization: Basic tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
+tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
+tobiaslj@gmail.com VHI4RVl0SWFLb1RPZ2psVVRETXNkVHZYZWRzU3hQRjRtd1lUSmJhTg==
+tobiaslkj2@gmail.com azdjUjBtVUQ1cFFUMFVMTjBSVEtZT0xkbFlETlFjNlhibTVxY0Eweg==
+tobias@gmail.com SjJQSGlsQXc0cjVKZEh5OGpEMU1VTUNBMVc0bWVXTkxNampSNXJEaQ==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
@@ -32,7 +32,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiaslkj@gmail.com",
+    "email":"tobias@gmail.com",
     "password":"password"
 }
 
@@ -130,5 +130,10 @@ GET {{baseurl}}/addresses HTTP/1.0
 
 ### Cancel Donation
 PATCH {{baseurl}}/donations/2 HTTP/1.0
+{{authorization}}
+{{contentype}}
+
+### View Donation
+GET {{baseurl}}/donations/10
 {{authorization}}
 {{contentype}}
