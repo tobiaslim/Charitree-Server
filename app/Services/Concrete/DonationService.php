@@ -40,8 +40,12 @@ class DonationService implements IDonationService{
             throw new ModelNotFoundException("Campaign not found or it has ended.");
         }
 
-
+        $date=$array['pickup_date'];
+        $time=$array['pickup_time'];
+        $dateTime=$date.",".$time;
+        
         $donation = new Donation;
+        $donation->pickup_datetime=$dateTime;
         $donation->status= DonationStatus::PENDING;
         $donation->user()->associate($user);
         $donation->campaign()->associate($campaign);
