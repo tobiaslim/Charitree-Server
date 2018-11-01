@@ -4,19 +4,20 @@
 1. Requests & Responses
     1. [User Create](#user-create)
     2. [Full user edit](#full-user-edit)
-    3. Create Authenticated Session
-    4. Check if session is valid
-    5. Create Campaign Manager
-    6. Get current session CM information
-    7. Get items
-    8. Create Campaign
-    9. Create Donation
-    10. Get current Campaign Manager Detail
-    11. Get all Campaigns
-    12. Get all donations of a user by the current session
-    13. Get donation by donation id
-    14. Create Address for user
-    15. Get addresses for a by the current session
+    3. [Create Authenticated Session](#create-authenticated-session)
+    4. [Check if session is valid](#check-if-session-is-valid)
+    5. [Create Campaign Manager](#create-campaign-manager)
+    6. [Get current session CM information](#get-current-session-cm-information)
+    7. [Get items](#get-items)
+    8. [Create Campaign](#create-campaign)
+    9. [Create Donation](#create-donation)
+    10. [Get current campaign Manager Detail](#get-current-campaign-manager-detail)
+    11. [Get all Campaigns](#get-all-campaigns)
+    12. [Get all donations by the current user session](#get-all-donations-by-the-current-user-session)
+    13. [Get donation by donation id](#get-donation-by-donation-id)
+    14. [Create Address for user](#create-address-for-user)
+    15. [Get addresses by current user session](#get-addresses-by-current-user-session)
+    16. [Get organization name based on UEN](#get-organization-name-based-on-uen)
 
 
 
@@ -595,7 +596,7 @@ Content-Type: application/json
 }
 ```
 
-# Get current Campaign Manager Detail
+# Get Current Campaign Manager Detail
 Get the current session's campaign manager detail. If current session is not a campaign manager, 403 will be returned.
 
 Request:
@@ -769,7 +770,7 @@ Content-Type: application/json
 }
 ```
 
-# Get all donations of a user by the current session
+# Get all donations by the current user session
 
 ##### Request
 ```
@@ -1016,7 +1017,7 @@ Content-Type: application/json
 }
 ```
 
-# Get addresses of the current session user
+# Get addresses by current user session
 Get all the addresses of the current user by the session token
 
 #### Request
