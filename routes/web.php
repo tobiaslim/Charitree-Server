@@ -79,6 +79,7 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->get('', "CampaignController@getCampaigns");
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
     $router->get('/{id:[0-9]+}', "CampaignController@getCampaignByCampaignID");
+    $router->get('/campaignmanagers',['middleware'=>[Auth::class, CM::class],"uses"=>"CampaignController@getAllCampaignBySession"]);
 });
 
 /**

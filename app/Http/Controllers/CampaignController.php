@@ -72,4 +72,23 @@ class CampaignController extends Controller
 
         return response()->json(['status'=>1, 'message'=>'Campaign found.', 'campaign'=>$campaign]);
     }
+
+    public function getAllCampaignBySession(Request $request,User $user){
+        $validator = Validator::make($request->all(),Campaign::$rules['get']);
+
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $campaigns = $this->campaignService->getAllCampaignBySession($user);
+
+        if(is_null($campaigns)){
+            $errors['message'] = "No campaigns found";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json(["status"=>"1", "messages"=> "All campaigns.", "campaigns"=>$campaigns], Response::HTTP_OK);
+    }
+
+
 }
