@@ -554,11 +554,11 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
 Content-type: application/json
 {
 	"address_id":31,
+    "pickup_date":"01/11/2018",
+    "pickup_time":"12:39",
 	"items":{
 		"keys":[1,2,4],
 		"values":[4,4,5]
-  	"pickup_date":"01/11/2018",
-        "pickup_time":"12:39",
 	}
 }
 ```
@@ -911,12 +911,12 @@ Content-type: application/json
 ###### Success
 ```
 HTTP/1.0 200 OK
-Date: Wed, 31 Oct 2018 12:56:04 GMT
+Date: Thu, 01 Nov 2018 13:05:12 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 493
+Content-Length: 540
 Connection: close
 Content-Type: application/json
 
@@ -924,36 +924,36 @@ Content-Type: application/json
   "status": "1",
   "message": "Donation returned",
   "donation": {
-    "did": 4,
+    "did": 9,
     "status": "Pending",
-    "pickup_datetime": null,
     "volunteer_details": null,
     "volunteer_HP": null,
-    "Campaign_id": 1,
+    "Campaign_id": 9,
     "User_id": 1,
-    "Address_id": 6,
-    "address": {
-      "id": 6,
-      "street_name": "Bhehehee",
-      "unit": "#16-25",
-      "zip": "750322",
-      "user_id": 1
-    },
+    "Address_id": 1,
     "campaign": {
-      "id": 1,
-      "name": "Run For Charity",
-      "start_date": "2019-08-20",
-      "end_date": "2019-08-21",
+      "id": 9,
+      "name": "Run For Tobias",
+      "start_date": "2018-11-06",
+      "end_date": "2018-11-07",
       "start_time": 12,
       "end_time": 17,
-      "description": "wtfffff",
-      "collection_point": "Block ass",
+      "description": "Run for redmond",
+      "collection_point": "Block 5",
       "postal_code": "750469",
       "cid": 1
+    },
+    "pickup_date": "date",
+    "pickup_time": "time",
+    "pickup_address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 1
     }
   }
 }
-
 ```
 
 ###### Failure
