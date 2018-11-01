@@ -19,6 +19,7 @@
     15. [Get addresses by current user session](#get-addresses-by-current-user-session)
     16. [Get organization name based on UEN](#get-organization-name-based-on-uen)
     17. [Get donations of campaign by campaign id and CM session](#get-donations-of-campaign-by-campaign-id-and-cm-session)
+    17. [Get all Campaigns By Current Campaign Manager Session](#get-all-campaigns-by-current-campaign-manager-session)
 
 
 
@@ -773,6 +774,75 @@ Content-Type: application/json
   "error": "No campaigns found.",
   "campaigns": null
 }
+```
+# Get all Campaigns By Current Campaign Manager Session
+
+Retrieve campaigns by current campaign manager session.
+##### Request
+```
+GET http://{{baseurl}}/campaigns/campaignmanagers HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
+```
+##### Possible Response
+
+##### Success
+```
+{
+    "status": "1",
+    "messages": "All campaigns.",
+    "campaigns": [
+        {
+            "id": 1,
+            "name": "Run For Charity",
+            "start_date": "2018-10-28",
+            "end_date": "2018-11-29",
+            "start_time": 12,
+            "end_time": 17,
+            "description": "wtfffff",
+            "collection_point": "Block ass",
+            "postal_code": "750469",
+            "cid": 1,
+            "campaign_manager": {
+                "cid": 1,
+                "UEN": "1234567890",
+                "organization_name": "helloWorldNihao",
+                "name": " "
+            },
+            "accepted_items": [
+                {
+                    "key": 1,
+                    "value": "Newspaper"
+                },
+                {
+                    "key": 2,
+                    "value": "Glass"
+                },
+                {
+                    "key": 3,
+                    "value": "Cardboard"
+                },
+                {
+                    "key": 4,
+                    "value": "Toys"
+                }
+            ],
+            "days_left": 4
+        }
+    ]
+}
+
+```
+
+##### Failed
+```
+{
+    "status": "0",
+    "errors": {
+        "message": "No campaigns found"
+    }
+}
+
 ```
 
 # Get all donations by the current user session
