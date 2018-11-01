@@ -544,6 +544,8 @@ Donation can be created for a certain campaign. Pass in the campaign ID as part 
 | items        | (Required \| Object)                                    |
 | items.keys   | (Required \| array \| int) Items keys array.            |
 | items.values | (Required \| array \| int) Array of corresponding value |
+| pickup_date  | (Required\)                                            |
+| pickup_time  | (Required\)                                            |
 
 Request:
 ```
@@ -555,6 +557,8 @@ Content-type: application/json
 	"items":{
 		"keys":[1,2,4],
 		"values":[4,4,5]
+  	"pickup_date":"01/11/2018",
+        "pickup_time":"12:39",
 	}
 }
 ```
@@ -831,6 +835,8 @@ Content-Type: application/json
       "zip": "750469",
       "user_id": 1
     }
+    	"pickup_date":"01/11/2019",
+	"pickup_time":"12:39",
   }, {
     "did": 2,
     "status": "pending",
@@ -866,6 +872,8 @@ Content-Type: application/json
       "zip": "750469",
       "user_id": 1
     }
+    "pickup_date": "01/11/2019",
+    "pickup_time": "12:10"
   }]
 }
 
