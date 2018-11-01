@@ -1100,3 +1100,55 @@ Content-Type: application/json
   }
 }
 ```
+
+# Get organization name based on UEN
+Pass in UEN to retrieve organization name.
+
+#### Request
+```
+GET http://{{baseurl}}/uen HTTP/1.0
+Content-type: application/json
+
+{
+	"uen":"T18SS0068E"
+}
+```
+
+#### Response
+
+##### Success
+```
+HTTP/1.0 200 OK
+Date: Thu, 01 Nov 2018 08:07:00 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 106
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "message": "Organization name found.",
+  "organization_name": "YISHUN ORCHID RESIDENTS' COMMITTEE"
+}
+```
+
+##### Failure
+```
+HTTP/1.0 404 Not Found
+Date: Thu, 01 Nov 2018 08:07:58 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 73
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "errors": {
+    "message": "UEN not found or have deregistered."
+  }
+}
+```

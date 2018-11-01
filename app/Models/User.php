@@ -41,7 +41,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static $rules = [
         "register" => [
-            'email' => 'required|email|unique:User'
+            'email' => 'required|email|unique:User',
+            'password' => 'required'
         ],
         "login"=>[
             'email' => 'required|email',

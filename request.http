@@ -1,16 +1,17 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
+@authorization = Authorization: Basic tobias123@gmail.com cTZqbTNhUVZZS1pxVENUdjQxTWxpTVF2ZGNocW5Kc1A1TXR1U1FVMA==
 tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
 tobiaslj@gmail.com VHI4RVl0SWFLb1RPZ2psVVRETXNkVHZYZWRzU3hQRjRtd1lUSmJhTg==
 tobiaslkj2@gmail.com azdjUjBtVUQ1cFFUMFVMTjBSVEtZT0xkbFlETlFjNlhibTVxY0Eweg==
 tobias@gmail.com SjJQSGlsQXc0cjVKZEh5OGpEMU1VTUNBMVc0bWVXTkxNampSNXJEaQ==
+tobias123@gmail.com cTZqbTNhUVZZS1pxVENUdjQxTWxpTVF2ZGNocW5Kc1A1TXR1U1FVMA==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobias@gmail.com",
+	"email":"tobias123@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -22,9 +23,9 @@ PUT {{baseurl}}/users HTTP/1.0
 {{authorization}}
 
 {
-    "email":"tobiaslkj@gmail.com",
-    "first_name":"tobi",
-    "last_name":"wan"
+    "email":"tobias123@gmail.com",
+    "first_name":"ha",
+    "last_name":"woo"
 }
 
 ### Create Session
@@ -32,7 +33,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobias@gmail.com",
+    "email":"tobias123@gmail.com",
     "password":"password"
 }
 
@@ -67,8 +68,8 @@ POST {{baseurl}}/campaigns HTTP/1.0
 
 {
     "name": "Run For Charity",
-    "start_date": "2018-11-01",
-    "end_date": "2018-11-12",
+    "start_date": "2018-11-02",
+    "end_date": "2018-11-03",
     "accepted_items": [1,2,3,4],
 	"start_time": "12",
 	"end_time": "17",
@@ -83,9 +84,9 @@ POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
 {{contentype}}
 
 {
-	"address_id":1,
+	"address_id":9,
 	"items":{
-		"keys":"[1,2,4]",
+		"keys":[1,2,4],
 		"values":[4,4,5]
 	}
 }
@@ -134,14 +135,14 @@ PATCH {{baseurl}}/donations/2 HTTP/1.0
 {{contentype}}
 
 ### View Donation
-GET {{baseurl}}/donations/10
+GET {{baseurl}}/donations/8
 {{authorization}}
 {{contentype}}
 
 ### TEST
-GET {{baseurl}}/test HTTP/1.0
+GET {{baseurl}}/uen HTTP/1.0
 {{contentype}}
 
 {
-	"uen":"T17MC0014"
+	"uen":"T18SS068E"
 }
