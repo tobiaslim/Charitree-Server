@@ -1251,7 +1251,8 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
   "donations":[{
     "did": 12,
     "status": "Pending",
-    "pickup_datetime": "date,time",
+    "pickup_date": "date",
+    "pickup_time": "time",
     "volunteer_details": null,
     "volunteer_HP": null,
     "Campaign_id": 9,
@@ -1286,7 +1287,8 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
   }, {
     "did": 13,
     "status": "Pending",
-    "pickup_datetime": "date,time",
+    "pickup_date": "date",
+    "pickup_time": "time",
     "volunteer_details": null,
     "volunteer_HP": null,
     "Campaign_id": 9,

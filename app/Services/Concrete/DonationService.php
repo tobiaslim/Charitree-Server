@@ -147,6 +147,11 @@ class DonationService implements IDonationService{
         $donations = $donations->toArray();
         $i = 0;
         foreach($donations as $donation){
+            $pickup_datetime=explode(",", $donation["pickup_datetime"]);
+            $donations[$i]["pickup_date"] = $pickup_datetime[0];
+            $donations[$i]["pickup_time"] = $pickup_datetime[1];
+            unset($donations[$i]['pickup_datetime']);
+
             unset($donations[$i]['items']);
             $donations[$i]['items'] = $items[$i];
             $i++;
