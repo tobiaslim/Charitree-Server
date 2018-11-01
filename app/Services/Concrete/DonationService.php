@@ -105,7 +105,18 @@ class DonationService implements IDonationService{
         //use an associative string to define the conditions
         if(is_null($donation)){
             throw new ModelNotFoundException("This user does not have this donation ID.");
-        } 
+        }
+        $donation = $donation->toArray(); 
+        $datetime;
+        if(isset($donation['pickup_datetime'])){
+            $datetime = explode(',',$donation['pickup_datetime']);
+            $donation['pickup_date'] = $datetime[0];
+            $donation['pickup_time'] = $datetime[1];
+        }
+        unset($donation['pickup_datetime']);
+        $donation['pickup_address'] = $donation['address'];
+        unset($donation['address']);
+
        return $donation;
     }
 }

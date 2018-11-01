@@ -1,11 +1,11 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobias123@gmail.com cTZqbTNhUVZZS1pxVENUdjQxTWxpTVF2ZGNocW5Kc1A1TXR1U1FVMA==
+@authorization = Authorization: Basic tobiaslkj@gmail.com TFpmVUVqWGNPODI1Mlg2eVlTUDhiOUR3U1hGVXJrazZmemJTS3BoYQ==
 tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
 tobiaslj@gmail.com VHI4RVl0SWFLb1RPZ2psVVRETXNkVHZYZWRzU3hQRjRtd1lUSmJhTg==
 tobiaslkj2@gmail.com azdjUjBtVUQ1cFFUMFVMTjBSVEtZT0xkbFlETlFjNlhibTVxY0Eweg==
 tobias@gmail.com SjJQSGlsQXc0cjVKZEh5OGpEMU1VTUNBMVc0bWVXTkxNampSNXJEaQ==
-tobias123@gmail.com cTZqbTNhUVZZS1pxVENUdjQxTWxpTVF2ZGNocW5Kc1A1TXR1U1FVMA==
+tobias123@gmail.com M21RREFRMHFXZDZxamNWUWVKcjJvQkRZZzZNMVpZYUlGV3dOR1R6dg==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
@@ -33,7 +33,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobias123@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "password":"password"
 }
 
@@ -79,12 +79,14 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
+POST {{baseurl}}/donations/campaigns/9 HTTP/1.0
 {{authorization}}
 {{contentype}}
 
 {
-	"address_id":9,
+	"address_id":1,
+	"pickup_date":"date",
+	"pickup_time":"time",
 	"items":{
 		"keys":[1,2,4],
 		"values":[4,4,5]
@@ -101,7 +103,7 @@ GET {{baseurl}}/campaigns
 {{contentype}}
 
 {
-     "max":3
+	"max":3
 }
 
 ### Create address 
@@ -135,7 +137,7 @@ PATCH {{baseurl}}/donations/2 HTTP/1.0
 {{contentype}}
 
 ### View Donation
-GET {{baseurl}}/donations/8
+GET {{baseurl}}/donations/9
 {{authorization}}
 {{contentype}}
 
