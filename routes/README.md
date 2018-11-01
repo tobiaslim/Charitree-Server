@@ -2,21 +2,21 @@
 
 ## Content
 1. Requests & Responses
-  1. User Create
-  2. User full edit
-  3. Create Authenticated Session
-  4. Check if session is valid
-  5. Create Campaign Manager
-  6. Get current session CM information
-  7. Get items
-  8. Create Campaign
-  9. Create Donation
-  10. Get current Campaign Manager Detail
-  11. Get all Campaigns
-  12. Get all donations of a user by the current session
-  13. Get donation by donation id
-  14. Create Address for user
-  15. Get addresses for a by the current session
+    1. [User Create](#user-create)
+    2. [Full user edit](#full-user-edit)
+    3. Create Authenticated Session
+    4. Check if session is valid
+    5. Create Campaign Manager
+    6. Get current session CM information
+    7. Get items
+    8. Create Campaign
+    9. Create Donation
+    10. Get current Campaign Manager Detail
+    11. Get all Campaigns
+    12. Get all donations of a user by the current session
+    13. Get donation by donation id
+    14. Create Address for user
+    15. Get addresses for a by the current session
 
 
 
