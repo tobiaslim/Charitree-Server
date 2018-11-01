@@ -116,7 +116,8 @@ class CampaignService implements ICampaignService{
 
     public function getAllCampaignBySession(User $user){
         $cid=$user->campaignManager->cid;
-        $campaigns = Campaign::with(['campaignmanager.user'])->where('cid', $cid)->get();
+        $today = new Carbon();
+        $campaigns = Campaign::with(['campaignmanager.user'])->where('cid', $cid)->orderBy('end_date', 'asc')->get();
         $campaigns;
         $today = new Carbon();
         $todayString = $today->toDateString();
