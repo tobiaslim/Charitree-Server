@@ -43,7 +43,7 @@ class DonationService implements IDonationService{
         $date=$array['pickup_date'];
         $time=$array['pickup_time'];
         $dateTime=$date.",".$time;
-        
+
         $donation = new Donation;
         $donation->pickup_datetime=$dateTime;
         $donation->status= DonationStatus::PENDING;
@@ -74,12 +74,15 @@ class DonationService implements IDonationService{
         
         foreach($donationsResults as $donation){
             $items = array();
-
+    
             foreach($donation->items as $item){
                 $items[] = ['id'=>$item->id, 'name'=>$item->name, 'qty'=> $item->pivot->qty];
             }
             $donations[] = ["did"=> $donation->did, "status"=> $donation->status,
-            "items"=>$items, "campaign"=>$donation->campaign, "pickup_address"=>$donation->address];
+            "items"=>$items, "campaign"=>$donation->campaign, "pickup_address"=>$donation->address,
+            $pickup_datetime=explode(",", $donation->pickup_datetime),
+            "pickup_date"=>$pickup_datetime[0],"pickup_time"=>$pickup_datetime[1]
+        ];
         }
 
         return $donations;
