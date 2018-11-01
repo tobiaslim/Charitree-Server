@@ -18,6 +18,7 @@
     14. [Create Address for user](#create-address-for-user)
     15. [Get addresses by current user session](#get-addresses-by-current-user-session)
     16. [Get organization name based on UEN](#get-organization-name-based-on-uen)
+    17. [Get donations of campaign by campaign id and CM session](#get-donations-of-campaign-by-campaign-id-and-cm-session)
 
 
 
@@ -1158,6 +1159,134 @@ Content-Type: application/json
   "status": "0",
   "errors": {
     "message": "UEN not found or have deregistered."
+  }
+}
+```
+
+# Get donations of campaign by campaign ID and CM session
+
+#### Request
+```
+GET http://{{baseurl}}/donations/campaignmanager/campaign/{campaignID} HTTP/1.0
+Content-type: application/json
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+```
+#### Response
+
+##### Success
+```
+{
+  "status":1,
+  "message": "List of donations for campaign id 9",
+  "donations":[{
+    "did": 12,
+    "status": "Pending",
+    "pickup_datetime": "date,time",
+    "volunteer_details": null,
+    "volunteer_HP": null,
+    "Campaign_id": 9,
+    "User_id": 1,
+    "Address_id": 1,
+    "address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 1
+    },
+    "user": {
+      "id": 1,
+      "email": "tobiaslkj@gmail.com",
+      "first_name": "ha",
+      "last_name": "woo"
+    },
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }]
+  }, {
+    "did": 13,
+    "status": "Pending",
+    "pickup_datetime": "date,time",
+    "volunteer_details": null,
+    "volunteer_HP": null,
+    "Campaign_id": 9,
+    "User_id": 1,
+    "Address_id": 1,
+    "address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 1
+    },
+    "user": {
+      "id": 1,
+      "email": "tobiaslkj@gmail.com",
+      "first_name": "ha",
+      "last_name": "woo"
+    },
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }]
+  }]
+}
+```
+
+##### Failure
+```
+HTTP/1.0 404 Not Found
+Date: Thu, 01 Nov 2018 17:00:28 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 73
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "errors": {
+    "message": "Campaign not found or it has ended."
+  }
+}
+```
+
+```
+HTTP/1.0 404 Not Found
+Date: Thu, 01 Nov 2018 17:00:28 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 73
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "errors": {
+    "message": "No donations found."
   }
 }
 ```

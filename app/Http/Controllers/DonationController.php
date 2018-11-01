@@ -85,5 +85,21 @@ class DonationController extends Controller
         } //the expection is defined inside donationService
       
         return response()->json(["status"=>"1","message"=>"Donation returned","donation"=>$donation],Response::HTTP_OK);
+    }
+
+    public function getAllDonationsByCampaignID(Request $request, User $user, $id){
+        $donations;
+        try{
+            $donations = $this->donationService->getAllDonationsByCampaignID($user,$id);
         }
+        catch(ModelNotFoundException $e){
+            $errors['message'] = $e->getMessage();
+            return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
+        }
+        if(is_null($donations)){
+            $errors['message'] = "No donations found.";
+            return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json(['status'=>1, 'donations'=>$donations,'message'=>"List of donations for campaign id $id"], Response::HTTP_OK);
+    }
 }

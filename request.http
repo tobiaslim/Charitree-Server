@@ -79,7 +79,7 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/donations/campaigns/9 HTTP/1.0
+POST {{baseurl}}/donations/campaigns/5 HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -152,3 +152,8 @@ GET {{baseurl}}/uen HTTP/1.0
 ###  Get campaign by campaign id
 GET {{baseurl}}/campaigns/1 HTTP/1.0
 {{contentype}}
+
+### Campaign maanger get donations for his campaign by id
+GET {{baseurl}}/donations/campaignmanagers/campaigns/9
+{{contentype}}
+{{authorization}}

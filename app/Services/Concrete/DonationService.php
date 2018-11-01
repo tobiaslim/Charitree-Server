@@ -99,6 +99,7 @@ class DonationService implements IDonationService{
         $donation->status = DonationStatus::CANCELLED;
         $donation->save();
     }
+
     public function viewDonation(User $user,$donationID)
     {
         $donation=Donation::with(['address','campaign'])->where(['User_id'=>$user->id,'did'=>$donationID])->first();
@@ -118,5 +119,39 @@ class DonationService implements IDonationService{
         unset($donation['address']);
 
        return $donation;
+    }
+
+    public function getAllDonationsByCampaignID(User $user, $campaignID){
+        $cmid = $user->campaignManager->cid;
+        $campaigns = Campaign::with(['donations.items','donations.address','donations.user'])->where('cid',$cmid)->where('id',$campaignID)->get();
+
+        if($campaigns->isEmpty()){
+            throw new ModelNotFoundException("No such campaign or campain is invalid.");
+        }
+
+        $donations = $campaigns->first()->donations;
+        if(count($donations) == 0){
+            return null;
+        }
+
+        //$donations = $donations->toArray();
+        $items = array();
+        $i = 0;
+        foreach($donations as $donation){
+            foreach($donation->items as $item){
+                $items[$i][] = ["id"=>$item->id, "name"=>$item->name, "qty"=>$item->pivot->qty];
+            }
+            $i++;
+        }
+
+        $donations = $donations->toArray();
+        $i = 0;
+        foreach($donations as $donation){
+            unset($donations[$i]['items']);
+            $donations[$i]['items'] = $items[$i];
+            $i++;
+        }
+
+        return $donations;
     }
 }

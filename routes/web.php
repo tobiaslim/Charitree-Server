@@ -83,6 +83,7 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
 
 /**
  * Routes:
+ * GET      /donations/campaignmanagers/campaigns/{id}  Get all donations for a campaign ID that belongs to a CM
  * GET      /donations                              Get all donations of the user based on the user's session
  * POST     /donations/campaigns/{campaignID}       Create donation for a campaign ID.
  * GET      /donations/campaigns/{campaignID}       Get all donations for a campaign by campaign id
@@ -91,6 +92,7 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
  * 
  */
 $router->group(['prefix' => 'donations'], function () use ($router) {
+    $router->get('/campaignmanagers/campaigns/{id:[0-9]+}',['middleware'=>[Auth::class, CM::class],"uses"=>"DonationController@getAllDonationsByCampaignID"]);
     $router->get('',['middleware'=>[Auth::class],"uses"=>"DonationController@getAllDonations"]);
     $router->post('/campaigns/{campaignID:[0-9]+}', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
     $router->get('/campaigns/{campaignID:[0-9]+}', ['middleware'=>[Auth::class, CM::class], "uses"=>"DonationController@getDonationsByCampaignID"]);
