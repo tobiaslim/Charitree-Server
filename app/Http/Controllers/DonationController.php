@@ -71,6 +71,7 @@ class DonationController extends Controller
         }
         return response()->json(['status'=>1, 'message'=>'Donation cancelled']);
     }
+    
     public function viewDonation(Request $request, User $user, $donationID)
     {
         //validator only used when the request body is not null

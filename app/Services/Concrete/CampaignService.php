@@ -87,4 +87,29 @@ class CampaignService implements ICampaignService{
 
         return $campaigns;
     }
+
+    public function getCampaignByCampaignID($id){
+        $campaign = Campaign::with(['items','campaignmanager.user'])->where('id',$id)->first();
+
+        if(is_null($campaign)){
+            return null;
+        }
+
+        $campaign = $campaign->toArray();
+        $campaign_manager = array();
+        foreach($campaign['campaignmanager']['user'] as $key => $value){
+            $campaign_manager[$key] = $value;
+        }
+        $accepted_items = array();
+        foreach($campaign['items'] as $item){
+            $accepted_items[] = ['key'=>$item['id'], 'value'=>$item['name']]; 
+        }
+        unset($campaign['cid']);
+        unset($campaign['items']);
+        $campaign['accepted_items'] = $accepted_items;
+        $campaign['campaign_manager'] = $campaign_manager;
+        unset($campaign['campaignmanager']);
+
+        return $campaign;
+    }
 }

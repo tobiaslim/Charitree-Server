@@ -57,8 +57,19 @@ class CampaignController extends Controller
 
         $campaigns = $this->campaignService->getAllCampaigns($max);
         if(is_null($campaigns)){
-            return response()->json(["status"=>"0", "error"=> "No campaigns found.", "campaigns"=>$campaigns], Response::HTTP_NOT_FOUND);
+            $errors['message'] = "No campaigns found";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_NOT_FOUND);
         }
         return response()->json(["status"=>"1", "messages"=> "All campaigns.", "campaigns"=>$campaigns], Response::HTTP_OK);
+    }
+
+    public function getCampaignByCampaignID($id){
+        $campaign = $this->campaignService->getCampaignByCampaignID($id);
+        if(is_null($campaign)){
+            $errors['message'] = "Campaign not found.";
+            return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json(['status'=>1, 'message'=>'Campaign found.', 'campaign'=>$campaign]);
     }
 }

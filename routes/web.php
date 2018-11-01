@@ -78,13 +78,14 @@ $router->get('/uen', "UserController@retrieveOrganizationNameByUEN");
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->get('', "CampaignController@getCampaigns");
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
+    $router->get('/{id}', "CampaignController@getCampaignByCampaignID");
 });
 
 /**
  * Routes:
  * GET      /donations                              Get all donations of the user based on the user's session
  * POST     /donations/campaigns/{campaignID}       Create donation for a campaign ID.
- * GET      /donations/campaigns/{campaignID}       Get all campaigns
+ * GET      /donations/campaigns/{campaignID}       Get all donations for a campaign by campaign id
  * PATCH    /donations/{donationID}                 Cancel Donation
  * GET      /donations/{donationID}                 View a specific donation
  * 

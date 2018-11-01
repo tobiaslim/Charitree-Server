@@ -139,10 +139,14 @@ GET {{baseurl}}/donations/8
 {{authorization}}
 {{contentype}}
 
-### TEST
+### Get org name by uen
 GET {{baseurl}}/uen HTTP/1.0
 {{contentype}}
 
 {
 	"uen":"T18SS068E"
 }
+
+###  Get campaign by campaign id
+GET {{baseurl}}/campaigns/1 HTTP/1.0
+{{contentype}}
