@@ -78,7 +78,7 @@ $router->get('/uen', "UserController@retrieveOrganizationNameByUEN");
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
     $router->get('', "CampaignController@getCampaigns");
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
-    $router->get('/{id}', "CampaignController@getCampaignByCampaignID");
+    $router->get('/{id:[0-9]+}', "CampaignController@getCampaignByCampaignID");
 });
 
 /**
@@ -92,10 +92,10 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
  */
 $router->group(['prefix' => 'donations'], function () use ($router) {
     $router->get('',['middleware'=>[Auth::class],"uses"=>"DonationController@getAllDonations"]);
-    $router->post('/campaigns/{campaignID}', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
-    $router->get('/campaigns/{campaignID}', ['middleware'=>[Auth::class, CM::class], "uses"=>"DonationController@getDonationsByCampaignID"]);
-    $router->patch('/{donationID}', ['middleware'=>[Auth::class], "uses"=>"DonationController@cancelDonationByID"]);
-    $router->get('/{id}',['middleware'=>[Auth::class], "uses"=>"DonationController@viewDonation"]);
+    $router->post('/campaigns/{campaignID:[0-9]+}', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
+    $router->get('/campaigns/{campaignID:[0-9]+}', ['middleware'=>[Auth::class, CM::class], "uses"=>"DonationController@getDonationsByCampaignID"]);
+    $router->patch('/{donationID:[0-9]+}', ['middleware'=>[Auth::class], "uses"=>"DonationController@cancelDonationByID"]);
+    $router->get('/{id:[0-9]+}',['middleware'=>[Auth::class], "uses"=>"DonationController@viewDonation"]);
 });
 
 
