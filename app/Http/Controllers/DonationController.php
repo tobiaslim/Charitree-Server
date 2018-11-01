@@ -43,7 +43,9 @@ class DonationController extends Controller
             'items.keys'=>['required','array', new ArraySameSizeAs],
             'items.values'=>'required|array',
             'items.keys.*'=>'required|integer|between:1,7',
-            'items.values.*'=>'integer'
+            'items.values.*'=>'integer',
+            'pickup_date'=>'required',
+            'pickup_time'=>'required'
         ]);
 
         if($validator->fails()){
