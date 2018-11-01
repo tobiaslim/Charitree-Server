@@ -42,7 +42,7 @@ GET {{baseurl}}/sessions HTTP/1.0
 {{authorization}}
 
 ### Create Campaign Manager
-POST {{baseurl}}/users/campaignmanager HTTP/1.0
+POST {{baseurl}}/users/campaignmanagers HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -52,7 +52,7 @@ POST {{baseurl}}/users/campaignmanager HTTP/1.0
 }
 
 ### Get current session campagin manager information
-GET {{baseurl}}/users/campaignmanager HTTP/1.0
+GET {{baseurl}}/users/campaignmanagers HTTP/1.0
 {{contentype}}
 {{authorization}}
 
@@ -67,8 +67,8 @@ POST {{baseurl}}/campaigns HTTP/1.0
 
 {
     "name": "Run For Charity",
-    "start_date": "2018-10-27",
-    "end_date": "2018-10-29",
+    "start_date": "2018-11-01",
+    "end_date": "2018-11-12",
     "accepted_items": [1,2,3,4],
 	"start_time": "12",
 	"end_time": "17",
@@ -85,7 +85,7 @@ POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
 {
 	"address_id":1,
 	"items":{
-		"keys":[1,2,4],
+		"keys":"[1,2,4]",
 		"values":[4,4,5]
 	}
 }
@@ -137,3 +137,11 @@ PATCH {{baseurl}}/donations/2 HTTP/1.0
 GET {{baseurl}}/donations/10
 {{authorization}}
 {{contentype}}
+
+### TEST
+GET {{baseurl}}/test HTTP/1.0
+{{contentype}}
+
+{
+	"uen":"T17MC0014"
+}

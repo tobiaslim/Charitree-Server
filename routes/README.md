@@ -14,7 +14,10 @@
   10. Get current Campaign Manager Detail
   11. Get all Campaigns
   12. Get all donations of a user by the current session
-  13. Create Address for user
+  13. Get donation by donation id
+  14. Create Address for user
+  15. Get addresses for a by the current session
+
 
 
 ## Preamble
@@ -203,7 +206,7 @@ Authenticate and create a session for user.
 
 ##### Request:
 ```
-POST http://{{baseurl}}/users HTTP/1.0
+POST http://{{baseurl}}/sessions HTTP/1.0
 Content-type: application/json
 
 {
@@ -304,7 +307,7 @@ Create a campaign manager based on a registered user.
 
 ##### Request:
 ```
-POST http://{{baseurl}}/users/campaignmanager HTTP/1.1
+POST http://{{baseurl}}/users/campaignmanagers HTTP/1.1
 Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
 Content-Type: application/json
 
@@ -364,6 +367,7 @@ You can use this API to check if the current session is a CM
 ##### Request:
 ```
 GET http://{{baseurl}}/users/campaignmanagers HTTP/1.1
+Content-type: application/json
 Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpiVmh2Y3pKV1dVcHVORlp3ZUdoemFVTjJZbEJzY1VnMlYzaGpWMnBxZW01b2NVRnZibWR4ZHc9PQ==
 ```
 
@@ -468,25 +472,36 @@ Create a campaign.
 
 
 ##### Request Body:
-| Field          | Description                                             |
-| -------------- | ------------------------------------------------------- |
-| name           | (Required) Campaign name.                               |
-| start_date     | (Required \| dd-MMM-yyyy) Campaign Start Date           |
-| end_date       | (Required \| dd-MMM-yyyy) Campaign End Date             |
-| accepted_items | (Required \| array) List of items the campaign requires |
+| Field            | Description                                                                            |
+| ---------------- | -------------------------------------------------------------------------------------- |
+| name             | (Required) Campaign name.                                                              |
+| start_date       | (Required \| yyyy-mm-dd) Campaign Start Date                                           |
+| end_date         | (Required \| yyyy-mm-dd) Campaign End Date                                             |
+| accepted_items   | (Required \| array | int ) List of items the campaign requires                         |
+| start_time       | (Required \| int \| 0 - 23) Hours from 0000HRS.                                        |
+| end_time         | (Required \| int \| 0 - 24) Hours from 0000HRS. Must be greater or equal to start_time |
+| description      | (Required \| string \| max:255 )                                                       |
+| collection_point | (required \| alpha numeric with space string \| max:45 ) Street address                |
+| postal_code      | (Required \| string \| size:6) Postal code of collection point                         |
 
 
 ##### Request:
 ```
 POST http://{{baseurl}}/campaigns
-Authorization: Basic dG9iaWFzbGtqQGdtYWlsLmNvbTpWVkp5VUVkT2VUSllkVlY1WWpWb1YxbzBZV2xzWW1KTGJuWmFSRlIwY2tkVmRrTk5ZVkZoYVE9PQ==
-Content-type: application/json
+POST {{baseurl}}/campaigns HTTP/1.0
+{{authorization}}
+{{contentype}}
 
 {
-	"name":"Run for Harri",
-	"start_date":"06-Oct-1995",
-	"end_date":"07-Oct-1997",
-    "accepted_items":[1,2,3,4]
+    "name": "Run For Charity",
+    "start_date": "2018-10-25",
+    "end_date": "2018-10-26",
+    "accepted_items": [1,2,3,4],
+	  "start_time": "12",
+	  "end_time": "17",
+	  "description": "wtfffff",
+	  "collection_point": "Block ass",
+	  "postal_code": "750469"
 }
 ```
 
@@ -519,7 +534,7 @@ HTTP Status: 422
 }
 ```
 # Create Donation
-Donation can be created for a certain campaign. Pass in the ID as part of the request URL to create a donation for a specific campaign. 
+Donation can be created for a certain campaign. Pass in the campaign ID as part of the request URL to create a donation for a specific campaign. 
 
 ##### Request Body:
 | Field        | Description                                             |
@@ -531,7 +546,7 @@ Donation can be created for a certain campaign. Pass in the ID as part of the re
 
 Request:
 ```
-POST http://{{baseurl}}/campaigns/24/donations HTTP/1.0
+POST http://{{baseurl}}/donations/campaigns/{campaignID} HTTP/1.0
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
 Content-type: application/json
 {
@@ -585,7 +600,7 @@ Get the current session's campaign manager detail. If current session is not a c
 
 Request:
 ```
-GET http://{{baseurl}}/campaignmanagers HTTP/1.0
+GET http://{{baseurl}}/users/campaignmanagers HTTP/1.0
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
 ```
 Response:
@@ -645,7 +660,7 @@ Retrieve campaigns.
 
 ##### Request:
 ```
-GET /campaigns HTTP/1.0
+GET http://{{baseurl}}/campaigns HTTP/1.0
 Content-type: application/json
 
 {
@@ -658,11 +673,11 @@ Content-type: application/json
 
 ```
 HTTP/1.0 200 OK
-Date: Mon, 22 Oct 2018 23:37:55 GMT
+Date: Wed, 24 Oct 2018 12:38:26 GMT
 Server: Apache/2.4.25 (Debian)
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 860
+Content-Length: 978
 Connection: close
 Content-Type: application/json
 
@@ -674,12 +689,17 @@ Content-Type: application/json
     "name": "Run For Charity",
     "start_date": "2018-10-25",
     "end_date": "2018-10-26",
-    "cid": 9,
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 1,
     "campaign_manager": {
-      "cid": 9,
-      "UEN": "S91291232",
-      "organization_name": "www",
-      "name": "harrison wjy"
+      "cid": 1,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
     },
     "accepted_items": [{
       "key": 1,
@@ -693,27 +713,24 @@ Content-Type: application/json
     }, {
       "key": 4,
       "value": "Toys"
-    }, {
-      "key": 5,
-      "value": "Furniture"
-    }, {
-      "key": 6,
-      "value": "Plastic"
-    }, {
-      "key": 7,
-      "value": "Metals"
-    }]
+    }],
+    "days_left": 0
   }, {
-    "id": 3,
+    "id": 1,
     "name": "Run For Charity",
-    "start_date": "2018-10-25",
-    "end_date": "2018-10-26",
-    "cid": 9,
+    "start_date": "2019-08-20",
+    "end_date": "2019-08-21",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 1,
     "campaign_manager": {
-      "cid": 9,
-      "UEN": "S91291232",
-      "organization_name": "www",
-      "name": "harrison wjy"
+      "cid": 1,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
     },
     "accepted_items": [{
       "key": 1,
@@ -727,16 +744,8 @@ Content-Type: application/json
     }, {
       "key": 4,
       "value": "Toys"
-    }, {
-      "key": 5,
-      "value": "Furniture"
-    }, {
-      "key": 6,
-      "value": "Plastic"
-    }, {
-      "key": 7,
-      "value": "Metals"
-    }]
+    }],
+    "days_left": 299
   }]
 }
 ```
@@ -764,7 +773,9 @@ Content-Type: application/json
 
 ##### Request
 ```
-GET /users/donations HTTP/1.0
+GET http://{{baseurl}}/donations HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
 ```
 
 ##### Possible Response
@@ -772,12 +783,12 @@ GET /users/donations HTTP/1.0
 ##### Success
 ```
 HTTP/1.0 200 OK
-Date: Tue, 23 Oct 2018 15:26:39 GMT
+Date: Wed, 24 Oct 2018 15:20:43 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 629
+Content-Length: 977
 Connection: close
 Content-Type: application/json
 
@@ -785,9 +796,8 @@ Content-Type: application/json
   "status": 1,
   "message": "Donations of a user.",
   "donations": [{
-    "did": 4,
+    "did": 1,
     "status": "pending",
-    "Campaign_id": 3,
     "items": [{
       "id": 1,
       "name": "Newspaper",
@@ -800,15 +810,29 @@ Content-Type: application/json
       "id": 4,
       "name": "Toys",
       "qty": 5
-    }, {
-      "id": 5,
-      "name": "Furniture",
-      "qty": 6
-    }]
+    }],
+    "campaign": {
+      "id": 1,
+      "name": "Run For Charity",
+      "start_date": "2019-08-20",
+      "end_date": "2019-08-21",
+      "start_time": 12,
+      "end_time": 17,
+      "description": "wtfffff",
+      "collection_point": "Block ass",
+      "postal_code": "750469",
+      "cid": 1
+    },
+    "pickup_address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 1
+    }
   }, {
-    "did": 5,
+    "did": 2,
     "status": "pending",
-    "Campaign_id": 3,
     "items": [{
       "id": 1,
       "name": "Newspaper",
@@ -821,32 +845,26 @@ Content-Type: application/json
       "id": 4,
       "name": "Toys",
       "qty": 5
-    }, {
-      "id": 5,
-      "name": "Furniture",
-      "qty": 6
-    }]
-  }, {
-    "did": 6,
-    "status": "pending",
-    "Campaign_id": 3,
-    "items": [{
+    }],
+    "campaign": {
       "id": 1,
-      "name": "Newspaper",
-      "qty": 4
-    }, {
-      "id": 2,
-      "name": "Glass",
-      "qty": 4
-    }, {
-      "id": 4,
-      "name": "Toys",
-      "qty": 5
-    }, {
-      "id": 5,
-      "name": "Furniture",
-      "qty": 6
-    }]
+      "name": "Run For Charity",
+      "start_date": "2019-08-20",
+      "end_date": "2019-08-21",
+      "start_time": 12,
+      "end_time": 17,
+      "description": "wtfffff",
+      "collection_point": "Block ass",
+      "postal_code": "750469",
+      "cid": 1
+    },
+    "pickup_address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 1
+    }
   }]
 }
 
@@ -872,6 +890,83 @@ Content-Type: application/json
 }
 ```
 
+# Get donation by donation ID
+
+##### Request
+```
+GET http://{{baseurl}}/donations/{donationID} HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
+```
+##### Response:
+###### Success
+```
+HTTP/1.0 200 OK
+Date: Wed, 31 Oct 2018 12:56:04 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 493
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "1",
+  "message": "Donation returned",
+  "donation": {
+    "did": 4,
+    "status": "Pending",
+    "pickup_datetime": null,
+    "volunteer_details": null,
+    "volunteer_HP": null,
+    "Campaign_id": 1,
+    "User_id": 1,
+    "Address_id": 6,
+    "address": {
+      "id": 6,
+      "street_name": "Bhehehee",
+      "unit": "#16-25",
+      "zip": "750322",
+      "user_id": 1
+    },
+    "campaign": {
+      "id": 1,
+      "name": "Run For Charity",
+      "start_date": "2019-08-20",
+      "end_date": "2019-08-21",
+      "start_time": 12,
+      "end_time": 17,
+      "description": "wtfffff",
+      "collection_point": "Block ass",
+      "postal_code": "750469",
+      "cid": 1
+    }
+  }
+}
+
+```
+
+###### Failure
+```
+HTTP/1.0 404 Not Found
+Date: Wed, 31 Oct 2018 13:07:06 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 79
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "errors": {
+    "message": "This user does not have this donation ID."
+  }
+}
+```
+
 # Create Address for user
 | Field                    | Description                                                             |
 | ------------------------ | ----------------------------------------------------------------------- |
@@ -883,7 +978,9 @@ Content-Type: application/json
 
 ##### Request
 ```
-POST /users/addresses HTTP/1.0
+POST http://{{baseurl}}/addresses HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
 ```
 
 ##### Response:
@@ -916,5 +1013,90 @@ Content-Type: application/json
     "zip": "750322",
     "user_id": 2
   }]
+}
+```
+
+# Get addresses of the current session user
+Get all the addresses of the current user by the session token
+
+#### Request
+```
+GET http://{{baseurl}}/addresses HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
+```
+
+#### Response
+##### Success
+```
+HTTP/1.0 200 OK
+Date: Wed, 31 Oct 2018 16:14:31 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 565
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "message": "User's addresses",
+  "addresses": [{
+    "id": 1,
+    "street_name": "Block 469 AdmiraltyDrive",
+    "unit": "#16-55",
+    "zip": "750469",
+    "user_id": 1
+  }, {
+    "id": 2,
+    "street_name": "Bhehehee",
+    "unit": "#16-25",
+    "zip": "750322",
+    "user_id": 1
+  }, {
+    "id": 3,
+    "street_name": "Block 469 AdmiraltyDrive",
+    "unit": "#16-55",
+    "zip": "750469",
+    "user_id": 1
+  }, {
+    "id": 4,
+    "street_name": "Bhehehee",
+    "unit": "#16-25",
+    "zip": "750322",
+    "user_id": 1
+  }, {
+    "id": 5,
+    "street_name": "Block 469 AdmiraltyDrive",
+    "unit": "#16-55",
+    "zip": "750469",
+    "user_id": 1
+  }, {
+    "id": 6,
+    "street_name": "Bhehehee",
+    "unit": "#16-25",
+    "zip": "750322",
+    "user_id": 1
+  }]
+}
+```
+##### Failure
+```
+HTTP/1.0 404 Not Found
+Date: Wed, 31 Oct 2018 16:15:53 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 54
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 0,
+  "errors": {
+    "message": "No addresses found"
+  }
 }
 ```

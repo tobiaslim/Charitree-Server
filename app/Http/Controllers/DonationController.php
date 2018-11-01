@@ -40,7 +40,8 @@ class DonationController extends Controller
         $validator = Validator::make($request->all(),[
             'address_id'=>'required|integer|exists:Address,id',
             'items'=>'required',
-            'items.keys'=>[new ArraySameSizeAs],
+            'items.keys'=>['required','array', new ArraySameSizeAs],
+            'items.values'=>'required|array',
             'items.keys.*'=>'required|integer|between:1,7',
             'items.values.*'=>'integer'
         ]);

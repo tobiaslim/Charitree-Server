@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 use App\Services\Contracts\IUserService;
 use App\Exceptions\ModelConflictException;
+use App\Utility\IHttpClient;
 
 class UserController extends Controller
 {
@@ -59,7 +60,7 @@ class UserController extends Controller
         }
 
         if($this->userService->edit($request->all(), $user)){
-            return response()->json(['status'=>'1','message'=>'User updated.'],201);
+            return response()->json(['status'=>'1','message'=>'User updated.'],Response::HTTP_CREATED);
         }
 
         else{
@@ -93,5 +94,25 @@ class UserController extends Controller
     public function getCurrentCampaignManagerDetails(User $user){
         $cm = $user->campaignManager;
         return response()->json(['status' => '1', 'campaign_manager' => $cm], Response::HTTP_OK);
+    }
+
+    public function retrieveOrganizationNameByUEN(Request $request, IHttpClient $httpClient){
+        $validator = Validator::make($request->all(), ['uen'=>'required|between:9,10']);
+        
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            $errors["message"] = "Unable to process parameters.";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+
+        $orgname = $this->userService->getEntityNameByUEN($httpClient, $request->input('uen'));
+        if(is_null($orgname)){
+            $errors['message'] = "UEN not found or have deregistered.";
+            return response()->json(['status' => '0', 'errors' => $errors], Response::HTTP_NOT_FOUND);
+        }
+        else{
+            return response()->json(['status'=>1, 'message'=>'Organization name found.', 'organization_name'=>$orgname], Response::HTTP_OK);
+        }
     }
 }

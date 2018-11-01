@@ -8,6 +8,7 @@ use App\Models\Session;
 use App\Services\Contracts\IAuthenticate;
 use App\Models\Address;
 use App\Exceptions\ModelConflictException;
+use App\Utility\IHttpClient;
 
 
 class UserService implements IUserService, IAuthenticate{
@@ -102,5 +103,25 @@ class UserService implements IUserService, IAuthenticate{
         $cm = new CampaignManager($array);
         $cm->cid = $user->id;
         $user->campaignManager()->save($cm);
+    }
+
+    public function getEntityNameByUEN(IHttpClient $httpClient, $uen){
+        $params = ['resource_id'=>'5ab68aac-91f6-4f39-9b21-698610bdf3f7', 'q'=>$uen];
+        $httpClient->request('GET', 'https://data.gov.sg/api/action/datastore_search', $params);
+
+        $response = $httpClient->getResponseBody();
+        $results = $response['result']['records'];
+
+        if(is_null($results) || count($results)==0){
+            return null;
+        }
+
+        foreach($results as $result){
+            if($result['uen_status'] === 'R'){
+                return $result['entity_name'];
+            }
+        }
+
+        return null;
     }
 }

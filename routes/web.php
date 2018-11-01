@@ -36,8 +36,8 @@ $router->get('/', function () use ($router) {
  */
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->post('', 'UserController@register');
-    $router->post('/campaignmanager',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);
-    $router->get('/campaignmanager',['middleware'=>[Auth::class, CM::class], "uses"=>"UserController@getCurrentCampaignManagerDetails"]); 
+    $router->post('/campaignmanagers',['middleware'=>[Auth::class], "uses"=>"UserController@registerAsCampaignManager"]);
+    $router->get('/campaignmanagers',['middleware'=>[Auth::class, CM::class], "uses"=>"UserController@getCurrentCampaignManagerDetails"]); 
     $router->put('', ['middleware'=>[Auth::class], "uses"=>"UserController@editUser"]);
 });
 
@@ -66,6 +66,7 @@ $router->group(['prefix' => 'sessions'], function () use ($router) {
  * GET      /items                                  Get list of items
  */
 $router->get('/items', "ItemController@getItems");
+$router->get('/uen', "UserController@retrieveOrganizationNameByUEN");
 
 
 /**
@@ -75,7 +76,7 @@ $router->get('/items', "ItemController@getItems");
  * 
  */
 $router->group(['prefix' => 'campaigns'], function () use ($router) {
-    $router->get('/', "CampaignController@getCampaigns");
+    $router->get('', "CampaignController@getCampaigns");
     $router->post('', ['middleware'=>[Auth::class, CM::class], "uses"=>"CampaignController@createCampaign"]);
 });
 
@@ -85,6 +86,7 @@ $router->group(['prefix' => 'campaigns'], function () use ($router) {
  * POST     /donations/campaigns/{campaignID}       Create donation for a campaign ID.
  * GET      /donations/campaigns/{campaignID}       Get all campaigns
  * PATCH    /donations/{donationID}                 Cancel Donation
+ * GET      /donations/{donationID}                 View a specific donation
  * 
  */
 $router->group(['prefix' => 'donations'], function () use ($router) {
@@ -92,7 +94,6 @@ $router->group(['prefix' => 'donations'], function () use ($router) {
     $router->post('/campaigns/{campaignID}', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
     $router->get('/campaigns/{campaignID}', ['middleware'=>[Auth::class, CM::class], "uses"=>"DonationController@getDonationsByCampaignID"]);
     $router->patch('/{donationID}', ['middleware'=>[Auth::class], "uses"=>"DonationController@cancelDonationByID"]);
-    $router->post('/{campaignID}/donations', ['middleware'=>Auth::class, "uses"=>"DonationController@createDonation"]);
     $router->get('/{id}',['middleware'=>[Auth::class], "uses"=>"DonationController@viewDonation"]);
 });
 
