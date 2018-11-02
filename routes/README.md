@@ -19,7 +19,9 @@
     15. [Get addresses by current user session](#get-addresses-by-current-user-session)
     16. [Get organization name based on UEN](#get-organization-name-based-on-uen)
     17. [Get donations of campaign by campaign id and CM session](#get-donations-of-campaign-by-campaign-id-and-cm-session)
-    17. [Get all Campaigns By Current Campaign Manager Session](#get-all-campaigns-by-current-campaign-manager-session)
+    18. [Get donation by donation ID for Campaign Manager](#get-donation-by-donation-id-for-campaign-manager)
+    19. [Get all Campaigns By Current Campaign Manager Session](#get-all-campaigns-by-current-campaign-manager-session)
+    20. [Get campaign by campaign id](#get-campaign-by-campaign-id)
 
 
 
@@ -1233,6 +1235,53 @@ Content-Type: application/json
 }
 ```
 
+# Get donation by donation ID for Campaign Manager
+##### Success
+```
+HTTP/1.0 200 OK
+Date: Fri, 02 Nov 2018 06:19:39 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 331
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "donation": {
+    "did": 5,
+    "status": "Pending",
+    "volunteer_details": null,
+    "volunteer_HP": null,
+    "Campaign_id": 1,
+    "User_id": 1,
+    "Address_id": 1,
+    "user": {
+      "id": 1,
+      "email": "tobiaslkj@gmail.com",
+      "first_name": "ha",
+      "last_name": "woo"
+    },
+    "items": [{
+      "id": 1,
+      "name": "Newspaper",
+      "qty": 4
+    }, {
+      "id": 2,
+      "name": "Glass",
+      "qty": 4
+    }, {
+      "id": 4,
+      "name": "Toys",
+      "qty": 5
+    }]
+  }
+}
+
+```
+
 # Get donations of campaign by campaign ID and CM session
 
 #### Request
@@ -1359,6 +1408,81 @@ Content-Type: application/json
   "status": "0",
   "errors": {
     "message": "No donations found."
+  }
+}
+```
+
+# Get Campaign by Campaign ID
+Get a single campaign by a campaign ID.
+
+##### Request
+```
+GET http://{{baseurl}}/campagins/{campaignID} HTTP/1.0
+Content-type: application/json
+```
+
+##### Success
+```
+HTTP/1.0 200 OK
+Date: Fri, 02 Nov 2018 16:12:26 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 491
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "message": "Campaign found.",
+  "campaign": {
+    "id": 1,
+    "name": "Run For Charity",
+    "start_date": "2018-11-03",
+    "end_date": "2018-11-04",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }],
+    "campaign_manager": {
+      "id": 1,
+      "email": "tobias123@gmail.com",
+      "first_name": "test first name",
+      "last_name": "test last name"
+    }
+  }
+}
+```
+
+##### Failure
+```
+HTTP/1.0 404 Not Found
+Date: Fri, 02 Nov 2018 16:14:42 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 55
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 0,
+  "errors": {
+    "message": "Campaign not found."
   }
 }
 ```

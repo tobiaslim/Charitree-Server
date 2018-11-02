@@ -1,17 +1,15 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com TFpmVUVqWGNPODI1Mlg2eVlTUDhiOUR3U1hGVXJrazZmemJTS3BoYQ==
-tobiaslkj@gmail.com TFQ0OFVQVHY4RzlMWUFMZzVUNjBUeGJmalZ6Z3dsSlBkR05YanBDWg==
-tobiaslj@gmail.com VHI4RVl0SWFLb1RPZ2psVVRETXNkVHZYZWRzU3hQRjRtd1lUSmJhTg==
-tobiaslkj2@gmail.com azdjUjBtVUQ1cFFUMFVMTjBSVEtZT0xkbFlETlFjNlhibTVxY0Eweg==
-tobias@gmail.com SjJQSGlsQXc0cjVKZEh5OGpEMU1VTUNBMVc0bWVXTkxNampSNXJEaQ==
-tobias123@gmail.com M21RREFRMHFXZDZxamNWUWVKcjJvQkRZZzZNMVpZYUlGV3dOR1R6dg==
+@authorization = Authorization: Basic tobias123@gmail.com S25JQ3NjSkdHbDN2Q3FUcDJ5YmVzb3N5WVpIWG56RDFqWVlDdG9lVA==
+
+tobias123@gmail.com S25JQ3NjSkdHbDN2Q3FUcDJ5YmVzb3N5WVpIWG56RDFqWVlDdG9lVA==
+tobiaslkj@gmail.com ZFNrMWNieThXV2h0cEFXYTVpcHZyb0g4Vk5nTUJ0eXFVZnQ4TjJOTQ==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobias123@gmail.com",
+	"email":"tobiaslkj@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -23,7 +21,7 @@ PUT {{baseurl}}/users HTTP/1.0
 {{authorization}}
 
 {
-    "email":"tobias123@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "first_name":"ha",
     "last_name":"woo"
 }
@@ -68,8 +66,8 @@ POST {{baseurl}}/campaigns HTTP/1.0
 
 {
     "name": "Run For Charity",
-    "start_date": "2018-11-02",
-    "end_date": "2018-11-03",
+    "start_date": "2018-11-03",
+    "end_date": "2018-11-04",
     "accepted_items": [1,2,3,4],
 	"start_time": "12",
 	"end_time": "17",
@@ -79,7 +77,7 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/donations/campaigns/5 HTTP/1.0
+POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -137,7 +135,7 @@ PATCH {{baseurl}}/donations/2 HTTP/1.0
 {{contentype}}
 
 ### View Donation
-GET {{baseurl}}/donations/9
+GET {{baseurl}}/donations/1
 {{authorization}}
 {{contentype}}
 
@@ -154,6 +152,11 @@ GET {{baseurl}}/campaigns/1 HTTP/1.0
 {{contentype}}
 
 ### Campaign maanger get donations for his campaign by id
-GET {{baseurl}}/donations/campaignmanagers/campaigns/9
+GET {{baseurl}}/donations/campaignmanagers/campaigns/1
+{{contentype}}
+{{authorization}}
+
+### Campaign manager get a donation
+GET {{baseurl}}/donations/1/campaignmanagers
 {{contentype}}
 {{authorization}}

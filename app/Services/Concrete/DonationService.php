@@ -42,10 +42,10 @@ class DonationService implements IDonationService{
 
         $date=$array['pickup_date'];
         $time=$array['pickup_time'];
-        $dateTime=$date.",".$time;
 
         $donation = new Donation;
-        $donation->pickup_datetime=$dateTime;
+        $donation->pickup_date=$date;
+        $donation->pickup_time=$time;
         $donation->status= DonationStatus::PENDING;
         $donation->user()->associate($user);
         $donation->campaign()->associate($campaign);
@@ -72,20 +72,23 @@ class DonationService implements IDonationService{
             return NULL;
         }
         
+        $i = 0;
+        $items = array();
         foreach($donationsResults as $donation){
-            $items = array();
-    
             foreach($donation->items as $item){
-                $items[] = ['id'=>$item->id, 'name'=>$item->name, 'qty'=> $item->pivot->qty];
+                $items[$i][] = ['id'=>$item->id, 'name'=>$item->name, 'qty'=> $item->pivot->qty];
             }
-            $donations[] = ["did"=> $donation->did, "status"=> $donation->status,
-            "items"=>$items, "campaign"=>$donation->campaign, "pickup_address"=>$donation->address,
-            $pickup_datetime=explode(",", $donation->pickup_datetime),
-            "pickup_date"=>$pickup_datetime[0],"pickup_time"=>$pickup_datetime[1]
-        ];
+            $i++;
+        }
+        $donationsResults->toArray();
+        $i = 0;
+        foreach($donationsResults as $donation ){
+            unset($donationsResults[$i]['items']);
+            $donationsResults[$i]['items'] = $items[$i];
+            $i++;
         }
 
-        return $donations;
+        return $donationsResults;
     }
 
     public function cancelDonation($donationID){
@@ -108,13 +111,6 @@ class DonationService implements IDonationService{
             throw new ModelNotFoundException("This user does not have this donation ID.");
         }
         $donation = $donation->toArray(); 
-        $datetime;
-        if(isset($donation['pickup_datetime'])){
-            $datetime = explode(',',$donation['pickup_datetime']);
-            $donation['pickup_date'] = $datetime[0];
-            $donation['pickup_time'] = $datetime[1];
-        }
-        unset($donation['pickup_datetime']);
         $donation['pickup_address'] = $donation['address'];
         unset($donation['address']);
 
@@ -147,16 +143,37 @@ class DonationService implements IDonationService{
         $donations = $donations->toArray();
         $i = 0;
         foreach($donations as $donation){
-            $pickup_datetime=explode(",", $donation["pickup_datetime"]);
-            $donations[$i]["pickup_date"] = $pickup_datetime[0];
-            $donations[$i]["pickup_time"] = $pickup_datetime[1];
-            unset($donations[$i]['pickup_datetime']);
-
             unset($donations[$i]['items']);
             $donations[$i]['items'] = $items[$i];
             $i++;
         }
 
         return $donations;
+    }
+
+    public function getDonationByDonationID(User $user, $donationID){
+        $cid = $user->campaignManager->cid;
+        $donation = Donation::with(['user','items'])->where('did', $donationID)->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->get();
+
+        if($donation->isEmpty()){
+            return null;
+        }
+        $donation = $donation->first();
+        $items = array();
+        $i = 0;
+        foreach($donation->items as $item){
+            $items[$i]['id'] = $item->id;
+            $items[$i]['name'] = $item->name;
+            $items[$i]['qty'] = $item->pivot->qty;
+            $i++;
+        }
+        $donation = $donation->toArray();
+
+        unset($donation['items']);
+        $donation['items'] = $items;
+        
+        return $donation;
     }
 }

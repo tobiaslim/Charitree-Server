@@ -102,4 +102,13 @@ class DonationController extends Controller
         }
         return response()->json(['status'=>1, 'donations'=>$donations,'message'=>"List of donations for campaign id $id"], Response::HTTP_OK);
     }
+
+    public function getDonationByDonationID(User $user,$id){
+        $donation = $this->donationService->getDonationByDonationID($user, $id);
+        if(is_null($donation)){
+            $errors['message'] = "Donation id $id not found.";
+            return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json(['status'=>1, 'donation'=>$donation], Response::HTTP_OK);
+    }
 }
