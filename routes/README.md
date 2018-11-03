@@ -791,49 +791,76 @@ Content-type: application/json
 ##### Success
 ```
 {
-    "status": "1",
-    "messages": "All campaigns.",
-    "campaigns": [
-        {
-            "id": 1,
-            "name": "Run For Charity",
-            "start_date": "2018-10-28",
-            "end_date": "2018-11-29",
-            "start_time": 12,
-            "end_time": 17,
-            "description": "wtfffff",
-            "collection_point": "Block ass",
-            "postal_code": "750469",
-            "cid": 1,
-            "campaign_manager": {
-                "cid": 1,
-                "UEN": "1234567890",
-                "organization_name": "helloWorldNihao",
-                "name": " "
-            },
-            "accepted_items": [
-                {
-                    "key": 1,
-                    "value": "Newspaper"
-                },
-                {
-                    "key": 2,
-                    "value": "Glass"
-                },
-                {
-                    "key": 3,
-                    "value": "Cardboard"
-                },
-                {
-                    "key": 4,
-                    "value": "Toys"
-                }
-            ],
-            "days_left": 4
-        }
-    ]
+  "status": "1",
+  "messages": "All campaigns.",
+  "campaigns": [{
+    "id": 2,
+    "name": "Run For Charity",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 3,
+    "total_donations": 3,
+    "pending_donations": 3,
+    "campaign_manager": {
+      "cid": 3,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }],
+    "days_left": 1
+  }, {
+    "id": 3,
+    "name": "Hair For Charity",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 3,
+    "total_donations": 1,
+    "pending_donations": 1,
+    "campaign_manager": {
+      "cid": 3,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }],
+    "days_left": 1
+  }]
 }
-
 ```
 
 ##### Failed

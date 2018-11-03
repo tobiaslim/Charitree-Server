@@ -9,6 +9,7 @@ use App\Models\Campaign;
 use App\Models\CampaignManager;
 use Symfony\Component\Finder\Comparator\DateComparator;
 use Illuminate\Support\Carbon;
+use App\Models\DonationStatus;
 
 
 class CampaignService implements ICampaignService{
@@ -117,7 +118,9 @@ class CampaignService implements ICampaignService{
     public function getAllCampaignBySession(User $user){
         $cid=$user->campaignManager->cid;
         $today = new Carbon();
-        $campaigns = Campaign::with(['campaignmanager.user'])->where('cid', $cid)->orderBy('end_date', 'asc')->get();
+        $campaigns = Campaign::with(['campaignmanager.user'])->withCount(['donations as total_donations','donations as pending_donations'=>function($query){
+            $query->where('status', DonationStatus::PENDING);
+        },])->where('cid', $cid)->orderBy('end_date', 'asc')->get();
         $campaigns;
         $today = new Carbon();
         $todayString = $today->toDateString();
