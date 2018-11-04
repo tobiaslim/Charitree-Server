@@ -1416,7 +1416,7 @@ Content-Type: application/json
 
 | Field                    | Description                                                             |
 | ------------------------ | ----------------------------------------------------------------------- |
-| action                   | (required \| ['approve','cancel', 'in-progress','complete'] ) Action to be done |
+| action                   | (required \| ['approve', 'reject', 'cancel', 'in-progress','complete'] ) Action to be done |
 | volunteer_name           |  (required if action is 'in-progress') Volunteer's name|
 | volunteer_HP             | (required if action is 'in-progress') Volunteer's phone number|
 
@@ -1430,6 +1430,17 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
 
 {
   "action":"approve"
+}
+```
+
+*Reject a donation*
+```
+PATCH http://{{baseurl}}/donations/{donationID}/campaignmanagers HTTP/1.0
+Content-type: application/json
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+
+{
+  "action":"reject"
 }
 ```
 
@@ -1494,6 +1505,26 @@ Content-Type: application/json
   "status": 0,
   "errors": {
     "message": "Either donation is already approved, or it does not exist as your donations."
+  }
+}
+```
+
+*Reject Donation*
+```
+HTTP/1.0 404 Not Found
+Date: Sun, 04 Nov 2018 14:56:43 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 126
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 0,
+  "errors": {
+    "message": "Either donation is already rejected or in-progress, or it does not exist as your donations."
   }
 }
 ```

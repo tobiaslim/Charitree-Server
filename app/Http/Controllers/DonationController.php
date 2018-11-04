@@ -114,12 +114,12 @@ class DonationController extends Controller
     }
 
     public function changeStatusOfDonation(Request $request, User $user, $id){
-        $availableActions = ['approve','cancel', 'in-progress','complete'];
+        $availableActions = ['approve', 'reject', 'cancel', 'in-progress','complete'];
 
         $validator = Validator::make($request->all(), [
             'action'=>['required', Rule::in($availableActions)],
-            'volunteer_name'=>"required_if:action,$availableActions[2]|max:45",
-            'volunteer_HP'=>"required_if:action,$availableActions[2]|size:8"
+            'volunteer_name'=>"required_if:action,$availableActions[3]|max:45",
+            'volunteer_HP'=>"required_if:action,$availableActions[3]|size:8"
         ]);
 
         if($validator->fails()){
@@ -132,6 +132,9 @@ class DonationController extends Controller
             switch($request->input('action')){
                 case "approve":
                 $this->donationService->approveDonation($user, $id);
+                break;
+                case "reject":
+                $this->donationService->rejectDonation($user, $id);
                 break;
                 case "cancel":
                 $this->donationService->cancelDonationByCampaignManager($user, $id);

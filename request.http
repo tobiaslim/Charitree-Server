@@ -1,9 +1,9 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
-tobias123@gmail.com cGFEYlBSNGU5TlBPdGYyWXA5QWlySDJuMGRGNlRVVzJuWkF5TTRrWg==
+@authorization = Authorization: Basic tobias123@gmail.com QWlaUm15YjZXRGNSOFBkVldSMXBFZkd6cllodlNQN3phcnJrem15SQ==
+tobias123@gmail.com QWlaUm15YjZXRGNSOFBkVldSMXBFZkd6cllodlNQN3phcnJrem15SQ==
 tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
-tobiaslkj@gmail.com UFJ3Z1NJSlRBYU83YmN1dEF2RHV0Q3lwQmVTMVVzMHQwVTVVTk0yQw==
+tobiaslkj@gmail.com a3NYdEhiZXN6REZLWm1qWjFqYzVhbnM5Q2NvWWI3QVphOGZVdnVmdg==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
@@ -21,7 +21,7 @@ PUT {{baseurl}}/users HTTP/1.0
 {{authorization}}
 
 {
-    "email":"tobiaslkj@gmail.com",
+    "email":"tobias123@gmail.com",
     "first_name":"ha",
     "last_name":"woo"
 }
@@ -31,7 +31,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobias456@gmail.com",
+    "email":"tobias123@gmail.com",
     "password":"password"
 }
 
@@ -166,6 +166,16 @@ GET {{baseurl}}/campaigns/campaignmanagers
 {{contentype}}
 {{authorization}}
 
+### Reject a donation
+PATCH {{baseurl}}/donations/2/campaignmanagers
+{{contentype}}
+{{authorization}}
+
+{
+	"action":"reject"
+}
+
+
 ### Approve a donation
 PATCH {{baseurl}}/donations/2/campaignmanagers
 {{contentype}}
@@ -196,7 +206,7 @@ PATCH {{baseurl}}/donations/1/campaignmanagers
 }
 
 ### Cancel a donation
-PATCH {{baseurl}}/donations/2/campaignmanagers
+PATCH {{baseurl}}/donations/1/campaignmanagers
 {{contentype}}
 {{authorization}}
 

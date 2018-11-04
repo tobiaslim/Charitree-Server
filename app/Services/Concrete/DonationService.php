@@ -191,6 +191,20 @@ class DonationService implements IDonationService{
         $donation->save();
     }
 
+    public function rejectDonation(User $user, $donationID){
+        $cid = $user->campaignManager->cid;
+        $donation = Donation::where('did', $donationID)->where('status', DonationStatus::PENDING)->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->first();
+
+        if(is_null($donation)){
+            throw new ModelNotFoundException("Either donation is already rejected or in-progress, or it does not exist as your donations.");
+        }
+
+        $donation->status = DonationStatus::REJECTED;
+        $donation->save();
+    }
+
     public function assignVolunteerToDonation(User $user, $donationID, $volunteer){
         $cid = $user->campaignManager->cid;
         $donation = Donation::where('did', $donationID)->where('status', DonationStatus::APPROVED)->whereHas('campaign', function($query) use ($cid){
