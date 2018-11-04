@@ -1,8 +1,8 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobias123@gmail.com cGFEYlBSNGU5TlBPdGYyWXA5QWlySDJuMGRGNlRVVzJuWkF5TTRrWg==
+@authorization = Authorization: Basic tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
 tobias123@gmail.com cGFEYlBSNGU5TlBPdGYyWXA5QWlySDJuMGRGNlRVVzJuWkF5TTRrWg==
-tobias456@gmail.com dXQ2QUdQb1lEWVY3TWF5OEtMWFk1T2o5cEpYaFU3RkgwU0Rwb3FrcA==
+tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
 tobiaslkj@gmail.com UFJ3Z1NJSlRBYU83YmN1dEF2RHV0Q3lwQmVTMVVzMHQwVTVVTk0yQw==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
@@ -182,8 +182,8 @@ PATCH {{baseurl}}/donations/1/campaignmanagers
 
 {
 	"action":"in-progress",
-	"volunteer_name":"tobias lim",
-	"volunteer_HP":"83669795"
+	"volunteer_name":"",
+	"volunteer_HP":""
 }
 
 ### Mark a donation as completed

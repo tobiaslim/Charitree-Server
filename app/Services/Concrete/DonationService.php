@@ -184,7 +184,7 @@ class DonationService implements IDonationService{
         })->first();
 
         if(is_null($donation)){
-            throw new ModelNotFoundException("Either donation is already accepted, or it does not exist as your donations.");
+            throw new ModelNotFoundException("Either donation is already approved, or it does not exist as your donations.");
         }
 
         $donation->status = DonationStatus::APPROVED;
