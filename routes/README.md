@@ -1107,7 +1107,7 @@ Content-Type: application/json
   "donation": {
     "did": 9,
     "status": "Pending",
-    "volunteer_details": null,
+    "volunteer_name": null,
     "volunteer_HP": null,
     "Campaign_id": 9,
     "User_id": 1,
@@ -1238,7 +1238,11 @@ Content-Type: application/json
 }
 ```
 # Get donation by donation ID for Campaign Manager
-##### Success
+##### Request 
+GET http://{{baseurl}}/donations/{donationID}/campaignmanagers
+
+##### Response
+###### Success
 ```
 HTTP/1.0 200 OK
 Date: Fri, 02 Nov 2018 06:19:39 GMT
@@ -1255,7 +1259,7 @@ Content-Type: application/json
   "donation": {
     "did": 5,
     "status": "Pending",
-    "volunteer_details": null,
+    "volunteer_name": null,
     "volunteer_HP": null,
     "Campaign_id": 1,
     "User_id": 1,
@@ -1287,7 +1291,7 @@ Content-Type: application/json
 
 #### Request
 ```
-GET http://{{baseurl}}/donations/campaignmanager/campaign/{campaignID} HTTP/1.0
+GET http://{{baseurl}}/donations/campaignmanagers/campaigns/{campaignID} HTTP/1.0
 Content-type: application/json
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
 ```
@@ -1303,7 +1307,7 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
     "status": "Pending",
     "pickup_date": "date",
     "pickup_time": "time",
-    "volunteer_details": null,
+    "volunteer_name": null,
     "volunteer_HP": null,
     "Campaign_id": 9,
     "User_id": 1,
@@ -1339,7 +1343,7 @@ Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWF
     "status": "Pending",
     "pickup_date": "date",
     "pickup_time": "time",
-    "volunteer_details": null,
+    "volunteer_name": null,
     "volunteer_HP": null,
     "Campaign_id": 9,
     "User_id": 1,
