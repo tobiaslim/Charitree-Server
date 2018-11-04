@@ -887,22 +887,19 @@ Content-type: application/json
 
 ##### Success
 ```
-HTTP/1.0 200 OK
-Date: Wed, 24 Oct 2018 15:20:43 GMT
-Server: Apache/2.4.25 (Debian)
-Vary: Authorization
-X-Powered-By: PHP/7.2.10
-Cache-Control: no-cache, private
-Content-Length: 977
-Connection: close
-Content-Type: application/json
-
 {
   "status": 1,
   "message": "Donations of a user.",
   "donations": [{
     "did": 1,
-    "status": "pending",
+    "status": "In Progress",
+    "volunteer_name": "tobias lim",
+    "volunteer_HP": "83669795",
+    "pickup_date": "date",
+    "pickup_time": "time",
+    "Campaign_id": 1,
+    "User_id": 3,
+    "Address_id": 2,
     "items": [{
       "id": 1,
       "name": "Newspaper",
@@ -918,65 +915,25 @@ Content-Type: application/json
     }],
     "campaign": {
       "id": 1,
-      "name": "Run For Charity",
-      "start_date": "2019-08-20",
-      "end_date": "2019-08-21",
+      "name": "Hair For Charity",
+      "start_date": "2018-11-05",
+      "end_date": "2018-11-06",
       "start_time": 12,
       "end_time": 17,
       "description": "wtfffff",
       "collection_point": "Block ass",
       "postal_code": "750469",
-      "cid": 1
+      "cid": 2
     },
-    "pickup_address": {
-      "id": 1,
-      "street_name": "Block 469 AdmiraltyDrive",
-      "unit": "#16-55",
-      "zip": "750469",
-      "user_id": 1
-    }
-    	"pickup_date":"01/11/2019",
-	"pickup_time":"12:39",
-  }, {
-    "did": 2,
-    "status": "pending",
-    "items": [{
-      "id": 1,
-      "name": "Newspaper",
-      "qty": 4
-    }, {
+    "address": {
       "id": 2,
-      "name": "Glass",
-      "qty": 4
-    }, {
-      "id": 4,
-      "name": "Toys",
-      "qty": 5
-    }],
-    "campaign": {
-      "id": 1,
-      "name": "Run For Charity",
-      "start_date": "2019-08-20",
-      "end_date": "2019-08-21",
-      "start_time": 12,
-      "end_time": 17,
-      "description": "wtfffff",
-      "collection_point": "Block ass",
-      "postal_code": "750469",
-      "cid": 1
-    },
-    "pickup_address": {
-      "id": 1,
-      "street_name": "Block 469 AdmiraltyDrive",
-      "unit": "#16-55",
-      "zip": "750469",
-      "user_id": 1
+      "street_name": "Bhehehee",
+      "unit": "#16-25",
+      "zip": "750322",
+      "user_id": 3
     }
-    "pickup_date": "01/11/2019",
-    "pickup_time": "12:10"
   }]
 }
-
 ```
 ##### Failed
 ```
@@ -1511,5 +1468,23 @@ Content-Type: application/json
   "errors": {
     "message": "Campaign not found."
   }
+}
+```
+
+# Change status of a donation
+
+| Field                    | Description                                                             |
+| ------------------------ | ----------------------------------------------------------------------- |
+| action                   | (required \| ['approve','cancel', 'in-progress','complete'] ) Action to be done |
+| volunteer_name           |  (required if action is 'in-progress') Volunteer's name|
+| volunteer_HP             | (required if action is 'in-progress') Volunteer's phone number|
+
+```
+PATCH http://{{baseurl}}/donations/{donationID}/campaignmanagers HTTP/1.0
+Content-type: application/json
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+
+{
+  "action":"approve"
 }
 ```

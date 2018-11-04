@@ -176,4 +176,69 @@ class DonationService implements IDonationService{
         
         return $donation;
     }
+    
+    public function approveDonation(User $user, $donationID){
+        $cid = $user->campaignManager->cid;
+        $donation = Donation::where('did', $donationID)->where('status', DonationStatus::PENDING)->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->first();
+
+        if(is_null($donation)){
+            throw new ModelNotFoundException("Either donation is already accepted, or it does not exist as your donations.");
+        }
+
+        $donation->status = DonationStatus::APPROVED;
+        $donation->save();
+    }
+
+    public function assignVolunteerToDonation(User $user, $donationID, $volunteer){
+        $cid = $user->campaignManager->cid;
+        $donation = Donation::where('did', $donationID)->where('status', DonationStatus::APPROVED)->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->first();
+
+        if(is_null($donation)){
+            throw new ModelNotFoundException("Either donation is already in-progress, or it does not exist as your donations.");
+        }
+
+        $donation->status = DonationStatus::INPROGRESS;
+        $donation->volunteer_name = $volunteer['volunteer_name'];
+        $donation->volunteer_HP = $volunteer['volunteer_HP'];
+        $donation->save();
+    }
+
+    public function completeDonation(User $user, $donationID){
+        $cid = $user->campaignManager->cid;
+        $donation = Donation::where('did', $donationID)->where('status', DonationStatus::INPROGRESS)->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->first();
+
+        if(is_null($donation)){
+            throw new ModelNotFoundException("Either donation is already completed, or it does not exist as your donations.");
+        }
+
+        $donation->status = DonationStatus::COMPLETED;
+        $donation->save();
+    }
+
+    public function cancelDonationByCampaignManager(User $user, $donationID){
+        $cid = $user->campaignManager->cid;
+
+        $donation = Donation::where('did', $donationID)
+        ->where(function ($query){
+            $query->where('status', DonationStatus::INPROGRESS)
+            ->orWhere('status',DonationStatus::PENDING)
+            ->orWhere('status',DonationStatus::APPROVED);
+        })
+        ->whereHas('campaign', function($query) use ($cid){
+            $query->where('cid', $cid);
+        })->first();
+
+        if(is_null($donation)){
+            throw new ModelNotFoundException("Either donation is already completed or cancelled, or it does not exist as your donations.");
+        }
+
+        $donation->status = DonationStatus::CANCELLED;
+        $donation->save();
+    }
 }

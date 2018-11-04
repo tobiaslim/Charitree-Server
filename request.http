@@ -1,16 +1,15 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobias456@gmail.com OVZTbUhuUnZQQldIazNSYnNCS05NMnZheGZvd1ptb0NKWjBrMW9SMQ==
-
-tobias123@gmail.com VUp1dEVwTEhwUlFXVVIzVmNKRkhFNmkydVpMa2gyRlR4dmRycXJ6dg==
-tobias456@gmail.com OVZTbUhuUnZQQldIazNSYnNCS05NMnZheGZvd1ptb0NKWjBrMW9SMQ==
-tobiaslkj@gmail.com dGE4ZHJaTXRIa01aaU1PaEFZVWIwMjFTbkpjVEN1a1Z6ZGNCMWpvSA==
+@authorization = Authorization: Basic tobias123@gmail.com cGFEYlBSNGU5TlBPdGYyWXA5QWlySDJuMGRGNlRVVzJuWkF5TTRrWg==
+tobias123@gmail.com cGFEYlBSNGU5TlBPdGYyWXA5QWlySDJuMGRGNlRVVzJuWkF5TTRrWg==
+tobias456@gmail.com dXQ2QUdQb1lEWVY3TWF5OEtMWFk1T2o5cEpYaFU3RkgwU0Rwb3FrcA==
+tobiaslkj@gmail.com UFJ3Z1NJSlRBYU83YmN1dEF2RHV0Q3lwQmVTMVVzMHQwVTVVTk0yQw==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobias456@gmail.com",
+	"email":"tobiaslkj@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
@@ -32,7 +31,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobiaslkj@gmail.com",
+    "email":"tobias456@gmail.com",
     "password":"password"
 }
 
@@ -78,7 +77,7 @@ POST {{baseurl}}/campaigns HTTP/1.0
 }
 
 ### Create Donation
-POST {{baseurl}}/donations/campaigns/3 HTTP/1.0
+POST {{baseurl}}/donations/campaigns/1 HTTP/1.0
 {{authorization}}
 {{contentype}}
 
@@ -158,11 +157,49 @@ GET {{baseurl}}/donations/campaignmanagers/campaigns/1
 {{authorization}}
 
 ### Campaign manager get a donation
-GET {{baseurl}}/donations/1/campaignmanagers
+GET {{baseurl}}/donations/2/campaignmanagers
 {{contentype}}
 {{authorization}}
 
-### Campaign maanger get all campaigns
+### Campaign manager get all campaigns
 GET {{baseurl}}/campaigns/campaignmanagers
 {{contentype}}
 {{authorization}}
+
+### Approve a donation
+PATCH {{baseurl}}/donations/2/campaignmanagers
+{{contentype}}
+{{authorization}}
+
+{
+	"action":"approve"
+}
+
+### Assign volunteer to a donation and make it in progress.
+PATCH {{baseurl}}/donations/1/campaignmanagers
+{{contentype}}
+{{authorization}}
+
+{
+	"action":"in-progress",
+	"volunteer_name":"tobias lim",
+	"volunteer_HP":"83669795"
+}
+
+### Mark a donation as completed
+PATCH {{baseurl}}/donations/1/campaignmanagers
+{{contentype}}
+{{authorization}}
+
+{
+	"action":"complete"
+}
+
+### Cancel a donation
+PATCH {{baseurl}}/donations/2/campaignmanagers
+{{contentype}}
+{{authorization}}
+
+{
+	"action":"cancel"
+}

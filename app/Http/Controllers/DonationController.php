@@ -12,6 +12,7 @@ use App\Services\Contracts\IDonationService;
 use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
@@ -110,5 +111,43 @@ class DonationController extends Controller
             return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
         }
         return response()->json(['status'=>1, 'donation'=>$donation], Response::HTTP_OK);
+    }
+
+    public function changeStatusOfDonation(Request $request, User $user, $id){
+        $availableActions = ['approve','cancel', 'in-progress','complete'];
+
+        $validator = Validator::make($request->all(), [
+            'action'=>['required', Rule::in($availableActions)],
+            'volunteer_name'=>"required_if:action,$availableActions[2]|max:45",
+            'volunteer_HP'=>"required_if:action,$availableActions[2]|size:8"
+        ]);
+
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            $errors['message'] = "Unproccessable request";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
+        try{
+            switch($request->input('action')){
+                case "approve":
+                $this->donationService->approveDonation($user, $id);
+                break;
+                case "cancel":
+                $this->donationService->cancelDonationByCampaignManager($user, $id);
+                break;
+                case "in-progress":
+                $this->donationService->assignVolunteerToDonation($user, $id, $request->all());
+                break;
+                case "complete":
+                $this->donationService->completeDonation($user, $id);
+            }
+        }catch(ModelNotFoundException $e){
+            $errors['message'] = $e->getMessage();
+            return response()->json(['status'=>0, 'errors'=>$errors], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json(['status'=>1, "message"=>"Donation updated!"], Response::HTTP_OK);
+        
     }
 }
