@@ -1093,12 +1093,12 @@ Content-type: application/json
 ###### Success
 ```
 HTTP/1.0 200 OK
-Date: Thu, 01 Nov 2018 13:05:12 GMT
+Date: Mon, 05 Nov 2018 15:50:28 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 540
+Content-Length: 523
 Connection: close
 Content-Type: application/json
 
@@ -1106,33 +1106,33 @@ Content-Type: application/json
   "status": "1",
   "message": "Donation returned",
   "donation": {
-    "did": 9,
-    "status": "Pending",
-    "volunteer_name": null,
-    "volunteer_HP": null,
-    "Campaign_id": 9,
-    "User_id": 1,
-    "Address_id": 1,
-    "campaign": {
-      "id": 9,
-      "name": "Run For Tobias",
-      "start_date": "2018-11-06",
-      "end_date": "2018-11-07",
-      "start_time": 12,
-      "end_time": 17,
-      "description": "Run for redmond",
-      "collection_point": "Block 5",
-      "postal_code": "750469",
-      "cid": 1
-    },
+    "did": 1,
+    "status": "Cancelled",
+    "volunteer_name": "",
+    "volunteer_HP": "",
     "pickup_date": "date",
     "pickup_time": "time",
-    "pickup_address": {
+    "Campaign_id": 1,
+    "User_id": 2,
+    "Address_id": 1,
+    "address": {
       "id": 1,
       "street_name": "Block 469 AdmiraltyDrive",
       "unit": "#16-55",
       "zip": "750469",
-      "user_id": 1
+      "user_id": 2
+    },
+    "campaign": {
+      "id": 1,
+      "name": "Run For Charity",
+      "start_date": "2018-11-03",
+      "end_date": "2018-11-04",
+      "start_time": 12,
+      "end_time": 17,
+      "description": "wtfffff",
+      "collection_point": "Block ass",
+      "postal_code": "750469",
+      "cid": 1
     }
   }
 }
@@ -1299,30 +1299,39 @@ GET http://{{baseurl}}/donations/{donationID}/campaignmanagers
 ###### Success
 ```
 HTTP/1.0 200 OK
-Date: Fri, 02 Nov 2018 06:19:39 GMT
+Date: Mon, 05 Nov 2018 15:46:20 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 331
+Content-Length: 498
 Connection: close
 Content-Type: application/json
 
 {
   "status": 1,
   "donation": {
-    "did": 5,
-    "status": "Pending",
+    "did": 2,
+    "status": "Rejected",
     "volunteer_name": null,
     "volunteer_HP": null,
+    "pickup_date": "date",
+    "pickup_time": "time",
     "Campaign_id": 1,
-    "User_id": 1,
+    "User_id": 2,
     "Address_id": 1,
     "user": {
-      "id": 1,
+      "id": 2,
       "email": "tobiaslkj@gmail.com",
-      "first_name": "ha",
-      "last_name": "woo"
+      "first_name": "test first name",
+      "last_name": "test last name"
+    },
+    "address": {
+      "id": 1,
+      "street_name": "Block 469 AdmiraltyDrive",
+      "unit": "#16-55",
+      "zip": "750469",
+      "user_id": 2
     },
     "items": [{
       "id": 1,

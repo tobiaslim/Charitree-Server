@@ -111,8 +111,6 @@ class DonationService implements IDonationService{
             throw new ModelNotFoundException("This user does not have this donation ID.");
         }
         $donation = $donation->toArray(); 
-        $donation['pickup_address'] = $donation['address'];
-        unset($donation['address']);
 
        return $donation;
     }
@@ -153,7 +151,7 @@ class DonationService implements IDonationService{
 
     public function getDonationByDonationID(User $user, $donationID){
         $cid = $user->campaignManager->cid;
-        $donation = Donation::with(['user','items'])->where('did', $donationID)->whereHas('campaign', function($query) use ($cid){
+        $donation = Donation::with(['user','items','address'])->where('did', $donationID)->whereHas('campaign', function($query) use ($cid){
             $query->where('cid', $cid);
         })->get();
 

@@ -1,9 +1,9 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobiaslkj@gmail.com a3NYdEhiZXN6REZLWm1qWjFqYzVhbnM5Q2NvWWI3QVphOGZVdnVmdg==
-tobias123@gmail.com QWlaUm15YjZXRGNSOFBkVldSMXBFZkd6cllodlNQN3phcnJrem15SQ==
+@authorization = Authorization: Basic tobiaslkj@gmail.com c0xUVmtVd3ZuSFh0OUdBY0Qzc1lSTWxwaHU1N1pNbXlmdE1yeUZncw==
+tobias123@gmail.com ZGJSa01wR3VTR3doSTRYRnpBS1lIelAwM3o3R2RjWHBFMGpnYnJraw==
 tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
-tobiaslkj@gmail.com a3NYdEhiZXN6REZLWm1qWjFqYzVhbnM5Q2NvWWI3QVphOGZVdnVmdg==
+tobiaslkj@gmail.com c0xUVmtVd3ZuSFh0OUdBY0Qzc1lSTWxwaHU1N1pNbXlmdE1yeUZncw==
 ### Create user
 POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
@@ -31,7 +31,7 @@ POST {{baseurl}}/sessions HTTP/1.0
 {{contentype}}
 
 {
-    "email":"tobias123@gmail.com",
+    "email":"tobiaslkj@gmail.com",
     "password":"password"
 }
 
