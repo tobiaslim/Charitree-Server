@@ -1,6 +1,6 @@
 @baseurl = http://localhost/public
 @contentype = Content-Type: application/json
-@authorization = Authorization: Basic tobias123@gmail.com QWlaUm15YjZXRGNSOFBkVldSMXBFZkd6cllodlNQN3phcnJrem15SQ==
+@authorization = Authorization: Basic tobiaslkj@gmail.com a3NYdEhiZXN6REZLWm1qWjFqYzVhbnM5Q2NvWWI3QVphOGZVdnVmdg==
 tobias123@gmail.com QWlaUm15YjZXRGNSOFBkVldSMXBFZkd6cllodlNQN3phcnJrem15SQ==
 tobias456@gmail.com UTVkSGhzR0d2WDAzb2JpSG5GOGt3anlyNXJ4N0ZjMlIweWZuN00wMw==
 tobiaslkj@gmail.com a3NYdEhiZXN6REZLWm1qWjFqYzVhbnM5Q2NvWWI3QVphOGZVdnVmdg==
@@ -212,4 +212,13 @@ PATCH {{baseurl}}/donations/1/campaignmanagers
 
 {
 	"action":"cancel"
+}
+
+### Count donations by status
+GET {{baseurl}}/donations/count
+{{contentype}}
+{{authorization}}
+
+{
+	"countBy":"Completed"
 }

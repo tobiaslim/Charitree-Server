@@ -23,6 +23,7 @@
     2. [Create Donation](#create-donation)
     2. [Get donation by donation id](#get-donation-by-donation-id)
     3. [Get all donations by the current user session](#get-all-donations-by-the-current-user-session)
+    4. [Get number of successful donations by the current user session](#get-number-of-successful-donations-by-the-current-user-session)
     4. [Get donation by donation ID for Campaign Manager **(Campaign Manager Only)**](#get-donation-by-donation-id-for-campaign-manager)
     5. [Get donations of campaign by campaign id and CM session **(Campaign Manager Only)**](#get-donations-of-campaign-by-campaign-id-and-cm-session)
     6. [Change status of a donation **(Campaign Manager Only)**](#change-status-of-a-donation)
@@ -1025,8 +1026,8 @@ Donation can be created for a certain campaign. Pass in the campaign ID as part 
 | items        | (Required \| Object)                                    |
 | items.keys   | (Required \| array \| int) Items keys array.            |
 | items.values | (Required \| array \| int) Array of corresponding value |
-| pickup_date  | (Required\)                                            |
-| pickup_time  | (Required\)                                            |
+| pickup_date  | (Required)                                            |
+| pickup_time  | (Required)                                            |
 
 Request:
 ```
@@ -1237,6 +1238,59 @@ Content-Type: application/json
   "donations": null
 }
 ```
+# Get number of successful donations by the current user session
+| Field        | Description                                             |
+| ------------ | ------------------------------------------------------- |
+| countBy   | (Required \| string \| ['Completed', 'Rejected', 'Cancelled', 'Pending'] ) Address user choose for pick up.     |
+##### Request
+GET http://{{baseurl}}/donations/count HTTP/1.0
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+Content-type: application/json
+
+{
+  'countBy': "Completed"
+}
+
+##### Response
+###### Success
+```
+HTTP/1.0 200 OK
+Date: Mon, 05 Nov 2018 03:52:52 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 44
+Connection: close
+Content-Type: application/json
+
+{
+  "status": 1,
+  "count": 0,
+  "countBy": "Completed"
+}
+```
+###### Failure
+```
+HTTP/1.0 422 Unprocessable Entity
+Date: Mon, 05 Nov 2018 03:50:39 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 108
+Connection: close
+Content-Type: application/json
+
+{
+  "status": "0",
+  "errors": {
+    "countBy": ["The selected count by is invalid."],
+    "message": "Unproccessable request"
+  }
+}
+```
+
 # Get donation by donation ID for Campaign Manager
 ##### Request 
 GET http://{{baseurl}}/donations/{donationID}/campaignmanagers

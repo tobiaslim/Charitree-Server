@@ -13,6 +13,7 @@ use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
+use App\Models\DonationStatus;
 
 class DonationController extends Controller
 {
@@ -152,5 +153,23 @@ class DonationController extends Controller
 
         return response()->json(['status'=>1, "message"=>"Donation updated!"], Response::HTTP_OK);
         
+    }
+
+    public function countDonations(Request $request, User $user){
+        $availableCountBy = [DonationStatus::COMPLETED, DonationStatus::REJECTED, DonationStatus::CANCELLED, DonationStatus::PENDING];
+
+        $validator = Validator::make($request->all(), [
+            'countBy'=>['required', Rule::in($availableCountBy)]
+        ]);
+
+        if($validator->fails()){
+            $errors = $validator->errors()->toArray();
+            $errors['message'] = "Unproccessable request";
+            return response()->json(["status"=>"0", "errors"=> $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $count = $this->donationService->getDonationsCount($user, $request->input('countBy'));
+
+        return response()->json(['status'=>1, 'count'=>$count, 'countBy'=>$request->input('countBy')]);
     }
 }

@@ -255,4 +255,8 @@ class DonationService implements IDonationService{
         $donation->status = DonationStatus::CANCELLED;
         $donation->save();
     }
+
+    public function getDonationsCount(User $user, String $countBy){
+        return Donation::where('status', $countBy)->where('User_id', $user->id)->count();
+    }
 }
