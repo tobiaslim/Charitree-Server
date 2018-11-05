@@ -1241,7 +1241,7 @@ Content-Type: application/json
 # Get number of successful donations by the current user session
 | Field        | Description                                             |
 | ------------ | ------------------------------------------------------- |
-| countBy   | (Required \| string \| ['Completed', 'Rejected', 'Cancelled', 'Pending'] ) Address user choose for pick up.     |
+| countBy   | (Required \| string \| ['Completed', 'Rejected', 'Cancelled', 'Pending'] ) Status of donations that are intended to count.     |
 ##### Request
 GET http://{{baseurl}}/donations/count HTTP/1.0
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
