@@ -120,7 +120,9 @@ class CampaignService implements ICampaignService{
         $today = new Carbon();
         $campaigns = Campaign::with(['campaignmanager.user'])->withCount(['donations as total_donations','donations as pending_donations'=>function($query){
             $query->where('status', DonationStatus::PENDING);
-        },])->where('cid', $cid)->orderBy('end_date', 'asc')->get();
+        }, 'donations as inprogress_donations'=>function($query){
+            $query->where('status', DonationStatus::INPROGRESS);
+        }])->where('cid', $cid)->orderBy('end_date', 'asc')->get();
         $campaigns;
         $today = new Carbon();
         $todayString = $today->toDateString();

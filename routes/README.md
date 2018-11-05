@@ -805,24 +805,35 @@ Content-type: application/json
 
 ##### Success
 ```
+HTTP/1.0 200 OK
+Date: Mon, 05 Nov 2018 16:24:13 GMT
+Server: Apache/2.4.25 (Debian)
+Vary: Authorization
+X-Powered-By: PHP/7.2.10
+Cache-Control: no-cache, private
+Content-Length: 583
+Connection: close
+Content-Type: application/json
+
 {
   "status": "1",
   "messages": "All campaigns.",
   "campaigns": [{
-    "id": 2,
+    "id": 1,
     "name": "Run For Charity",
-    "start_date": "2018-11-05",
-    "end_date": "2018-11-06",
+    "start_date": "2018-11-03",
+    "end_date": "2018-11-04",
     "start_time": 12,
     "end_time": 17,
     "description": "wtfffff",
     "collection_point": "Block ass",
     "postal_code": "750469",
-    "cid": 3,
-    "total_donations": 3,
-    "pending_donations": 3,
+    "cid": 1,
+    "total_donations": 2,
+    "pending_donations": 0,
+    "inprogress_donations": 1,
     "campaign_manager": {
-      "cid": 3,
+      "cid": 1,
       "UEN": "T19932220",
       "organization_name": "Tobias",
       "name": "test first name test last name"
@@ -840,40 +851,7 @@ Content-type: application/json
       "key": 4,
       "value": "Toys"
     }],
-    "days_left": 1
-  }, {
-    "id": 3,
-    "name": "Hair For Charity",
-    "start_date": "2018-11-05",
-    "end_date": "2018-11-06",
-    "start_time": 12,
-    "end_time": 17,
-    "description": "wtfffff",
-    "collection_point": "Block ass",
-    "postal_code": "750469",
-    "cid": 3,
-    "total_donations": 1,
-    "pending_donations": 1,
-    "campaign_manager": {
-      "cid": 3,
-      "UEN": "T19932220",
-      "organization_name": "Tobias",
-      "name": "test first name test last name"
-    },
-    "accepted_items": [{
-      "key": 1,
-      "value": "Newspaper"
-    }, {
-      "key": 2,
-      "value": "Glass"
-    }, {
-      "key": 3,
-      "value": "Cardboard"
-    }, {
-      "key": 4,
-      "value": "Toys"
-    }],
-    "days_left": 1
+    "days_left": 2
   }]
 }
 ```
@@ -1531,9 +1509,18 @@ Content-type: application/json
 Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
 
 {
-  "action":"in-progress",
-  "volunteer_name":"Redmond Aldric Goon",
-  "volunteer_HP":"85219821"
+  "action":"cancel"
+}
+```
+
+*Complete a donation*
+```
+PATCH http://{{baseurl}}/donations/{donationID}/campaignmanagers HTTP/1.0
+Content-type: application/json
+Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
+
+{
+  "action":"complete"
 }
 ```
 
