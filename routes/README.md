@@ -628,14 +628,13 @@ Content-type: application/json
 ##### Possible Response:
 
 ###### Success:
-
 ```
 HTTP/1.0 200 OK
-Date: Tue, 06 Nov 2018 05:09:55 GMT
+Date: Tue, 06 Nov 2018 14:27:36 GMT
 Server: Apache/2.4.25 (Debian)
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 1703
+Content-Length: 1793
 Connection: close
 Content-Type: application/json
 
@@ -673,7 +672,8 @@ Content-Type: application/json
       "value": "Toys"
     }],
     "weather_forecasts": [{
-      "2018-11-06": "Afternoon thundery showers."
+      "date": "2018-11-06",
+      "forecast": "Afternoon thundery showers."
     }],
     "days_left": 1
   }, {
@@ -707,7 +707,8 @@ Content-Type: application/json
       "value": "Toys"
     }],
     "weather_forecasts": [{
-      "2018-11-06": "Afternoon thundery showers."
+      "date": "2018-11-06",
+      "forecast": "Afternoon thundery showers."
     }],
     "days_left": 1
   }, {
@@ -741,16 +742,18 @@ Content-Type: application/json
       "value": "Metals"
     }],
     "weather_forecasts": [{
-      "2018-11-07": "Afternoon thundery showers."
+      "date": "2018-11-07",
+      "forecast": "Afternoon thundery showers."
     }, {
-      "2018-11-08": "Morning thundery showers."
+      "date": "2018-11-08",
+      "forecast": "Morning thundery showers."
     }, {
-      "2018-11-09": "Morning thundery showers."
+      "date": "2018-11-09",
+      "forecast": "Morning thundery showers."
     }],
     "days_left": 0
   }]
 }
-
 ```
 ###### Failure:
 
@@ -842,21 +845,13 @@ HTTP Status: 422
 Retrieve campaigns by current campaign manager session.
 ##### Request
 ```
-GET http://{{baseurl}}/campaigns/campaignmanagers HTTP/1.0
-Authorization: Basic dG9iaWFzbGtqQG1haWwuY29tOlJtUk5RMEpSV0VsU1JXeEtiMDkzUjBKNWFqZDRkRTQ0VWxZM1JUSnhlVlo0Ym10MGNtcHJOUT09
-Content-type: application/json
-```
-##### Possible Response
-
-##### Success
-```
 HTTP/1.0 200 OK
-Date: Tue, 06 Nov 2018 05:07:39 GMT
+Date: Tue, 06 Nov 2018 14:28:11 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 1945
+Content-Length: 2053
 Connection: close
 Content-Type: application/json
 
@@ -898,7 +893,8 @@ Content-Type: application/json
     }],
     "days_left": 1,
     "weather_forecasts": [{
-      "2018-11-06": "Afternoon thundery showers."
+      "date": "2018-11-06",
+      "forecast": "Afternoon thundery showers."
     }]
   }, {
     "id": 3,
@@ -935,7 +931,8 @@ Content-Type: application/json
     }],
     "days_left": 1,
     "weather_forecasts": [{
-      "2018-11-06": "Afternoon thundery showers."
+      "date": "2018-11-06",
+      "forecast": "Afternoon thundery showers."
     }]
   }, {
     "id": 5,
@@ -969,13 +966,17 @@ Content-Type: application/json
     }],
     "days_left": 2,
     "weather_forecasts": [{
-      "2018-11-06": "Afternoon thundery showers."
+      "date": "2018-11-06",
+      "forecast": "Afternoon thundery showers."
     }, {
-      "2018-11-07": "Afternoon thundery showers."
+      "date": "2018-11-07",
+      "forecast": "Afternoon thundery showers."
     }, {
-      "2018-11-08": "Morning thundery showers."
+      "date": "2018-11-08",
+      "forecast": "Morning thundery showers."
     }, {
-      "2018-11-09": "Morning thundery showers."
+      "date": "2018-11-09",
+      "forecast": "Morning thundery showers."
     }]
   }]
 }

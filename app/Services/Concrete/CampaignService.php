@@ -101,7 +101,7 @@ class CampaignService implements ICampaignService{
                 $date = Carbon::make($key);
                 if($date->between($startDate, $endDate)){
                     // forecasted date falls within the campaign. attached to response
-                    $campaigns[$i]["weather_forecasts"][] = [$key => $val];
+                    $campaigns[$i]["weather_forecasts"][] = ['date'=>$key, 'forecast' => $val];
                 }
             }
             $daysLeft = $today->diffInDays($startDate);
@@ -208,7 +208,7 @@ class CampaignService implements ICampaignService{
                 $date = Carbon::make($key);
                 if($date->between($startDate, $endDate)){
                     // forecasted date falls within the campaign. attached to response
-                    $campaigns[$i]["weather_forecasts"][] = [$key => $val];
+                    $campaigns[$i]["weather_forecasts"][] = ['date'=>$key, 'forecast' => $val];
                 }
             }
 
