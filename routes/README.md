@@ -631,11 +631,11 @@ Content-type: application/json
 
 ```
 HTTP/1.0 200 OK
-Date: Wed, 24 Oct 2018 12:38:26 GMT
+Date: Tue, 06 Nov 2018 05:09:55 GMT
 Server: Apache/2.4.25 (Debian)
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 978
+Content-Length: 1703
 Connection: close
 Content-Type: application/json
 
@@ -645,16 +645,16 @@ Content-Type: application/json
   "campaigns": [{
     "id": 2,
     "name": "Run For Charity",
-    "start_date": "2018-10-25",
-    "end_date": "2018-10-26",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
     "start_time": 12,
     "end_time": 17,
     "description": "wtfffff",
     "collection_point": "Block ass",
     "postal_code": "750469",
-    "cid": 1,
+    "cid": 3,
     "campaign_manager": {
-      "cid": 1,
+      "cid": 3,
       "UEN": "T19932220",
       "organization_name": "Tobias",
       "name": "test first name test last name"
@@ -671,41 +671,86 @@ Content-Type: application/json
     }, {
       "key": 4,
       "value": "Toys"
+    }],
+    "weather_forecasts": [{
+      "2018-11-06": "Afternoon thundery showers."
+    }],
+    "days_left": 1
+  }, {
+    "id": 3,
+    "name": "Hair For Charity",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 3,
+    "campaign_manager": {
+      "cid": 3,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }],
+    "weather_forecasts": [{
+      "2018-11-06": "Afternoon thundery showers."
+    }],
+    "days_left": 1
+  }, {
+    "id": 4,
+    "name": "Hair For Charity",
+    "start_date": "2018-11-07",
+    "end_date": "2018-11-09",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 1,
+    "campaign_manager": {
+      "cid": 1,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "ha woo"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 7,
+      "value": "Metals"
+    }],
+    "weather_forecasts": [{
+      "2018-11-07": "Afternoon thundery showers."
+    }, {
+      "2018-11-08": "Morning thundery showers."
+    }, {
+      "2018-11-09": "Morning thundery showers."
     }],
     "days_left": 0
-  }, {
-    "id": 1,
-    "name": "Run For Charity",
-    "start_date": "2019-08-20",
-    "end_date": "2019-08-21",
-    "start_time": 12,
-    "end_time": 17,
-    "description": "wtfffff",
-    "collection_point": "Block ass",
-    "postal_code": "750469",
-    "cid": 1,
-    "campaign_manager": {
-      "cid": 1,
-      "UEN": "T19932220",
-      "organization_name": "Tobias",
-      "name": "test first name test last name"
-    },
-    "accepted_items": [{
-      "key": 1,
-      "value": "Newspaper"
-    }, {
-      "key": 2,
-      "value": "Glass"
-    }, {
-      "key": 3,
-      "value": "Cardboard"
-    }, {
-      "key": 4,
-      "value": "Toys"
-    }],
-    "days_left": 299
   }]
 }
+
 ```
 ###### Failure:
 
@@ -804,14 +849,13 @@ Content-type: application/json
 ##### Possible Response
 
 ##### Success
-```
 HTTP/1.0 200 OK
-Date: Mon, 05 Nov 2018 16:24:13 GMT
+Date: Tue, 06 Nov 2018 05:07:39 GMT
 Server: Apache/2.4.25 (Debian)
 Vary: Authorization
 X-Powered-By: PHP/7.2.10
 Cache-Control: no-cache, private
-Content-Length: 583
+Content-Length: 1945
 Connection: close
 Content-Type: application/json
 
@@ -819,21 +863,21 @@ Content-Type: application/json
   "status": "1",
   "messages": "All campaigns.",
   "campaigns": [{
-    "id": 1,
+    "id": 2,
     "name": "Run For Charity",
-    "start_date": "2018-11-03",
-    "end_date": "2018-11-04",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
     "start_time": 12,
     "end_time": 17,
     "description": "wtfffff",
     "collection_point": "Block ass",
     "postal_code": "750469",
-    "cid": 1,
-    "total_donations": 2,
-    "pending_donations": 0,
-    "inprogress_donations": 1,
+    "cid": 3,
+    "total_donations": 3,
+    "pending_donations": 3,
+    "inprogress_donations": 0,
     "campaign_manager": {
-      "cid": 1,
+      "cid": 3,
       "UEN": "T19932220",
       "organization_name": "Tobias",
       "name": "test first name test last name"
@@ -851,7 +895,87 @@ Content-Type: application/json
       "key": 4,
       "value": "Toys"
     }],
-    "days_left": 2
+    "days_left": 1,
+    "weather_forecasts": [{
+      "2018-11-06": "Afternoon thundery showers."
+    }]
+  }, {
+    "id": 3,
+    "name": "Hair For Charity",
+    "start_date": "2018-11-05",
+    "end_date": "2018-11-06",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 3,
+    "total_donations": 1,
+    "pending_donations": 1,
+    "inprogress_donations": 0,
+    "campaign_manager": {
+      "cid": 3,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
+    },
+    "accepted_items": [{
+      "key": 1,
+      "value": "Newspaper"
+    }, {
+      "key": 2,
+      "value": "Glass"
+    }, {
+      "key": 3,
+      "value": "Cardboard"
+    }, {
+      "key": 4,
+      "value": "Toys"
+    }],
+    "days_left": 1,
+    "weather_forecasts": [{
+      "2018-11-06": "Afternoon thundery showers."
+    }]
+  }, {
+    "id": 5,
+    "name": "Hair For Charity",
+    "start_date": "2018-11-04",
+    "end_date": "2018-11-10",
+    "start_time": 12,
+    "end_time": 17,
+    "description": "wtfffff",
+    "collection_point": "Block ass",
+    "postal_code": "750469",
+    "cid": 3,
+    "total_donations": 0,
+    "pending_donations": 0,
+    "inprogress_donations": 0,
+    "campaign_manager": {
+      "cid": 3,
+      "UEN": "T19932220",
+      "organization_name": "Tobias",
+      "name": "test first name test last name"
+    },
+    "accepted_items": [{
+      "key": 5,
+      "value": "Furniture"
+    }, {
+      "key": 6,
+      "value": "Plastic"
+    }, {
+      "key": 7,
+      "value": "Metals"
+    }],
+    "days_left": 2,
+    "weather_forecasts": [{
+      "2018-11-06": "Afternoon thundery showers."
+    }, {
+      "2018-11-07": "Afternoon thundery showers."
+    }, {
+      "2018-11-08": "Morning thundery showers."
+    }, {
+      "2018-11-09": "Morning thundery showers."
+    }]
   }]
 }
 ```
