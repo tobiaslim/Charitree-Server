@@ -9,7 +9,7 @@ POST {{baseurl}}/users HTTP/1.0
 {{contentype}}
 
 {
-	"email":"tobiaslkj@gmail.com",
+	"email":"tobiaslim@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
 	"password":"password"
