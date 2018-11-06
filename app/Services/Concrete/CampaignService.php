@@ -11,6 +11,7 @@ use Symfony\Component\Finder\Comparator\DateComparator;
 use Illuminate\Support\Carbon;
 use App\Models\DonationStatus;
 use App\Utility\IHttpClient;
+use App\Utility\WeatherForecastAPI;
 
 
 class CampaignService implements ICampaignService{
@@ -30,10 +31,6 @@ class CampaignService implements ICampaignService{
         $campaign->items()->sync($array['accepted_items']);
     }
     
-    public function edit(array $array){
-        
-    }
-
     public function find($id){
         return Campaign::find($id);
     }
@@ -53,21 +50,10 @@ class CampaignService implements ICampaignService{
             return null;
         }
 
-        $httpClient = app(IHttpClient::class);
+        $weatherForecast = app(WeatherForecastAPI::class);
         $yesterday = Carbon::yesterday();
-        $yesterdayString = $yesterday->toDateString();
-        $params = ['date'=>$yesterdayString];
-        $httpClient->request('GET', 'https://api.data.gov.sg/v1/environment/4-day-weather-forecast', $params);
-        $response = $httpClient->getResponseBody();
-        $itemsCount = count($response['items']);
-        $forecastRaw = $response['items'][$itemsCount-1]['forecasts'];
+        $forecast = $weatherForecast->getWeatherForecast($yesterday);
         
-        $forecast = array();
-
-        foreach($forecastRaw as $fc){
-            $date = Carbon::parse($fc['date']); 
-            $forecast[$date->toDateString()]=$fc['forecast']; 
-        }
         $accepted_items;
         $campaignManagerInfo;
         $i = 0;
@@ -104,8 +90,8 @@ class CampaignService implements ICampaignService{
                     $campaigns[$i]["weather_forecasts"][] = ['date'=>$key, 'forecast' => $val];
                 }
             }
-            $daysLeft = $today->diffInDays($startDate);
-            $campaigns[$i]["days_left"] = $daysLeft;
+            $daysLeft = $today->diffInDays($endDate, false);
+            $campaigns[$i]["days_left"] = ($daysLeft < 0) ? 0 : $daysLeft;
 
             $i++;
         }
@@ -156,21 +142,9 @@ class CampaignService implements ICampaignService{
             return null;
         }
 
-        $httpClient = app(IHttpClient::class);
+        $weatherForecast = app(WeatherForecastAPI::class);
         $yesterday = Carbon::yesterday();
-        $yesterdayString = $yesterday->toDateString();
-        $params = ['date'=>$yesterdayString];
-        $httpClient->request('GET', 'https://api.data.gov.sg/v1/environment/4-day-weather-forecast', $params);
-        $response = $httpClient->getResponseBody();
-        $itemsCount = count($response['items']);
-        $forecastRaw = $response['items'][$itemsCount-1]['forecasts'];
-        
-        $forecast = array();
-
-        foreach($forecastRaw as $fc){
-            $date = Carbon::parse($fc['date']); 
-            $forecast[$date->toDateString()]=$fc['forecast']; 
-        }
+        $forecast = $weatherForecast->getWeatherForecast($yesterday);
 
         $accepted_items;
         $campaignManagerInfo;
@@ -200,8 +174,9 @@ class CampaignService implements ICampaignService{
             $campaigns[$i]["accepted_items"] = $accepted_items[$i];
 
             $startDate = Carbon::make($campaign['start_date']);
-            $daysLeft = $today->diffInDays($startDate);
-            $campaigns[$i]["days_left"] = $daysLeft;
+            $endDate = Carbon::make($campaign['end_date']);
+            $daysLeft = $today->diffInDays($endDate, false);
+            $campaigns[$i]["days_left"] = ($daysLeft < 0) ? 0 : $daysLeft;
 
             $endDate = Carbon::make($campaign['end_date']);
             foreach($forecast as $key => $val){
