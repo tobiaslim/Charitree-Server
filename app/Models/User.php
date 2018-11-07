@@ -42,7 +42,7 @@ class User extends Model
     public static $rules = [
         "register" => [
             'email' => 'required|email|unique:User',
-            'password' => 'required'
+            'password' => 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/u'
         ],
         "login"=>[
             'email' => 'required|email',

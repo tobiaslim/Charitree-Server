@@ -12,7 +12,7 @@ POST {{baseurl}}/users HTTP/1.0
 	"email":"tobiaslim@gmail.com",
 	"first_name":"test first name",
 	"last_name":"test last name",
-	"password":"password"
+	"password":"Pa$$w0rd!"
 }
 
 ### Edit User
