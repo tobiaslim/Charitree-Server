@@ -12,20 +12,9 @@ class CreateUserTest extends TestCase
 
     public function testInvalidEmail(){
         $email      = "xxxx@xxxx";
-        $password   = "Pa\$\$w0rd!";
-        $firstName  = "xxx";
-        $lastName   = "xxx";
-
-        $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
-
-        $this->json('POST', '/users', $params);
-        $this->seeStatusCode(422);
-        $this->seeJson(["email"=>["The email must be a valid email address."]]);
-
-        $email      = "xxxx.com";
-        $password   = "Pa\$\$w0rd!";
-        $firstName  = "xxx";
-        $lastName   = "xxxx";
+        $password   = "Password1!";
+        $firstName  = "Tan";
+        $lastName   = "Thomas";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
 
@@ -35,21 +24,10 @@ class CreateUserTest extends TestCase
     }
 
     public function testInvalidPassword(){
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Password";
-        $firstName  = "Tobias";
-        $lastName   = "Lim";
-
-        $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
-
-        $this->json('POST', '/users', $params);
-        $this->seeStatusCode(422);
-        $this->seeJson(["password"=>["The password format is invalid."]]);
-
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Password";
-        $firstName  = "Tobias";
-        $lastName   = "Lim";
+        $email      = "xxx@xxx.xxx";
+        $password   = "password1";
+        $firstName  = "Tan";
+        $lastName   = "Thomas";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
 
@@ -59,21 +37,10 @@ class CreateUserTest extends TestCase
     }
 
     public function testInvalidFirstName(){
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
-        $firstName  = "!@#$%";
-        $lastName   = "tobias";
-
-        $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
-
-        $this->json('POST', '/users', $params);
-        $this->seeStatusCode(422);
-        $this->seeJson(["first_name"=>["The first name may only contain letters."]]);
-
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
+        $email      = "xxx@xxx.xxx";
+        $password   = "Password1!";
         $firstName  = "123";
-        $lastName   = "Tobias";
+        $lastName   = "Thomas";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
 
@@ -83,9 +50,9 @@ class CreateUserTest extends TestCase
     }
 
     public function testMissingFirstName(){
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
-        $lastName   = "Mei Ling";
+        $email      = "xxx@xxx.xxx";
+        $password   = "Password1!";
+        $lastName   = "Thomas";
 
         $params = ["email"=>$email, "password"=>$password, "last_name"=>$lastName];
 
@@ -96,20 +63,9 @@ class CreateUserTest extends TestCase
 
     public function testInvalidLastName(){
         $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
+        $password   = "Password1!";
         $firstName  = "Tan";
-        $lastName   = "123";
-
-        $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, 'last_name'=>$lastName];
-
-        $this->json('POST', '/users', $params);
-        $this->seeStatusCode(422);
-        $this->seeJson(["last_name"=>["The last name may only contain letters."]]);
-
-        $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
-        $firstName  = "Tan";
-        $lastName   = "!@#$%^";
+        $lastName   = "321";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, 'last_name'=>$lastName];
 
@@ -120,7 +76,7 @@ class CreateUserTest extends TestCase
 
     public function testMissingLastName(){
         $email      = "tobiaslkj@gmail.com";
-        $password   = "Pa\$\$w0rd!";
+        $password   = "Password1!";
         $firstName  = "Tan";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName];
@@ -132,10 +88,10 @@ class CreateUserTest extends TestCase
 
     public function testValidRequest(){
         //test should pass unless database already has the user record.
-        $email      = "tobias111@gmail.com";
-        $password   = "Pa\$\$w0rd!";
-        $firstName  = "Lim";
-        $lastName   = "Tob";
+        $email      = "xxx@xxx.xxx";
+        $password   = "Password1!";
+        $firstName  = "Tan";
+        $lastName   = "Thomas";
 
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName,"last_name"=>$lastName];
 
