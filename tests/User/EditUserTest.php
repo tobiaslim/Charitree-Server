@@ -6,7 +6,6 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 use Tests\TestCaseWithSession;
 
 class EditUserTest extends TestCaseWithSession{
-    use DatabaseTransactions;
 
     public function testInvalidEmail(){
         $this->createSessionTokenForTest("tobiaslkj@gmail.com", "password");

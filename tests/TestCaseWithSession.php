@@ -11,4 +11,11 @@ class TestCaseWithSession extends TestCase{
         $token              = $response['user_token'];
         $this->sessionToken = base64_encode("$email:$token");
     }
+
+    public function createCampaignManagerWithSessionForTest(){
+        $organizationName   = "test organization";
+        $UEN                = 'T00000000';
+        $params             = ["UEN"=>$UEN, "organization_name"=>$organizationName];
+        $this->json('POST', '/campaignmanagers', $params); 
+    }
 }
