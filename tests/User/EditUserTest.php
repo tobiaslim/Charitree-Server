@@ -50,7 +50,7 @@ class EditUserTest extends TestCaseWithSession{
     }
 
     public function testValidEditUser(){
-        $this->createSessionTokenForTest("tobiaslkj@gmail.com", "password");
+        $this->createUserAndSessionForTest("xxx@xxx.xxx", "P@ssword1", "xxx","xxx");
         $headers    = ['Authorization'=>"Basic: $this->sessionToken"];
         
         // valid EC

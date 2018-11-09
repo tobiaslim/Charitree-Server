@@ -5,6 +5,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 class TestCaseWithSession extends TestCase{
     use DatabaseTransactions;
     protected $sessionToken;
+
     public function createUserAndSessionForTest(String $email, String $password, String $firstName, String $lastName){
         $params = ["email"=>$email, "password"=>$password, "first_name"=>$firstName, "last_name"=>$lastName];
         $this->json('POST', '/users', $params);
@@ -22,6 +23,7 @@ class TestCaseWithSession extends TestCase{
         $organizationName   = "test organization";
         $UEN                = 'T00000000';
         $params             = ["UEN"=>$UEN, "organization_name"=>$organizationName];
-        $this->json('POST', '/campaignmanagers', $params); 
+        $headers            = ['Authorization'=>"Basic: $this->sessionToken"];
+        $response           = $this->json('POST', '/users/campaignmanagers', $params, $headers)->response->getData(true); 
     }
 }
