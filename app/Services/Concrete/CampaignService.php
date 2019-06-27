@@ -31,7 +31,7 @@ class CampaignService implements ICampaignService{
         $campaign->items()->sync($array['accepted_items']);
     }
     
-    public function find($id){
+    public function find(int $id){
         return Campaign::find($id);
     }
 
