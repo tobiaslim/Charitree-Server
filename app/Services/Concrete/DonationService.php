@@ -20,7 +20,7 @@ class DonationService implements IDonationService{
     {
     }
 
-    public function createDonation(array $array, User $user, $campaignID)
+    public function createDonation(array $array, User $user, int $campaignID)
     {
         /**
          * Check if address belongs to user
